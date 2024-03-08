@@ -1,20 +1,10 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  Touchable,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import GetStarted from '../assets/images/GetStarted.svg';
 import Icon from '../assets/icons';
+import pages from '../constants/pages';
 
-const IntroPage = () => {
-  const dimensions = Dimensions.get('window');
-  const imageWidth = dimensions.width;
-  const imageHeight = dimensions.height;
-
+const IntroPage = ({navigation}) => {
   return (
     <View style={styles.container}>
       <GetStarted
@@ -32,14 +22,11 @@ const IntroPage = () => {
           decorations to catering, everything you need is here. Simplify your
           event planning with us.
         </Text>
-        <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}}>
+        <TouchableOpacity
+          style={styles.GetStartedButton}
+          onPress={() => navigation.replace(pages.homePage)}>
           <Text style={styles.footerText}>Get Started</Text>
-          <Icon
-            type="AntDesign"
-            name="arrowright"
-            size={20}
-            color={'white'}
-          />
+          <Icon type="AntDesign" name="arrowright" size={20} color={'white'} />
         </TouchableOpacity>
       </View>
     </View>
@@ -76,6 +63,10 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 20,
     marginRight: 20,
+  },
+  GetStartedButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 

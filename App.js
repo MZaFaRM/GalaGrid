@@ -6,15 +6,39 @@
  */
 
 import React from 'react';
-import {ScrollView} from 'react-native';
+import 'react-native-gesture-handler';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import {View} from 'react-native';
 
 import IntroPage from './src/screens/IntroPage';
+import pages from './src/constants/pages';
+import HomePage from './src/screens/homePage';
+
+const Stack = createStackNavigator();
 
 function App() {
   return (
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>
-        <IntroPage />
-      </ScrollView>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: '#FFFFFF',
+      }}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name={pages.introPage}
+            component={IntroPage}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={pages.homePage}
+            component={HomePage}
+            options={{headerShown: false}}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </View>
   );
 }
 
