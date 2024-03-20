@@ -10,7 +10,10 @@ import {
 } from 'react-native';
 import HomePageBanner from '../assets/images/HomePageBanner.svg';
 import Icon from '../assets/icons';
-import {StuffBoxCard} from '../components/homePageComponents';
+import {
+  RecommendedStuffBoxCard,
+  OtherStuffBoxCards,
+} from '../components/homePageComponents';
 
 const HomePage = () => {
   const [searchBoxHeight, setSearchBoxHeight] = useState(0);
@@ -56,8 +59,7 @@ const HomePage = () => {
           <Icon type="Entypo" name="menu" size={20} color="white" />
         </View>
       </View>
-      <View
-        style={[styles.StuffHeader, {marginTop: 20 + searchBoxHeight / 2}]}>
+      <View style={[styles.StuffHeader, {marginTop: 20 + searchBoxHeight / 2}]}>
         <Text style={styles.StuffHeaderText}>Popular Events</Text>
       </View>
       <TouchableOpacity style={styles.seeAllBox}>
@@ -72,16 +74,26 @@ const HomePage = () => {
       </TouchableOpacity>
       <ScrollView
         horizontal={true}
-        contentContainerStyle={styles.stuffBoxCards}
+        contentContainerStyle={styles.recommendedStuffBoxCards}
         showsHorizontalScrollIndicator={false}>
-        <StuffBoxCard />
-        <StuffBoxCard />
-        <StuffBoxCard />
-        <StuffBoxCard />
+        <RecommendedStuffBoxCard />
+        <RecommendedStuffBoxCard />
+        <RecommendedStuffBoxCard />
+        <RecommendedStuffBoxCard />
       </ScrollView>
-      <View
-        style={[styles.StuffHeader]}>
-        <Text style={styles.StuffHeaderText}>Running Events</Text>
+      <View style={styles.ListAllBlock}>
+        <View style={[styles.StuffHeader]}>
+          <Text style={styles.StuffHeaderText}>Running Events</Text>
+        </View>
+        <View style={styles.OtherStuffBoxCards}>
+          <OtherStuffBoxCards />
+          <OtherStuffBoxCards />
+          <OtherStuffBoxCards />
+          <OtherStuffBoxCards />
+          <OtherStuffBoxCards />
+          <OtherStuffBoxCards />
+          <OtherStuffBoxCards />
+        </View>
       </View>
       <View style={{height: 600, backgroundColor: '#020b44'}}></View>
     </ScrollView>
@@ -154,7 +166,7 @@ const styles = StyleSheet.create({
 
     alignSelf: 'center',
   },
-  stuffBoxCards: {
+  recommendedStuffBoxCards: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
