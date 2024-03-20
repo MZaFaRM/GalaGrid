@@ -14,6 +14,7 @@ import {View} from 'react-native';
 import IntroPage from './src/screens/IntroPage';
 import pages from './src/constants/pages';
 import HomePage from './src/screens/homePage';
+import FilterPage from './src/screens/filterPage';
 
 const Stack = createStackNavigator();
 
@@ -34,6 +35,11 @@ function App() {
           <Stack.Screen
             name={pages.homePage}
             component={HomePage}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={pages.filterPage}
+            component={FilterPage}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

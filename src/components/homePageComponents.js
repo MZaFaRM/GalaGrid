@@ -205,6 +205,9 @@ const styles = StyleSheet.create({
   otherStuffLocation: {
     flexDirection: 'row',
     alignItems: 'center',
+
+    flex: 1,
+    alignSelf: 'baseline'
   },
   otherStuffLocationText: {
     color: '#5d3dfc',

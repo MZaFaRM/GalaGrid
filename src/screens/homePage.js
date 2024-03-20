@@ -14,8 +14,9 @@ import {
   RecommendedStuffBoxCard,
   OtherStuffBoxCards,
 } from '../components/homePageComponents';
+import pages from '../constants/pages';
 
-const HomePage = () => {
+const HomePage = ({navigation}) => {
   const [searchBoxHeight, setSearchBoxHeight] = useState(0);
   headerSize = 300;
 
@@ -55,9 +56,11 @@ const HomePage = () => {
           placeholderTextColor="white"
           style={[styles.SearchText, {flex: 10}]}
         />
-        <View style={[styles.filterBox, {flex: 1}]}>
+        <TouchableOpacity
+          style={[styles.filterBox, {flex: 1}]}
+          onPress={() => navigation.navigate(pages.filterPage)}>
           <Icon type="Entypo" name="menu" size={20} color="white" />
-        </View>
+        </TouchableOpacity>
       </View>
       <View style={[styles.StuffHeader, {marginTop: 20 + searchBoxHeight / 2}]}>
         <Text style={styles.StuffHeaderText}>Popular Events</Text>
