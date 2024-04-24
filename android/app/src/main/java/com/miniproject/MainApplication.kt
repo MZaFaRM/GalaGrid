@@ -1,4 +1,4 @@
-package com.miniproject
+package com.galagrid
 
 import android.app.Application
 import com.facebook.react.PackageList

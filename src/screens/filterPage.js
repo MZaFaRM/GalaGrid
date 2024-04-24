@@ -1,12 +1,13 @@
-  import React, {useState} from 'react';
-  import {
-    View,
-    StyleSheet,
-    ScrollView,
-    Text,
-    TouchableOpacity,
-  } from 'react-native';
-  import Layout from '../components/layout';
+import React, {useState} from 'react';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
+import Layout from '../components/layout';
+import {colors} from '../constants/constants';
 
 const FilterPage = ({navigation}) => {
   const [filterData, setFilterData] = useState([
@@ -177,12 +178,12 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   filterBoxText: {
-    color: '#5d3dfc',
+    color: colors.tertiary,
     fontFamily: 'Quicksand-Bold',
     fontSize: 16,
   },
   selectedFilterBox: {
-    backgroundColor: '#5d3dfc',
+    backgroundColor: colors.tertiary,
   },
   selectedFilterBoxText: {
     color: 'white',

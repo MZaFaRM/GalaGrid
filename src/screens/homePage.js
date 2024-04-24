@@ -15,6 +15,7 @@ import {
   OtherStuffBoxCards,
 } from '../components/homePageComponents';
 import pages from '../constants/pages';
+import {colors, fonts} from '../constants/constants';
 
 const HomePage = ({navigation}) => {
   const [searchBoxHeight, setSearchBoxHeight] = useState(0);
@@ -27,23 +28,7 @@ const HomePage = ({navigation}) => {
 
   return (
     <ScrollView style={styles.container}>
-      <View style={{height: headerSize, backgroundColor: 'white'}}>
-        <View style={styles.headerBox}>
-          <Text style={styles.headerText}>Find the {'\n'}trending Events</Text>
-        </View>
-        <HomePageBanner
-          style={styles.background}
-          height={'100%'}
-          width={'100%'}
-          preserveAspectRatio="xMaxYMax slice"
-        />
-      </View>
-      <View
-        style={[
-          styles.searchBox,
-          {marginTop: headerSize - searchBoxHeight / 2},
-        ]}
-        onLayout={handleLayout}>
+      <View style={[styles.searchBox]} onLayout={handleLayout}>
         <Icon
           type="AntDesign"
           name="search1"
@@ -59,21 +44,22 @@ const HomePage = ({navigation}) => {
         <TouchableOpacity
           style={[styles.filterBox, {flex: 1}]}
           onPress={() => navigation.navigate(pages.filterPage)}>
-          <Icon type="Entypo" name="menu" size={20} color="white" />
+          <Icon type="Entypo" name="menu" size={20} color={colors.quatertiary} />
         </TouchableOpacity>
       </View>
-      <View style={[styles.StuffHeader, {marginTop: 20 + searchBoxHeight / 2}]}>
-        <Text style={styles.StuffHeaderText}>Popular Events</Text>
+      <View style={[styles.StuffHeader]}>
+        <Text style={styles.StuffHeaderText}>Featured Products</Text>
       </View>
       <TouchableOpacity style={styles.seeAllBox}>
-        <Text style={styles.seeAllText}>See all</Text>
-        <Icon
-          type="FontAwesome"
-          name="caret-right"
-          size={15}
-          color="#5d3dfc"
-          style={{alignSelf: 'center'}}
-        />
+        <Text style={styles.seeAllText}>
+          See More{'\t\t'}
+          <Icon
+            type="FontAwesome"
+            name="caret-right"
+            size={16}
+            color={colors.tertiary}
+          />
+        </Text>
       </TouchableOpacity>
       <ScrollView
         horizontal={true}
@@ -98,17 +84,16 @@ const HomePage = ({navigation}) => {
           <OtherStuffBoxCards />
         </View>
       </View>
-      <View style={{height: 600, backgroundColor: '#020b44'}}></View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#020b44',
+    backgroundColor: '#030316',
   },
   searchBox: {
-    backgroundColor: '#0b144b',
+    backgroundColor: colors.secondary,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -117,12 +102,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 15,
     paddingVertical: 10,
-    zIndex: 1,
-    position: 'absolute',
   },
   headerText: {
     color: 'white',
-    fontFamily: 'Quicksand-Bold',
+    fontFamily: fonts.primary,
 
     fontSize: 30,
   },
@@ -135,7 +118,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   filterBox: {
-    backgroundColor: '#5d3dfc',
+    backgroundColor: colors.tertiary,
     padding: 5,
     borderRadius: 10,
 
@@ -152,8 +135,8 @@ const styles = StyleSheet.create({
   },
   StuffHeaderText: {
     color: 'white',
-    fontFamily: 'Quicksand-Bold',
-    fontSize: 20,
+    fontFamily: fonts.tertiary,
+    fontSize: 24,
   },
   seeAllBox: {
     flexDirection: 'row',
@@ -162,12 +145,9 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   seeAllText: {
-    color: '#5d3dfc',
-    fontFamily: 'Quicksand-Medium',
-    fontSize: 15,
-    marginRight: 10,
-
-    alignSelf: 'center',
+    color: colors.tertiary,
+    fontFamily: fonts.quatertiary,
+    fontSize: 16,
   },
   recommendedStuffBoxCards: {
     flexDirection: 'row',

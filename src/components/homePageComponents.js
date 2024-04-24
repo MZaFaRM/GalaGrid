@@ -3,6 +3,7 @@ import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
 import Icon from '../assets/icons';
 import {useNavigation} from '@react-navigation/native';
 import pages from '../constants/pages';
+import {colors} from '../constants/constants';
 
 export const RecommendedStuffBoxCard = () => {
   const navigation = useNavigation();
@@ -26,7 +27,7 @@ export const RecommendedStuffBoxCard = () => {
                 type="Entypo"
                 name="location-pin"
                 size={15}
-                color="#5d3dfc"
+                color={colors.tertiary}
                 style={{marginRight: 10}}
               />
               <Text style={stuffBoxCardStyles.stuffLocationText}>
@@ -35,10 +36,10 @@ export const RecommendedStuffBoxCard = () => {
             </View>
             <View style={stuffBoxCardStyles.stuffRatingBox}>
               <Text style={stuffBoxCardStyles.stuffRatingText}>4.0</Text>
-              <Icon type="AntDesign" name="star" size={15} color="yellow" />
-              <Icon type="AntDesign" name="star" size={15} color="yellow" />
-              <Icon type="AntDesign" name="star" size={15} color="yellow" />
-              <Icon type="AntDesign" name="star" size={15} color="yellow" />
+              <Icon type="AntDesign" name="star" size={15} color="black" />
+              <Icon type="AntDesign" name="star" size={15} color="black" />
+              <Icon type="AntDesign" name="star" size={15} color="black" />
+              <Icon type="AntDesign" name="star" size={15} color="black" />
               <Icon type="AntDesign" name="star" size={15} color="grey" />
             </View>
           </View>
@@ -70,7 +71,7 @@ const stuffBoxCardStyles = StyleSheet.create({
   stuffDetails: {
     flex: 1,
     width: '100%',
-    backgroundColor: '#161851',
+    backgroundColor: colors.secondary,
     padding: 20,
   },
   stuffDate: {
@@ -80,7 +81,7 @@ const stuffBoxCardStyles = StyleSheet.create({
   },
   stuffName: {
     color: 'white',
-    fontFamily: 'Quicksand-Bold',
+    fontFamily: 'Urbanist-Light',
     fontSize: 20,
     marginVertical: 8,
   },
@@ -96,13 +97,13 @@ const stuffBoxCardStyles = StyleSheet.create({
     justifyContent: 'center',
   },
   stuffRentButton: {
-    backgroundColor: '#0f0f30',
+    backgroundColor: colors.tertiary,
     padding: 10,
     paddingHorizontal: 25,
     borderRadius: 10,
   },
   stuffRentButtonText: {
-    color: '#5d3dfc',
+    color: colors.quatertiary,
     fontFamily: 'Quicksand-Bold',
   },
   stuffLocation: {
@@ -110,7 +111,7 @@ const stuffBoxCardStyles = StyleSheet.create({
     alignItems: 'center',
   },
   stuffLocationText: {
-    color: '#5d3dfc',
+    color: 'grey',
     fontFamily: 'Quicksand-Bold',
   },
   stuffRatingBox: {
@@ -151,7 +152,7 @@ export const OtherStuffBoxCards = () => (
           type="Entypo"
           name="location-pin"
           size={15}
-          color="#5d3dfc"
+          color={colors.tertiary}
           style={{marginRight: 10}}
         />
         <Text style={styles.otherStuffLocationText}>Kerala, India</Text>
@@ -162,7 +163,7 @@ export const OtherStuffBoxCards = () => (
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#161851',
+    backgroundColor: colors.secondary,
     borderRadius: 20,
 
     overflow: 'hidden',
@@ -215,7 +216,7 @@ const styles = StyleSheet.create({
     alignSelf: 'baseline',
   },
   otherStuffLocationText: {
-    color: '#5d3dfc',
+    color: colors.tertiary,
     fontFamily: 'Quicksand-Bold',
   },
 });

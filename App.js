@@ -19,7 +19,7 @@ import StuffDetailsPage from './src/screens/stuffDetailsPage';
 
 const Stack = createStackNavigator();
 
-function App() {
+const App = () => {
   return (
     <View
       style={{
@@ -62,6 +62,6 @@ function App() {
       </NavigationContainer>
     </View>
   );
-}
+};
 
 export default App;

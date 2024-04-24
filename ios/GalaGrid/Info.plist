@@ -54,6 +54,24 @@
 		<string>Quicksand-Medium.ttf</string>
 		<string>Quicksand-Regular.ttf</string>
 		<string>Quicksand-SemiBold.ttf</string>
+		<string>Urbanist-Black.ttf</string>
+		<string>Urbanist-BlackItalic.ttf</string>
+		<string>Urbanist-Bold.ttf</string>
+		<string>Urbanist-BoldItalic.ttf</string>
+		<string>Urbanist-ExtraBold.ttf</string>
+		<string>Urbanist-ExtraBoldItalic.ttf</string>
+		<string>Urbanist-ExtraLight.ttf</string>
+		<string>Urbanist-ExtraLightItalic.ttf</string>
+		<string>Urbanist-Italic.ttf</string>
+		<string>Urbanist-Light.ttf</string>
+		<string>Urbanist-LightItalic.ttf</string>
+		<string>Urbanist-Medium.ttf</string>
+		<string>Urbanist-MediumItalic.ttf</string>
+		<string>Urbanist-Regular.ttf</string>
+		<string>Urbanist-SemiBold.ttf</string>
+		<string>Urbanist-SemiBoldItalic.ttf</string>
+		<string>Urbanist-Thin.ttf</string>
+		<string>Urbanist-ThinItalic.ttf</string>
 	</array>
 </dict>
 </plist>

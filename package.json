@@ -1,5 +1,5 @@
 {
-  "name": "MiniProject",
+  "name": "GalaGrid",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-community/blur": "^4.4.0",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/native": "^6.1.14",
     "@react-navigation/stack": "^6.3.25",
