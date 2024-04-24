@@ -15,6 +15,7 @@ import IntroPage from './src/screens/IntroPage';
 import pages from './src/constants/pages';
 import HomePage from './src/screens/homePage';
 import FilterPage from './src/screens/filterPage';
+import StuffDetailsPage from './src/screens/stuffDetailsPage';
 
 const Stack = createStackNavigator();
 
@@ -39,6 +40,21 @@ function App() {
           />
           <Stack.Screen
             name={pages.filterPage}
+            component={FilterPage}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={pages.stuffDetailsPage}
+            component={StuffDetailsPage}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={pages.stuffUploadPage}
+            component={FilterPage}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={pages.userProfilePage}
             component={FilterPage}
             options={{headerShown: false}}
           />

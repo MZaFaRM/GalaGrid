@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
-import Layout from '../components/layout';
+  import React, {useState} from 'react';
+  import {
+    View,
+    StyleSheet,
+    ScrollView,
+    Text,
+    TouchableOpacity,
+  } from 'react-native';
+  import Layout from '../components/layout';
 
 const FilterPage = ({navigation}) => {
   const [filterData, setFilterData] = useState([

@@ -30,18 +30,18 @@ const Layout = ({children, navigation, title}) => {
 };
 
 const styles = StyleSheet.create({
-  backBox: {
-    aspectRatio: 1,
-    padding: 10,
-    backgroundColor: 'white',
-    borderRadius: 5,
-  },
   container: {
     flexDirection: 'row',
     alignItems: 'space-between',
 
     padding: 20,
     backgroundColor: '#020b44',
+  },
+  backBox: {
+    aspectRatio: 1,
+    padding: 10,
+    backgroundColor: 'white',
+    borderRadius: 5,
   },
   titleHeadBox: {
     flex: 1,
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Quicksand-Bold',
     marginLeft: 20,
 
-    alignSelf: 'flex-end'
+    alignSelf: 'flex-end',
   },
 });
 

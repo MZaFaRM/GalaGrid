@@ -1,52 +1,59 @@
 import React from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
 import Icon from '../assets/icons';
+import {useNavigation} from '@react-navigation/native';
+import pages from '../constants/pages';
 
-export const RecommendedStuffBoxCard = () => (
-  <View style={stuffBoxCardStyles.stuffBox}>
-    <Image
-      source={{
-        uri: 'https://img.freepik.com/free-vector/flat-smiling-college-university-students-with-books_88138-859.jpg',
-      }}
-      style={stuffBoxCardStyles.stuffImage}
-    />
-    <View style={stuffBoxCardStyles.stuffDetails}>
-      <Text style={stuffBoxCardStyles.stuffDate}>25 Jan 2023</Text>
-      <Text style={stuffBoxCardStyles.stuffName}>
-        4 Human Organ Donations{'\n'}
-      </Text>
-      <View style={stuffBoxCardStyles.stuffRentAndOther}>
-        <View style={stuffBoxCardStyles.stuffOther}>
-          <View style={stuffBoxCardStyles.stuffLocation}>
-            <Icon
-              type="Entypo"
-              name="location-pin"
-              size={15}
-              color="#5d3dfc"
-              style={{marginRight: 10}}
-            />
-            <Text style={stuffBoxCardStyles.stuffLocationText}>
-              Kerala, India
-            </Text>
+export const RecommendedStuffBoxCard = () => {
+  const navigation = useNavigation();
+  return (
+    <View style={stuffBoxCardStyles.stuffBox}>
+      <Image
+        source={{
+          uri: 'https://img.freepik.com/free-vector/flat-smiling-college-university-students-with-books_88138-859.jpg',
+        }}
+        style={stuffBoxCardStyles.stuffImage}
+      />
+      <View style={stuffBoxCardStyles.stuffDetails}>
+        <Text style={stuffBoxCardStyles.stuffDate}>25 Jan 2023</Text>
+        <Text style={stuffBoxCardStyles.stuffName}>
+          4 Human Organ Donations{'\n'}
+        </Text>
+        <View style={stuffBoxCardStyles.stuffRentAndOther}>
+          <View style={stuffBoxCardStyles.stuffOther}>
+            <View style={stuffBoxCardStyles.stuffLocation}>
+              <Icon
+                type="Entypo"
+                name="location-pin"
+                size={15}
+                color="#5d3dfc"
+                style={{marginRight: 10}}
+              />
+              <Text style={stuffBoxCardStyles.stuffLocationText}>
+                Kerala, India
+              </Text>
+            </View>
+            <View style={stuffBoxCardStyles.stuffRatingBox}>
+              <Text style={stuffBoxCardStyles.stuffRatingText}>4.0</Text>
+              <Icon type="AntDesign" name="star" size={15} color="yellow" />
+              <Icon type="AntDesign" name="star" size={15} color="yellow" />
+              <Icon type="AntDesign" name="star" size={15} color="yellow" />
+              <Icon type="AntDesign" name="star" size={15} color="yellow" />
+              <Icon type="AntDesign" name="star" size={15} color="grey" />
+            </View>
           </View>
-          <View style={stuffBoxCardStyles.stuffRatingBox}>
-            <Text style={stuffBoxCardStyles.stuffRatingText}>4.0</Text>
-            <Icon type="AntDesign" name="star" size={15} color="yellow" />
-            <Icon type="AntDesign" name="star" size={15} color="yellow" />
-            <Icon type="AntDesign" name="star" size={15} color="yellow" />
-            <Icon type="AntDesign" name="star" size={15} color="yellow" />
-            <Icon type="AntDesign" name="star" size={15} color="grey" />
+          <View style={stuffBoxCardStyles.stuffRent}>
+            <TouchableOpacity
+              style={stuffBoxCardStyles.stuffRentButton}
+              onPress={() => navigation.navigate(pages.stuffDetailsPage)}>
+              <Text style={stuffBoxCardStyles.stuffRentButtonText}>RENT</Text>
+            </TouchableOpacity>
           </View>
-        </View>
-        <View style={stuffBoxCardStyles.stuffRent}>
-          <TouchableOpacity style={stuffBoxCardStyles.stuffRentButton}>
-            <Text style={stuffBoxCardStyles.stuffRentButtonText}>RENT</Text>
-          </TouchableOpacity>
         </View>
       </View>
     </View>
-  </View>
-);
+  );
+};
 
 const stuffBoxCardStyles = StyleSheet.create({
   stuffBox: {
@@ -132,9 +139,7 @@ export const OtherStuffBoxCards = () => (
       />
     </View>
     <View style={styles.otherStuffBoxCardDetails}>
-        <Text style={styles.otherStuffName}>
-          1 Human Organ Donations 
-        </Text>
+      <Text style={styles.otherStuffName}>1 Human Organ Donations</Text>
       <View style={styles.otherStuffMinorDetails}>
         <Icon type={'Entypo'} name={'eye'} size={20} color={'grey'} />
         <Text style={styles.otherStuffMinorDetailsText}>4.4k</Text>
@@ -184,7 +189,7 @@ const styles = StyleSheet.create({
   },
   otherStuffNameBox: {
     backgroundColor: 'red',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   otherStuffName: {
     color: 'white',
@@ -207,7 +212,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
 
     flex: 1,
-    alignSelf: 'baseline'
+    alignSelf: 'baseline',
   },
   otherStuffLocationText: {
     color: '#5d3dfc',
