@@ -19,7 +19,9 @@ export const pages = {
   introPage: 'IntroPage',
   homePage: 'HomePage',
   filterPage: 'FilterPage',
+  eventPage: 'EventPage',
   stuffDetailsPage: 'StuffDetailsPage',
+  settingsPage: 'SettingsPage',
   stuffUploadPage: 'StuffUploadPage',
   userProfilePage: 'userProfilePage',
 };

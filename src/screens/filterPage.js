@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Layout from '../components/layout';
-import {colors} from '../constants/constants';
+import {colors, fonts} from '../constants/constants';
 
 const FilterPage = ({navigation}) => {
   const [filterData, setFilterData] = useState([
@@ -128,16 +128,13 @@ const FilterPage = ({navigation}) => {
             <View style={styles.filterBoxes}>
               {filter.filterOptions.map(option => (
                 <TouchableOpacity
+                  key={option.id}
                   style={[
                     styles.filterBox,
                     option.isSelected ? styles.selectedFilterBox : {},
                   ]}
                   onPress={() => handleFilterData(filter.key, option.key)}>
-                  <Text
-                    style={[
-                      styles.filterBoxText,
-                      option.isSelected ? styles.selectedFilterBoxText : {},
-                    ]}>
+                  <Text style={[styles.filterBoxText]}>
                     {option.optionName}
                   </Text>
                 </TouchableOpacity>
@@ -152,14 +149,16 @@ const FilterPage = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#020b44',
+    backgroundColor: 'black',
     padding: 20,
   },
-  filterHeader: {},
+  filterHeader: {
+    marginTop: 10,
+  },
   filterText: {
     color: 'white',
     fontSize: 22,
-    fontFamily: 'Quicksand-Bold',
+    fontFamily: fonts.tertiary,
     marginBottom: 20,
   },
   filterBoxes: {
@@ -178,15 +177,12 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   filterBoxText: {
-    color: colors.tertiary,
-    fontFamily: 'Quicksand-Bold',
+    color: 'black',
+    fontFamily: fonts.primary,
     fontSize: 16,
   },
   selectedFilterBox: {
     backgroundColor: colors.tertiary,
-  },
-  selectedFilterBoxText: {
-    color: 'white',
   },
 });
 

@@ -75,10 +75,14 @@ const StuffDetailsPage = ({navigation}) => {
             <Icon name={'call'} type={'Ionicons'} size={18} color={'white'} />
             <Text style={styles.callButtonText}>Call</Text>
           </TouchableOpacity>
+          <TouchableOpacity style={[styles.callButton, { marginHorizontal: 10}]}>
+            <Icon name={'chatbox'} type={'Ionicons'} size={18} color={'white'} />
+            <Text style={styles.callButtonText}>Chat</Text>
+          </TouchableOpacity>
           <TouchableOpacity
             style={[
               styles.callButton,
-              {backgroundColor: colors.tertiary, flex: 1, marginLeft: 10},
+              {backgroundColor: colors.tertiary, flex: 1},
             ]}>
             <Icon
               name={'bag-add'}

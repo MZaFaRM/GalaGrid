@@ -5,17 +5,19 @@
  * @format
  */
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import { View } from 'react-native';
+import {View} from 'react-native';
 import 'react-native-gesture-handler';
 
-import { pages } from './src/constants/constants';
+import {pages} from './src/constants/constants';
 import IntroPage from './src/screens/IntroPage';
 import FilterPage from './src/screens/filterPage';
 import HomePage from './src/screens/homePage';
 import StuffDetailsPage from './src/screens/stuffDetailsPage';
+import EventPage from './src/screens/eventPage';
+import SettingsPage from './src/screens/settingsPage';
 
 const Stack = createStackNavigator();
 
@@ -24,7 +26,7 @@ const App = () => {
     <View
       style={{
         flex: 1,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: 'black',
       }}>
       <NavigationContainer>
         <Stack.Navigator>
@@ -49,13 +51,13 @@ const App = () => {
             options={{headerShown: false}}
           />
           <Stack.Screen
-            name={pages.stuffUploadPage}
-            component={FilterPage}
+            name={pages.eventPage}
+            component={EventPage}
             options={{headerShown: false}}
           />
           <Stack.Screen
-            name={pages.userProfilePage}
-            component={FilterPage}
+            name={pages.settingsPage}
+            component={SettingsPage}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

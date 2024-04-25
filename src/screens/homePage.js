@@ -163,17 +163,15 @@ const HomePage = ({navigation}) => {
             />
           </TouchableOpacity>
         </View>
-        <View style={styles.typeProduct}>
-          
-        </View>
+        <View style={styles.typeProduct}></View>
         <View style={[styles.StuffHeader]}>
           <Text style={styles.StuffHeaderText}>Featured Products</Text>
         </View>
         <View style={styles.recommendedStuffBoxCards}>
           {products.map(product => (
             <RecommendedStuffBoxCard
-            key={product.key}
-            productID={product.key}
+              key={product.key}
+              productID={product.key}
               company={product.company}
               image={product.image}
               name={product.name}
@@ -214,20 +212,6 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontFamily: fonts.quaternary,
     color: 'grey',
-  },
-  headerText: {
-    color: 'white',
-    fontFamily: fonts.primary,
-
-    fontSize: 30,
-  },
-  headerBox: {
-    position: 'absolute',
-    zIndex: 1,
-    margin: 20,
-
-    height: '75%',
-    justifyContent: 'flex-end',
   },
   filterBox: {
     backgroundColor: colors.tertiary,

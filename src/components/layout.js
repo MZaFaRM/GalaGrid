@@ -50,8 +50,9 @@ const Footer = ({navigation, currentPage}) => {
           },
         },
       ].map(item => (
-        <View
+        <TouchableOpacity
           key={item.key}
+          onPress={() => navigation.navigate(item.page)}
           style={[
             styles.footerIconBox,
             currentPage === item.page
@@ -64,7 +65,7 @@ const Footer = ({navigation, currentPage}) => {
             size={22}
             color={currentPage === item.page ? colors.tertiary : 'white'}
           />
-        </View>
+        </TouchableOpacity>
       ))}
     </View>
   );

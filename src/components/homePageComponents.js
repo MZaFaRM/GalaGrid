@@ -73,7 +73,7 @@ const stuffBoxCardStyles = StyleSheet.create({
   stuffBox: {
     width: '45%',
     margin: 5,
-    borderTopLeftRadius: 10,
+    borderTopLeftRadius: 25,
     overflow: 'hidden',
   },
   stuffImage: {
@@ -131,97 +131,5 @@ const stuffBoxCardStyles = StyleSheet.create({
     color: 'grey',
     fontSize: 15,
     fontFamily: fonts.primary,
-  },
-});
-
-export const OtherStuffBoxCards = () => (
-  <View style={styles.container}>
-    <View style={styles.otherStuffBoxCardImageBox}>
-      <Image
-        source={{
-          uri: 'https://img.freepik.com/free-vector/business-man-working-hard-stock-financial-trade-market-diagram-vector-illustration-flat-design_1150-39773.jpg?w=740&t=st=1710891345~exp=1710891945~hmac=08b821b62f4da424990243e4b89ca7bdcfaf7b25913e626c276c3b19e71154fc',
-        }}
-        style={styles.otherStuffBoxCardImage}
-      />
-    </View>
-    <View style={styles.otherStuffBoxCardDetails}>
-      <Text style={styles.otherStuffName}>1 Human Organ Donations</Text>
-      <View style={styles.otherStuffMinorDetails}>
-        <Icon type={'Entypo'} name={'eye'} size={20} color={'grey'} />
-        <Text style={styles.otherStuffMinorDetailsText}>4.4k</Text>
-        <Icon type={'Entypo'} name={'heart'} size={20} color={'grey'} />
-        <Text style={styles.otherStuffMinorDetailsText}>350</Text>
-      </View>
-      <View style={styles.otherStuffLocation}>
-        <Icon
-          type="Entypo"
-          name="location-pin"
-          size={15}
-          color={colors.tertiary}
-          style={{marginRight: 10}}
-        />
-        <Text style={styles.otherStuffLocationText}>Kerala, India</Text>
-      </View>
-    </View>
-  </View>
-);
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: colors.secondary,
-    borderRadius: 20,
-
-    overflow: 'hidden',
-    margin: 20,
-    marginBottom: 0,
-
-    flexDirection: 'row',
-    height: 120,
-  },
-  otherStuffBoxCardImageBox: {
-    margin: 10,
-  },
-  otherStuffBoxCardImage: {
-    aspectRatio: 1,
-    height: 100,
-
-    borderRadius: 20,
-  },
-  otherStuffBoxCardDetails: {
-    marginVertical: 10,
-    marginLeft: 20,
-
-    flexShrink: 1,
-  },
-  otherStuffNameBox: {
-    backgroundColor: 'red',
-    flexDirection: 'column',
-  },
-  otherStuffName: {
-    color: 'white',
-    fontFamily: 'Quicksand-Bold',
-    fontSize: 20,
-    flexShrink: 1,
-  },
-  otherStuffMinorDetails: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  otherStuffMinorDetailsText: {
-    color: 'grey',
-    fontFamily: 'Quicksand-Bold',
-    fontSize: 15,
-    marginHorizontal: 10,
-  },
-  otherStuffLocation: {
-    flexDirection: 'row',
-    alignItems: 'center',
-
-    flex: 1,
-    alignSelf: 'baseline',
-  },
-  otherStuffLocationText: {
-    color: colors.tertiary,
-    fontFamily: 'Quicksand-Bold',
   },
 });
