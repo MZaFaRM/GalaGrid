@@ -6,9 +6,12 @@ import {
   Text,
   TouchableOpacity,
   Image,
+  TextInput,
 } from 'react-native';
 import Layout from '../components/layout';
 import Icon from '../assets/icons';
+import {colors, fonts} from '../constants/constants';
+import {ReviewRatings} from '../components/stuffDetailsPageComponents';
 
 const StuffDetailsPage = ({navigation}) => {
   return (
@@ -20,8 +23,7 @@ const StuffDetailsPage = ({navigation}) => {
               source={{
                 uri: 'https://img.lovepik.com/photo/20211119/large/lovepik-cat-picture_500156655.jpg',
               }}
-              width={300}
-              height={400}
+              style={styles.productImage}
             />
           </View>
         </View>
@@ -29,8 +31,9 @@ const StuffDetailsPage = ({navigation}) => {
           <View style={styles.titleAndDescription}>
             <Text style={styles.productName}>Royal Sofa</Text>
             <Text style={styles.companyName}>Taj Light and Sounds</Text>
+            <Text style={styles.address}>Kerala, India</Text>
             <View style={styles.productRating}>
-              <Text style={styles.productRatingText}>4.0</Text>
+              <Text style={styles.productRatingText}>5K</Text>
               <Icon type="AntDesign" name="star" size={15} color="yellow" />
               <Icon type="AntDesign" name="star" size={15} color="yellow" />
               <Icon type="AntDesign" name="star" size={15} color="yellow" />
@@ -47,20 +50,52 @@ const StuffDetailsPage = ({navigation}) => {
             </Text>
           </View>
         </View>
+        <View style={styles.quantityBox}>
+          <Text style={styles.quantityText}>Quantity: </Text>
+          <TouchableOpacity>
+            <View style={styles.quantityChangeBox}>
+              <Text style={styles.quantityChangeText}>+</Text>
+            </View>
+          </TouchableOpacity>
+          <TextInput
+            placeholder="0"
+            placeholderTextColor="white"
+            keyboardType="numeric"
+            textAlign="center"
+            style={{marginBottom: 0, paddingBottom: 0, width: 50}}
+          />
+          <TouchableOpacity>
+            <View style={styles.quantityChangeBox}>
+              <Text style={styles.quantityChangeText}>-</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.continueBox}>
+          <TouchableOpacity style={styles.callButton}>
+            <Icon name={'call'} type={'Ionicons'} size={18} color={'white'} />
+            <Text style={styles.callButtonText}>Call</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.callButton,
+              {backgroundColor: colors.tertiary, flex: 1, marginLeft: 10},
+            ]}>
+            <Icon
+              name={'bag-add'}
+              type={'Ionicons'}
+              size={18}
+              color={'black'}
+            />
+            <Text style={[styles.callButtonText, {color: 'black'}]}>
+              Add to Event
+            </Text>
+          </TouchableOpacity>
+        </View>
         <View style={styles.reviewsAndRatingsBox}>
           <Text style={styles.reviewsAndRatingsText}>Reviews & Ratings</Text>
-          <View style={styles.singleRating}>
-            <View style={styles.profileName}>
-              <Image
-                source={{
-                  uri: 'https://img.lovepik.com/photo/20211119/large/lovepik-cat-picture_500156655.jpg',
-                }}
-                width={30}
-                height={30}
-              />
-              <Text>Sheikh Minhaj</Text>
-            </View>
-          </View>
+          <ReviewRatings />
+          <ReviewRatings />
+          <ReviewRatings />
         </View>
       </ScrollView>
     </Layout>
@@ -69,7 +104,7 @@ const StuffDetailsPage = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#020b44',
+    backgroundColor: 'black',
   },
   stuffImagesBox: {
     flexDirection: 'row',
@@ -78,51 +113,121 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   stuffImageBox: {
-    width: '50',
-    height: '50',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  productImage: {
+    width: '100%',
+    aspectRatio: 1,
   },
   detailsBox: {
     width: '100%',
     padding: 20,
   },
   productName: {
-    fontFamily: 'Quicksand-Bold',
-    color: 'white',
-    fontSize: 28,
+    fontFamily: fonts.primary,
+    color: colors.tertiary,
+    fontSize: 35,
   },
   productDetails: {
     color: 'white',
-    fontFamily: 'Quicksand-Medium',
+    fontFamily: fonts.senary,
     fontSize: 14,
     marginTop: 10,
+    lineHeight: 25,
   },
   productRating: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 5,
+    marginVertical: 10,
   },
   productRatingText: {
     color: 'grey',
     marginRight: 10,
     fontSize: 15,
-    fontFamily: 'Quicksand-Bold',
+    fontFamily: fonts.primary,
   },
   companyName: {
-    fontFamily: 'Quicksand-Bold',
+    fontFamily: fonts.secondary,
     color: 'white',
     fontSize: 16,
   },
+  address: {
+    fontFamily: fonts.secondary,
+    color: 'white',
+    fontSize: 16,
+    marginTop: 10,
+  },
+  quantityBox: {
+    padding: 20,
+    flexDirection: 'row',
+
+    alignItems: 'center',
+  },
+  quantityText: {
+    fontFamily: fonts.primary,
+    color: 'white',
+    fontSize: 20,
+    marginRight: 25,
+  },
+  quantityChangeText: {
+    fontSize: 25,
+    color: 'black',
+    fontFamily: fonts.primary,
+    textAlignVertical: 'center',
+  },
+  quantityChangeBox: {
+    width: 40,
+    backgroundColor: colors.tertiary,
+    aspectRatio: 1,
+    borderRadius: 10,
+
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  continueBox: {
+    padding: 25,
+    flexDirection: 'row',
+  },
+  callButton: {
+    backgroundColor: colors.secondary,
+    paddingHorizontal: 25,
+    paddingVertical: 10,
+    borderRadius: 10,
+
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  callButtonText: {
+    color: 'white',
+    fontFamily: fonts.secondary,
+    marginLeft: 10,
+  },
+  commentDescription: {
+    marginLeft: 25,
+    paddingRight: 30,
+  },
   reviewsAndRatingsText: {
-    fontFamily: 'Quicksand-Bold',
+    fontFamily: fonts.primary,
     color: 'white',
     fontSize: 28,
+    marginBottom: 20,
   },
   reviewsAndRatingsBox: {
-    padding: 20,
+    margin: 20,
   },
-  singleRating: {},
+  commenterName: {
+    fontFamily: fonts.tertiary,
+    fontSize: 15,
+  },
+  singleRating: {
+    marginVertical: 20,
+    flexDirection: 'row',
+  },
   profileName: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 

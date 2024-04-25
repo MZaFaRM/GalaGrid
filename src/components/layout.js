@@ -1,7 +1,7 @@
 import React from 'react';
 import {TouchableOpacity, Text, StyleSheet, View} from 'react-native';
 import Icon from '../assets/icons';
-import {colors, pages} from '../constants/constants';
+import {colors, fonts, pages} from '../constants/constants';
 
 const Header = ({navigation, title}) => {
   return (
@@ -9,7 +9,7 @@ const Header = ({navigation, title}) => {
       <TouchableOpacity
         onPress={() => navigation.goBack()}
         style={styles.backBox}>
-        <Icon type={'AntDesign'} name={'left'} size={15} color={'black'} />
+        <Icon type={'AntDesign'} name={'left'} size={24} color={'white'} />
       </TouchableOpacity>
       <View style={styles.titleHeadBox}>
         <Text style={styles.titleStyle}>{title}</Text>
@@ -93,21 +93,22 @@ const styles = StyleSheet.create({
     alignItems: 'space-between',
 
     padding: 20,
-    backgroundColor: '#020b44',
+    backgroundColor: 'black',
+
+    justifyContent: 'center',
   },
   backBox: {
     aspectRatio: 1,
-    padding: 10,
-    backgroundColor: 'white',
     borderRadius: 5,
   },
   titleHeadBox: {
     flex: 1,
+    justifyContent: 'center',
   },
   titleStyle: {
     color: 'white',
-    fontSize: 22,
-    fontFamily: 'Quicksand-Bold',
+    fontSize: 25,
+    fontFamily: fonts.tertiary,
     marginLeft: 20,
 
     alignSelf: 'flex-end',
