@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
 
     flexShrink: 1,
+    justifyContent: 'center'
   },
   otherStuffNameBox: {
     backgroundColor: 'red',
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
   otherStuffName: {
     color: 'white',
     fontFamily: fonts.primary,
-    fontSize: 20,
+    fontSize: 16,
     flexShrink: 1,
   },
   eventDue: {
