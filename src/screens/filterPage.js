@@ -120,10 +120,10 @@ const FilterPage = ({navigation}) => {
   };
 
   return (
-    <Layout navigation={navigation} title="Filter">
+    <Layout navigation={navigation} title="Filter" header={true}>
       <ScrollView style={styles.container}>
         {filterData.map(filter => (
-          <View style={styles.filterHeader}>
+          <View style={styles.filterHeader} key={filter.key}>
             <Text style={styles.filterText}>{filter.filterTitle}</Text>
             <View style={styles.filterBoxes}>
               {filter.filterOptions.map(option => (

@@ -1,9 +1,8 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import GetStarted from '../assets/images/GetStarted.svg';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from '../assets/icons';
-import pages from '../constants/pages';
-
+import GetStarted from '../assets/images/GetStarted.svg';
+import { pages } from '../constants/constants';
 const IntroPage = ({navigation}) => {
   return (
     <View style={styles.container}>

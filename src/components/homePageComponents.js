@@ -2,98 +2,104 @@ import React from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
 import Icon from '../assets/icons';
 import {useNavigation} from '@react-navigation/native';
-import pages from '../constants/pages';
-import {colors} from '../constants/constants';
+import {colors, fonts, pages} from '../constants/constants';
 
-export const RecommendedStuffBoxCard = () => {
+export const RecommendedStuffBoxCard = ({
+  productID,
+  company,
+  name,
+  image,
+  itemCount,
+}) => {
   const navigation = useNavigation();
   return (
-    <View style={stuffBoxCardStyles.stuffBox}>
+    <TouchableOpacity
+      style={stuffBoxCardStyles.stuffBox}
+      onPress={() => navigation.navigate(pages.stuffDetailsPage)}>
       <Image
         source={{
-          uri: 'https://img.freepik.com/free-vector/flat-smiling-college-university-students-with-books_88138-859.jpg',
+          uri: image,
         }}
         style={stuffBoxCardStyles.stuffImage}
       />
       <View style={stuffBoxCardStyles.stuffDetails}>
-        <Text style={stuffBoxCardStyles.stuffDate}>25 Jan 2023</Text>
-        <Text style={stuffBoxCardStyles.stuffName}>
-          4 Human Organ Donations{'\n'}
+        <Text style={stuffBoxCardStyles.companyName}>{company}</Text>
+        <Text style={stuffBoxCardStyles.stuffName} numberOfLines={1}>
+          {itemCount} × {name}
         </Text>
-        <View style={stuffBoxCardStyles.stuffRentAndOther}>
-          <View style={stuffBoxCardStyles.stuffOther}>
-            <View style={stuffBoxCardStyles.stuffLocation}>
-              <Icon
-                type="Entypo"
-                name="location-pin"
-                size={15}
-                color={colors.tertiary}
-                style={{marginRight: 10}}
-              />
-              <Text style={stuffBoxCardStyles.stuffLocationText}>
-                Kerala, India
-              </Text>
-            </View>
-            <View style={stuffBoxCardStyles.stuffRatingBox}>
-              <Text style={stuffBoxCardStyles.stuffRatingText}>4.0</Text>
-              <Icon type="AntDesign" name="star" size={15} color="black" />
-              <Icon type="AntDesign" name="star" size={15} color="black" />
-              <Icon type="AntDesign" name="star" size={15} color="black" />
-              <Icon type="AntDesign" name="star" size={15} color="black" />
-              <Icon type="AntDesign" name="star" size={15} color="grey" />
-            </View>
+        <View style={stuffBoxCardStyles.stuffOther}>
+          <View style={stuffBoxCardStyles.stuffLocation}>
+            <Text style={stuffBoxCardStyles.stuffLocationText}>
+              Kerala, India
+            </Text>
           </View>
-          <View style={stuffBoxCardStyles.stuffRent}>
-            <TouchableOpacity
-              style={stuffBoxCardStyles.stuffRentButton}
-              onPress={() => navigation.navigate(pages.stuffDetailsPage)}>
-              <Text style={stuffBoxCardStyles.stuffRentButtonText}>RENT</Text>
-            </TouchableOpacity>
+          <View style={stuffBoxCardStyles.stuffRatingBox}>
+            <Text style={stuffBoxCardStyles.stuffRatingText}>
+              5K{'\t'}
+              <Icon
+                type="AntDesign"
+                name="star"
+                size={14}
+                color={colors.tertiary}
+              />
+              <Icon
+                type="AntDesign"
+                name="star"
+                size={14}
+                color={colors.tertiary}
+              />
+              <Icon
+                type="AntDesign"
+                name="star"
+                size={14}
+                color={colors.tertiary}
+              />
+              <Icon
+                type="AntDesign"
+                name="star"
+                size={14}
+                color={colors.tertiary}
+              />
+              <Icon type="AntDesign" name="star" size={14} color="grey" />
+            </Text>
           </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
 const stuffBoxCardStyles = StyleSheet.create({
   stuffBox: {
-    width: 300,
-    margin: 20,
-    borderRadius: 20,
-
+    width: '45%',
+    margin: 5,
+    borderTopLeftRadius: 10,
     overflow: 'hidden',
   },
   stuffImage: {
-    height: 200,
-    width: '100%',
+    aspectRatio: 1,
   },
   stuffDetails: {
-    flex: 1,
-    width: '100%',
     backgroundColor: colors.secondary,
     padding: 20,
   },
-  stuffDate: {
-    color: 'grey',
-    fontFamily: 'Quicksand-Bold',
-    fontSize: 15,
-  },
   stuffName: {
-    color: 'white',
-    fontFamily: 'Urbanist-Light',
-    fontSize: 20,
-    marginVertical: 8,
+    color: colors.tertiary,
+    fontFamily: fonts.secondary,
+    fontSize: 14,
   },
-  stuffRentAndOther: {
-    flexDirection: 'row',
+  companyName: {
+    color: 'white',
+    fontFamily: fonts.secondary,
+    fontSize: 16,
+    marginBottom: 5,
   },
   stuffOther: {
     flex: 1,
   },
   stuffRent: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'flex-end',
     justifyContent: 'center',
   },
   stuffRentButton: {
@@ -103,29 +109,28 @@ const stuffBoxCardStyles = StyleSheet.create({
     borderRadius: 10,
   },
   stuffRentButtonText: {
-    color: colors.quatertiary,
-    fontFamily: 'Quicksand-Bold',
+    color: colors.quaternary,
+    fontFamily: fonts.primary,
   },
   stuffLocation: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   stuffLocationText: {
-    color: 'grey',
-    fontFamily: 'Quicksand-Bold',
+    color: colors.senary,
+    fontFamily: fonts.secondary,
+    fontSize: 14,
   },
   stuffRatingBox: {
-    marginTop: 15,
+    marginTop: 5,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '35%',
   },
   stuffRatingText: {
     color: 'grey',
-    marginRight: 10,
     fontSize: 15,
-    fontFamily: 'Quicksand-Bold',
+    fontFamily: fonts.primary,
   },
 });
 

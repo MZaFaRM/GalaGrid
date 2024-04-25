@@ -5,16 +5,16 @@
  * @format
  */
 
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
+import { View } from 'react-native';
 import 'react-native-gesture-handler';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {View} from 'react-native';
 
+import { pages } from './src/constants/constants';
 import IntroPage from './src/screens/IntroPage';
-import pages from './src/constants/pages';
-import HomePage from './src/screens/homePage';
 import FilterPage from './src/screens/filterPage';
+import HomePage from './src/screens/homePage';
 import StuffDetailsPage from './src/screens/stuffDetailsPage';
 
 const Stack = createStackNavigator();
