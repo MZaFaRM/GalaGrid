@@ -11,7 +11,7 @@ import {
 import Layout from '../components/layout';
 import Icon from '../assets/icons';
 import {colors, fonts} from '../constants/constants';
-import {ReviewRatings} from '../components/stuffDetailsPageComponents';
+import {ReviewRatings} from '../components/stuffDetailsComponents';
 
 const StuffDetailsPage = ({navigation}) => {
   return (
@@ -82,7 +82,7 @@ const StuffDetailsPage = ({navigation}) => {
           <TouchableOpacity
             style={[
               styles.callButton,
-              {backgroundColor: colors.tertiary, flex: 1},
+              {backgroundColor: colors.yellow, flex: 1},
             ]}>
             <Icon
               name={'bag-add'}
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   },
   productName: {
     fontFamily: fonts.primary,
-    color: colors.tertiary,
+    color: colors.yellow,
     fontSize: 35,
   },
   productDetails: {
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   },
   quantityChangeBox: {
     width: 40,
-    backgroundColor: colors.tertiary,
+    backgroundColor: colors.yellow,
     aspectRatio: 1,
     borderRadius: 10,
 

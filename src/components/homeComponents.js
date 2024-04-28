@@ -40,25 +40,25 @@ export const RecommendedStuffBoxCard = ({
                 type="AntDesign"
                 name="star"
                 size={14}
-                color={colors.tertiary}
+                color={colors.yellow}
               />
               <Icon
                 type="AntDesign"
                 name="star"
                 size={14}
-                color={colors.tertiary}
+                color={colors.yellow}
               />
               <Icon
                 type="AntDesign"
                 name="star"
                 size={14}
-                color={colors.tertiary}
+                color={colors.yellow}
               />
               <Icon
                 type="AntDesign"
                 name="star"
                 size={14}
-                color={colors.tertiary}
+                color={colors.yellow}
               />
               <Icon type="AntDesign" name="star" size={14} color="grey" />
             </Text>
@@ -84,7 +84,7 @@ const stuffBoxCardStyles = StyleSheet.create({
     padding: 20,
   },
   stuffName: {
-    color: colors.tertiary,
+    color: colors.yellow,
     fontFamily: fonts.secondary,
     fontSize: 14,
   },
@@ -103,7 +103,7 @@ const stuffBoxCardStyles = StyleSheet.create({
     justifyContent: 'center',
   },
   stuffRentButton: {
-    backgroundColor: colors.tertiary,
+    backgroundColor: colors.yellow,
     padding: 10,
     paddingHorizontal: 25,
     borderRadius: 10,

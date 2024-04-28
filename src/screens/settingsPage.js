@@ -9,10 +9,11 @@ import {
   View,
 } from 'react-native';
 import Icon from '../assets/icons';
-import {RecommendedStuffBoxCard} from '../components/homePageComponents';
+import {RecommendedStuffBoxCard} from '../components/homeComponents';
 import Layout from '../components/layout';
 import {colors, fonts, pages} from '../constants/constants';
-import {EventCard} from '../components/eventPageComponents';
+import {EventCard} from '../components/eventComponents';
+import {Banner} from '../components/component';
 
 const SettingsPage = ({navigation}) => {
   return (
@@ -23,15 +24,10 @@ const SettingsPage = ({navigation}) => {
       header={false}
       currentPage={pages.settingsPage}>
       <ScrollView style={styles.container}>
-        <View style={styles.bannerBox}>
-          <ImageBackground
-            source={require('../assets/images/bannerBGSettings.jpg')}
-            resizeMode="stretch">
-            <View style={styles.banner}>
-              <Text style={styles.bannerText}>Settings</Text>
-            </View>
-          </ImageBackground>
-        </View>
+        <Banner
+          image={require('../assets/images/bannerBGSettings.jpg')}
+          text={'Settings'}
+        />
         <View style={{marginBottom: 150}}></View>
       </ScrollView>
     </Layout>
@@ -41,23 +37,6 @@ const SettingsPage = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'black',
-  },
-  bannerBox: {
-    margin: 15,
-    borderRadius: 15,
-    overflow: 'hidden',
-    backgroundColor: 'red',
-  },
-  banner: {
-    height: 200,
-    alignItems: 'flex-end',
-    justifyContent: 'flex-end',
-  },
-  bannerText: {
-    fontSize: 30,
-    fontFamily: fonts.quaternary,
-    color: 'grey',
-    margin: 20,
   },
 });
 

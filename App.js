@@ -18,6 +18,7 @@ import HomePage from './src/screens/homePage';
 import StuffDetailsPage from './src/screens/stuffDetailsPage';
 import EventPage from './src/screens/eventPage';
 import SettingsPage from './src/screens/settingsPage';
+import EventDetailsPage from './src/screens/eventDetailsPage';
 
 const Stack = createStackNavigator();
 
@@ -53,6 +54,11 @@ const App = () => {
           <Stack.Screen
             name={pages.eventPage}
             component={EventPage}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={pages.eventDetails}
+            component={EventDetailsPage}
             options={{headerShown: false}}
           />
           <Stack.Screen

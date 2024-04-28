@@ -15,7 +15,7 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 export default function Icon({type, name, size, color, style}) {
   switch (type) {
     case 'FontAwesome6':
-      return <FontAwesome6 name={name} size={size} color={color} style={style}/>;
+      return <FontAwesome6 name={name} size={size} color={color} style={style} />;
     case 'FontAwesome5':
       return <FontAwesome5 name={name} size={size} color={color} style={style}/>;
     case 'FontAwesome':

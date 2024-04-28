@@ -10,7 +10,7 @@ export const fonts = {
 export const colors = {
   primary: '#232227',
   secondary: '#232227',
-  tertiary: '#EBF400', // Yellow
+  yellow: '#EBF400', // Yellow
   quaternary: 'black',
   quinary: 'white',
   senary: '#61677A', // grey
@@ -22,6 +22,7 @@ export const pages = {
   eventPage: 'EventPage',
   stuffDetailsPage: 'StuffDetailsPage',
   settingsPage: 'SettingsPage',
+  eventDetails: 'EventDetails',
   stuffUploadPage: 'StuffUploadPage',
   userProfilePage: 'userProfilePage',
 };

@@ -128,7 +128,7 @@ const FilterPage = ({navigation}) => {
             <View style={styles.filterBoxes}>
               {filter.filterOptions.map(option => (
                 <TouchableOpacity
-                  key={option.id}
+                  key={option.key}
                   style={[
                     styles.filterBox,
                     option.isSelected ? styles.selectedFilterBox : {},
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   selectedFilterBox: {
-    backgroundColor: colors.tertiary,
+    backgroundColor: colors.yellow,
   },
 });
 

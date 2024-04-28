@@ -9,9 +9,10 @@ import {
   View,
 } from 'react-native';
 import Icon from '../assets/icons';
-import {RecommendedStuffBoxCard} from '../components/homePageComponents';
+import {RecommendedStuffBoxCard} from '../components/homeComponents';
 import Layout from '../components/layout';
 import {colors, fonts, pages} from '../constants/constants';
+import {Banner} from '../components/component';
 
 const HomePage = ({navigation}) => {
   const [products, setProducts] = useState([
@@ -128,17 +129,10 @@ const HomePage = ({navigation}) => {
       header={false}
       currentPage={pages.homePage}>
       <ScrollView style={styles.container}>
-        <View style={styles.bannerBox}>
-          <ImageBackground
-            source={require('../assets/images/bannerBG.jpg')}
-            resizeMode="stretch">
-            <View style={styles.banner}>
-              <Text style={styles.bannerText}>
-                Explore our collection of {'\n'}event rentals & services
-              </Text>
-            </View>
-          </ImageBackground>
-        </View>
+        <Banner
+          image={require('../assets/images/bannerBG.jpg')}
+          text={'Explore our collection of \nevent rentals & services'}
+        />
         <View style={[styles.searchBox]}>
           <Icon
             type="AntDesign"
@@ -198,23 +192,8 @@ const styles = StyleSheet.create({
     padding: 15,
     paddingVertical: 10,
   },
-  bannerBox: {
-    margin: 15,
-    borderRadius: 15,
-    overflow: 'hidden',
-  },
-  banner: {
-    height: 200,
-    alignItems: 'flex-end',
-    justifyContent: 'flex-end',
-  },
-  bannerText: {
-    fontSize: 30,
-    fontFamily: fonts.quaternary,
-    color: 'grey',
-  },
   filterBox: {
-    backgroundColor: colors.tertiary,
+    backgroundColor: colors.yellow,
     padding: 5,
     borderRadius: 10,
 
@@ -240,7 +219,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   seeAllText: {
-    color: colors.tertiary,
+    color: colors.yellow,
     fontFamily: fonts.quaternary,
     fontSize: 16,
   },

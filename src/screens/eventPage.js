@@ -9,10 +9,11 @@ import {
   View,
 } from 'react-native';
 import Icon from '../assets/icons';
-import {RecommendedStuffBoxCard} from '../components/homePageComponents';
+import {RecommendedStuffBoxCard} from '../components/homeComponents';
 import Layout from '../components/layout';
 import {colors, fonts, pages} from '../constants/constants';
-import {EventCard} from '../components/eventPageComponents';
+import {EventCard} from '../components/eventComponents';
+import {Banner} from '../components/component';
 
 const EventPage = ({navigation}) => {
   return (
@@ -24,20 +25,17 @@ const EventPage = ({navigation}) => {
       currentPage={pages.eventPage}>
       <ScrollView style={styles.container}>
         <View style={styles.bannerBox}>
-          <ImageBackground
-            source={require('../assets/images/bannerBGEvent.jpg')}
-            resizeMode="stretch">
-            <View style={styles.banner}>
-              <Text style={styles.bannerText}>Your events</Text>
-            </View>
-          </ImageBackground>
+          <Banner
+            image={require('../assets/images/bannerBGEvent.jpg')}
+            text={'Your events'}
+          />
         </View>
         <View style={{marginBottom: 150}}>
-          <EventCard />
-          <EventCard />
-          <EventCard />
-          <EventCard />
-          <EventCard />
+          <EventCard navigation={navigation} />
+          <EventCard navigation={navigation} />
+          <EventCard navigation={navigation} />
+          <EventCard navigation={navigation} />
+          <EventCard navigation={navigation} />
         </View>
       </ScrollView>
     </Layout>
@@ -47,23 +45,6 @@ const EventPage = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'black',
-  },
-  bannerBox: {
-    margin: 15,
-    borderRadius: 15,
-    overflow: 'hidden',
-    backgroundColor: 'red',
-  },
-  banner: {
-    height: 200,
-    alignItems: 'flex-end',
-    justifyContent: 'flex-end',
-  },
-  bannerText: {
-    fontSize: 30,
-    fontFamily: fonts.quaternary,
-    color: 'grey',
-    margin: 20,
   },
 });
 

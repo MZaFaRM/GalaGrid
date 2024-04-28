@@ -56,14 +56,14 @@ const Footer = ({navigation, currentPage}) => {
           style={[
             styles.footerIconBox,
             currentPage === item.page
-              ? {borderColor: colors.tertiary}
+              ? {borderColor: colors.yellow}
               : {borderColor: 'white'},
           ]}>
           <Icon
             name={item.icon.name}
             type={item.icon.type}
             size={22}
-            color={currentPage === item.page ? colors.tertiary : 'white'}
+            color={currentPage === item.page ? colors.yellow : 'white'}
           />
         </TouchableOpacity>
       ))}
