@@ -14,14 +14,13 @@ import {colors, fonts} from '../constants/constants';
 import {ReviewRatings} from '../components/stuffDetailsComponents';
 import {Banner} from '../components/component';
 
-const ListItem = <Text style={styles.listItem}>
-    <Icon
-        type="FontAwesome"
-        name="check-circle"
-        size={18}
-        color="#90D26D" />
+const ListItem = () => (
+  <Text style={styles.listItem}>
+    <Icon type="FontAwesome" name="check-circle" size={18} color="#90D26D" />
     {'\t\t'}Photographer
-</Text>;
+  </Text>
+);
+
 const EventDetailsPage = ({navigation}) => {
   const [text, setText] = useState('');
   return (
@@ -42,7 +41,7 @@ const EventDetailsPage = ({navigation}) => {
           <View style={styles.subHeadBox}>
             <Text style={styles.subHead}>Services</Text>
             <View style={styles.listItems}>
-              {ListItem}
+              <ListItem />
               <Text style={styles.listItem}>
                 <Icon
                   type="FontAwesome"
@@ -160,7 +159,7 @@ const styles = StyleSheet.create({
   },
   listItems: {
     marginBottom: 20,
-  }
+  },
 });
 
 export default EventDetailsPage;
