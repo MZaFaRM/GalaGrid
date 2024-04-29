@@ -28,7 +28,17 @@ const SettingsPage = ({navigation}) => {
           image={require('../assets/images/bannerBGSettings.jpg')}
           text={'Settings'}
         />
-        <View style={{marginBottom: 150}}></View>
+        <View style={{marginBottom: 150}}>
+          <View style={styles.settingBox}>
+            <Icon
+              type="AntDesign"
+              name="rightcircle"
+              size={48}
+              color={'white'}
+            />
+            <Text style={styles.settingText}>About us</Text>
+          </View>
+        </View>
       </ScrollView>
     </Layout>
   );
@@ -37,6 +47,18 @@ const SettingsPage = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'black',
+  },
+  settingBox: {
+    borderBottomWidth: 2,
+    borderBottomColor: 'white',
+    borderRadius: 10,
+
+    flexDirection: 'row',
+  },
+  settingText: {
+    fontSize: 28,
+    fontFamily: 'Urbanist-Italic',
+    marginLeft: 10
   },
 });
 

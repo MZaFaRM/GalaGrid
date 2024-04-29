@@ -6,11 +6,13 @@ import {colors, fonts, pages} from '../constants/constants';
 const Header = ({navigation, title}) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        onPress={() => navigation.goBack()}
-        style={styles.backBox}>
-        <Icon type={'AntDesign'} name={'left'} size={24} color={'white'} />
-      </TouchableOpacity>
+      <View style={styles.backBox}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.backButton}>
+          <Icon type={'AntDesign'} name={'left'} size={24} color={'white'} />
+        </TouchableOpacity>
+      </View>
       <View style={styles.titleHeadBox}>
         <Text style={styles.titleStyle}>{title}</Text>
       </View>
@@ -93,18 +95,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'space-between',
 
-    padding: 20,
+    paddingVertical: 20,
     backgroundColor: 'black',
 
     justifyContent: 'center',
+    width: '100%',
+    paddingHorizontal: 40,
   },
   backBox: {
+    justifyContent: 'flex-start',
+  },
+  backButton: {
     aspectRatio: 1,
     borderRadius: 5,
   },
   titleHeadBox: {
-    flex: 1,
     justifyContent: 'center',
+    width: '100%',
   },
   titleStyle: {
     color: 'white',

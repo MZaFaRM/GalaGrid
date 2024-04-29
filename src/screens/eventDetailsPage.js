@@ -24,7 +24,7 @@ const ListItem = () => (
 const EventDetailsPage = ({navigation}) => {
   const [text, setText] = useState('');
   return (
-    <Layout title="Details" navigation={navigation}>
+    <Layout title="Event Details" navigation={navigation}>
       <ScrollView style={styles.container}>
         <View style={styles.eventImagesBox}>
           <View style={styles.eventImageBox}>
