@@ -117,7 +117,7 @@ const stuffBoxCardStyles = StyleSheet.create({
     alignItems: 'center',
   },
   stuffLocationText: {
-    color: colors.senary,
+    color: colors.grey,
     fontFamily: fonts.secondary,
     fontSize: 14,
   },

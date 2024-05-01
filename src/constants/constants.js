@@ -13,7 +13,7 @@ export const colors = {
   yellow: '#EBF400', // Yellow
   quaternary: 'black',
   quinary: 'white',
-  senary: '#61677A', // grey
+  grey: '#61677A', // grey
 };
 export const pages = {
   introPage: 'IntroPage',
