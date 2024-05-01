@@ -56,11 +56,11 @@ const App = () => {
             component={EventPage}
             options={{headerShown: false}}
           />
-          {/* <Stack.Screen
+          <Stack.Screen
             name={pages.eventDetails}
             component={EventDetailsPage}
             options={{headerShown: false}}
-          /> */}
+          />
           <Stack.Screen
             name={pages.settingsPage}
             component={SettingsPage}
