@@ -14,6 +14,7 @@ import Layout from '../components/layout';
 import {
   EventSelectCard,
   ReviewRatings,
+  UserReviewRatings,
 } from '../components/stuffDetailsComponents';
 import {colors, fonts} from '../constants/constants';
 
@@ -170,6 +171,7 @@ const StuffDetailsPage = ({navigation}) => {
                   <View style={styles.eventSelector}>
                     {eventData.map((event, index) => (
                       <TouchableOpacity
+                        key={index}
                         onPress={() => {
                           setEventData(prevState => {
                             const updatedEvents = [...prevState];
@@ -224,6 +226,7 @@ const StuffDetailsPage = ({navigation}) => {
         </View>
         <View style={styles.reviewsAndRatingsBox}>
           <Text style={styles.reviewsAndRatingsText}>Reviews & Ratings</Text>
+          <UserReviewRatings />
           <ReviewRatings />
           <ReviewRatings />
           <ReviewRatings />

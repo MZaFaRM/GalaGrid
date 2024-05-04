@@ -31,16 +31,11 @@ const App = () => {
       }}>
       <NavigationContainer>
         <Stack.Navigator>
-        <Stack.Screen
-            name={pages.stuffDetailsPage}
-            component={StuffDetailsPage}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
+          {/* <Stack.Screen
             name={pages.introPage}
             component={IntroPage}
             options={{headerShown: false}}
-          />
+          /> */}
           <Stack.Screen
             name={pages.homePage}
             component={HomePage}
@@ -51,11 +46,11 @@ const App = () => {
             component={FilterPage}
             options={{headerShown: false}}
           />
-          {/* <Stack.Screen
+          <Stack.Screen
             name={pages.stuffDetailsPage}
             component={StuffDetailsPage}
             options={{headerShown: false}}
-          /> */}
+          />
           <Stack.Screen
             name={pages.eventPage}
             component={EventPage}

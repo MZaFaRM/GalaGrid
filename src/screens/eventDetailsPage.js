@@ -11,7 +11,7 @@ import {
 import Layout from '../components/layout';
 import Icon from '../assets/icons';
 import {colors, fonts, pages} from '../constants/constants';
-import {ReviewRatings} from '../components/stuffDetailsComponents';
+import {UserReviewRatings} from '../components/stuffDetailsComponents';
 import {Banner} from '../components/component';
 import {
   Table,

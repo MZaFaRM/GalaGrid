@@ -30,7 +30,23 @@ const EventPage = ({navigation}) => {
             text={'Your events'}
           />
         </View>
-        <View style={{marginBottom: 150}}>
+        <View style={{marginBottom: 150, padding: 20}}>
+          <TouchableOpacity style={styles.createEventButton}>
+            <Icon
+              type={'MaterialIcons'}
+              name={'create'}
+              size={14}
+              color={'black'}
+            />
+            <Text
+              style={{
+                color: 'black',
+                fontFamily: fonts.primary,
+                marginLeft: 10,
+              }}>
+              Create an event
+            </Text>
+          </TouchableOpacity>
           <EventCard navigation={navigation} />
           <EventCard navigation={navigation} />
           <EventCard navigation={navigation} />
@@ -45,6 +61,15 @@ const EventPage = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'black',
+  },
+  createEventButton: {
+    backgroundColor: colors.yellow,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    height: 40,
+    borderRadius: 10,
   },
 });
 

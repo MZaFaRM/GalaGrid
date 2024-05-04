@@ -1,7 +1,67 @@
-import React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, {useState} from 'react';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Icon from '../assets/icons';
 import {colors, fonts, pages} from '../constants/constants';
+
+export const UserReviewRatings = () => {
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState('');
+  const [height, setHeight] = useState(0);
+
+  return (
+    <View style={styles.singleRating}>
+      <View style={styles.profileName}>
+        <Image
+          source={{
+            uri: 'https://www.ageuk.org.uk/globalassets/age-uk/media/hero/sleeping-cat-crop.jpg',
+          }}
+          width={25}
+          height={25}
+          borderRadius={50}
+        />
+      </View>
+      <View style={styles.commentDescription}>
+        <Text style={[styles.commenterName, {color: 'white'}]}>
+          Muhammed Zafar (You)
+        </Text>
+        <View style={styles.productRating}>
+          {[...Array(5)].map((e, i) => (
+            <TouchableOpacity key={i} onPress={() => setRating(i + 1)}>
+              <Icon
+                type="AntDesign"
+                name="star"
+                size={20}
+                color={i < rating ? 'yellow' : 'grey'}
+                key={i}
+              />
+            </TouchableOpacity>
+          ))}
+        </View>
+        <View>
+          <TextInput
+            style={styles.userComment}
+            value={comment}
+            placeholder="Write your review here..."
+            multiline
+            onChangeText={setComment}
+            numberOfLines={1}
+            maxLength={200}
+          />
+        </View>
+        <TouchableOpacity style={styles.postCommentButton}>
+          <Text style={{color: 'black', fontFamily: fonts.primary}}>Post</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
 
 export const ReviewRatings = () => (
   <View style={styles.singleRating}>
@@ -73,7 +133,7 @@ const styles = StyleSheet.create({
   productRating: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 10,
+    marginTop: 10,
   },
   commentDescription: {
     marginLeft: 25,
@@ -87,8 +147,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
   },
+  userComment: {
+    fontFamily: fonts.tertiary,
+    fontSize: 14,
+    width: '100%',
+  },
   comment: {
     fontFamily: fonts.tertiary,
+    fontSize: 14,
   },
   otherStuffBoxCardImageBox: {
     margin: 10,
@@ -135,5 +201,12 @@ const styles = StyleSheet.create({
   otherStuffLocationText: {
     color: colors.yellow,
     fontFamily: fonts.tertiary,
+  },
+  postCommentButton: {
+    backgroundColor: colors.yellow,
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 10,
+    alignItems: 'center',
   },
 });
