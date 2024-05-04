@@ -228,7 +228,7 @@ const EventDetailsPage = ({navigation}) => {
             <ListItem />
             <TouchableOpacity
               style={styles.buyMoreButton}
-              onPress={() => navigation.navigate(pages.homePage)}>
+              onPress={() => navigation.push(pages.homePage)}>
               <Icon
                 name="cart-plus"
                 type="FontAwesome5"

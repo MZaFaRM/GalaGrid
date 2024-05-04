@@ -1,19 +1,70 @@
 import React, {useState} from 'react';
 import {
-  View,
-  StyleSheet,
-  ScrollView,
-  Text,
-  TouchableOpacity,
   Image,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
   TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import Layout from '../components/layout';
 import Icon from '../assets/icons';
+import Layout from '../components/layout';
+import {
+  EventSelectCard,
+  ReviewRatings,
+} from '../components/stuffDetailsComponents';
 import {colors, fonts} from '../constants/constants';
-import {ReviewRatings} from '../components/stuffDetailsComponents';
 
 const StuffDetailsPage = ({navigation}) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [quantity, setQuantity] = useState(0);
+
+  const [eventData, setEventData] = useState([
+    {
+      name: 'TechFest Hackathon',
+      date: '12/12/2022',
+      location: 'Kerala, India',
+      image:
+        'https://www.gl-events.com/sites/default/files/styles/max_2600x2600/public/2019-03/about_us.jpg?itok=G8TBpJbF',
+      selected: false,
+    },
+    {
+      name: 'TechFest Hackathon',
+      date: '12/12/2022',
+      location: 'Kerala, India',
+      image:
+        'https://watermark.lovepik.com/photo/20211120/large/lovepik-the-golden-wedding-stage-picture_500501082.jpg',
+      selected: false,
+    },
+    {
+      name: 'TechFest Hackathon',
+      date: '12/12/2022',
+      location: 'Kerala, India',
+      image:
+        'https://www.i-eventplanner.com/wp-content/uploads/revslider/Avada_Full_Width/Annual-Dinner-Event-planner.jpg',
+      selected: false,
+    },
+    {
+      name: 'TechFest Hackathon',
+      date: '12/12/2022',
+      location: 'Kerala, India',
+      image:
+        'https://cdn.pixabay.com/photo/2016/11/23/15/48/audience-1853662_640.jpg',
+      selected: false,
+    },
+  ]);
+
+  const changeQuantity = text => {
+    number = parseInt(text);
+    if (isNaN(number) || number < 0) {
+      setQuantity(0);
+    } else {
+      setQuantity(number);
+    }
+  };
+
   return (
     <Layout title="Details" navigation={navigation}>
       <ScrollView style={styles.container}>
@@ -52,19 +103,22 @@ const StuffDetailsPage = ({navigation}) => {
         </View>
         <View style={styles.quantityBox}>
           <Text style={styles.quantityText}>Quantity: </Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => changeQuantity(quantity + 1)}>
             <View style={styles.quantityChangeBox}>
               <Text style={styles.quantityChangeText}>+</Text>
             </View>
           </TouchableOpacity>
           <TextInput
-            placeholder="0"
+            value={quantity.toString()}
             placeholderTextColor="white"
             keyboardType="numeric"
             textAlign="center"
-            style={{marginBottom: 0, paddingBottom: 0, width: 50}}
+            onChangeText={text => {
+              changeQuantity(text);
+            }}
+            style={{margin: 0, padding: 0, width: 50}}
           />
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => changeQuantity(quantity - 1)}>
             <View style={styles.quantityChangeBox}>
               <Text style={styles.quantityChangeText}>-</Text>
             </View>
@@ -75,11 +129,84 @@ const StuffDetailsPage = ({navigation}) => {
             <Icon name={'call'} type={'Ionicons'} size={18} color={'white'} />
             <Text style={styles.callButtonText}>Call</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.callButton, { marginHorizontal: 10}]}>
-            <Icon name={'chatbox'} type={'Ionicons'} size={18} color={'white'} />
+          <TouchableOpacity style={[styles.callButton, {marginHorizontal: 10}]}>
+            <Icon
+              name={'chatbox'}
+              type={'Ionicons'}
+              size={18}
+              color={'white'}
+            />
             <Text style={styles.callButtonText}>Chat</Text>
           </TouchableOpacity>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            propagateSwipe={true}
+            onRequestClose={() => {
+              setModalVisible(!modalVisible);
+            }}>
+            <ScrollView style={{backgroundColor: 'black', padding: 50}}>
+              <View style={styles.modalContainer}>
+                <View contentContainerStyle={styles.modalBody}>
+                  <Text style={styles.modalHead}>Select an Event</Text>
+                  <Text style={styles.modalDescription}>
+                    Add this product to an event to easily manage your orders,
+                    later, when you need it, this product can be accessed from
+                    the event tab by selecting that event.
+                  </Text>
+                  <View style={{flexDirection: 'row', marginBottom: 10}}>
+                    <TouchableOpacity
+                      style={styles.cancelButton}
+                      onPress={() => setModalVisible(!modalVisible)}>
+                      <Text style={styles.cancelButtonText}>Cancel</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.continueButton}
+                      onPress={() => setModalVisible(!modalVisible)}>
+                      <Text style={styles.continueButtonText}>Continue</Text>
+                    </TouchableOpacity>
+                  </View>
+                  <View style={styles.eventSelector}>
+                    {eventData.map((event, index) => (
+                      <TouchableOpacity
+                        onPress={() => {
+                          setEventData(prevState => {
+                            const updatedEvents = [...prevState];
+                            updatedEvents[index].selected =
+                              !updatedEvents[index].selected;
+                            return updatedEvents;
+                          });
+                        }}
+                        style={[
+                          styles.eventContainer,
+                          event.selected && styles.selectedContainer,
+                        ]}>
+                        <EventSelectCard
+                          navigation={navigation}
+                          key={index}
+                          event={event}
+                        />
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                  <View>
+                    <TouchableOpacity style={styles.modalCancelButton}>
+                      <Icon
+                        name={'back'}
+                        type={'Entypo'}
+                        size={14}
+                        color={'white'}
+                      />
+                      <Text style={styles.modalCancelText}>Cancel</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </ScrollView>
+          </Modal>
           <TouchableOpacity
+            onPress={() => setModalVisible(true)}
             style={[
               styles.callButton,
               {backgroundColor: colors.yellow, flex: 1},
@@ -232,6 +359,87 @@ const styles = StyleSheet.create({
   profileName: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  modalContainer: {
+    height: '100%',
+    width: '100%',
+
+    justifyContent: 'flex-end',
+  },
+  modalBody: {
+    width: '100%',
+    height: '80%',
+
+    backgroundColor: 'black',
+  },
+  modalHead: {
+    color: colors.yellow,
+    fontFamily: fonts.primary,
+    fontSize: 24,
+    marginBottom: 20,
+  },
+  eventSelector: {
+    marginBottom: 50,
+  },
+  modalDescription: {
+    color: '#E5E1DA',
+    fontFamily: fonts.senary,
+    fontStyle: 'italic',
+    fontSize: 14,
+    lineHeight: 20,
+    marginBottom: 20,
+  },
+  modalCancelButton: {
+    backgroundColor: 'red',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 30,
+    marginHorizontal: 50,
+    borderRadius: 10,
+    flexDirection: 'row',
+  },
+  modalCancelText: {
+    fontFamily: fonts.primary,
+    color: 'white',
+    fontSize: 14,
+    marginLeft: 10,
+  },
+  selectedContainer: {
+    borderWidth: 2,
+    borderColor: colors.yellow,
+  },
+  eventContainer: {
+    backgroundColor: colors.secondary,
+
+    overflow: 'hidden',
+    paddingBottom: 10,
+    marginBottom: 10,
+    borderRadius: 20,
+  },
+  cancelButton: {
+    backgroundColor: 'red',
+    padding: 10,
+    borderRadius: 10,
+    marginRight: 20,
+    flex: 1,
+  },
+  cancelButtonText: {
+    color: 'white',
+    fontFamily: fonts.primary,
+    fontSize: 16,
+    alignSelf: 'center',
+  },
+  continueButton: {
+    backgroundColor: colors.yellow,
+    padding: 10,
+    borderRadius: 10,
+    flex: 1,
+  },
+  continueButtonText: {
+    color: 'black',
+    fontFamily: fonts.primary,
+    fontSize: 16,
+    alignSelf: 'center',
   },
 });
 
