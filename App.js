@@ -19,6 +19,7 @@ import StuffDetailsPage from './src/screens/stuffDetailsPage';
 import EventPage from './src/screens/eventPage';
 import SettingsPage from './src/screens/settingsPage';
 import EventDetailsPage from './src/screens/eventDetailsPage';
+import ProductForm from './src/screens/productForm';
 
 const Stack = createStackNavigator();
 
@@ -64,6 +65,11 @@ const App = () => {
           <Stack.Screen
             name={pages.settingsPage}
             component={SettingsPage}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={pages.productForm}
+            component={ProductForm}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

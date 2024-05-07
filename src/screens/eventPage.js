@@ -16,6 +16,15 @@ import {EventCard} from '../components/eventComponents';
 import {Banner} from '../components/component';
 
 const EventPage = ({navigation}) => {
+  const [eventData, setEventData] = useState([]);
+  const [newEvent, setNewEvent] = useState({
+    image:
+      'https://www.spict.org.uk/wp-content/uploads/2019/04/placeholder.png',
+    name: 'Your Event Name',
+    date: 'Your Date',
+    location: 'Your Location',
+  });
+  const [emptyCards, setEmptyCards] = useState(0);
   return (
     <Layout
       navigation={navigation}
@@ -31,7 +40,9 @@ const EventPage = ({navigation}) => {
           />
         </View>
         <View style={{marginBottom: 150, padding: 20}}>
-          <TouchableOpacity style={styles.createEventButton}>
+          <TouchableOpacity
+            style={styles.createEventButton}
+            onPress={() => setEmptyCards(emptyCards + 1)}>
             <Icon
               type={'MaterialIcons'}
               name={'create'}
@@ -47,11 +58,17 @@ const EventPage = ({navigation}) => {
               Create an event
             </Text>
           </TouchableOpacity>
-          <EventCard navigation={navigation} />
-          <EventCard navigation={navigation} />
-          <EventCard navigation={navigation} />
-          <EventCard navigation={navigation} />
-          <EventCard navigation={navigation} />
+          {emptyCards > 0 && (
+            <View style={styles.recommendedStuffBoxCards}>
+              {[...Array(emptyCards)].map((_, index) => (
+                <EventCard
+                  key={index}
+                  navigation={navigation}
+                  eventData={newEvent}
+                />
+              ))}
+            </View>
+          )}
         </View>
       </ScrollView>
     </Layout>

@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Linking,
 } from 'react-native';
 import Icon from '../assets/icons';
 import Layout from '../components/layout';
@@ -18,7 +19,8 @@ import {
 } from '../components/stuffDetailsComponents';
 import {colors, fonts} from '../constants/constants';
 
-const StuffDetailsPage = ({navigation}) => {
+const StuffDetailsPage = ({navigation, route}) => {
+  const {productData} = route.params;
   const [modalVisible, setModalVisible] = useState(false);
   const [quantity, setQuantity] = useState(0);
 
@@ -61,7 +63,7 @@ const StuffDetailsPage = ({navigation}) => {
     number = parseInt(text);
     if (isNaN(number) || number < 0) {
       setQuantity(0);
-    } else {
+    } else if (number > productData.max_quantity) {
       setQuantity(number);
     }
   };
@@ -73,7 +75,7 @@ const StuffDetailsPage = ({navigation}) => {
           <View style={styles.stuffImageBox}>
             <Image
               source={{
-                uri: 'https://img.lovepik.com/photo/20211119/large/lovepik-cat-picture_500156655.jpg',
+                uri: productData.image,
               }}
               style={styles.productImage}
             />
@@ -81,9 +83,11 @@ const StuffDetailsPage = ({navigation}) => {
         </View>
         <View style={styles.detailsBox}>
           <View style={styles.titleAndDescription}>
-            <Text style={styles.productName}>Royal Sofa</Text>
-            <Text style={styles.companyName}>Taj Light and Sounds</Text>
-            <Text style={styles.address}>Kerala, India</Text>
+            <Text style={styles.productName}>{productData.name}</Text>
+            <Text style={styles.companyName}>{productData.company_name}</Text>
+            <Text style={styles.address}>
+              {productData.district}, {productData.state}
+            </Text>
             <View style={styles.productRating}>
               <Text style={styles.productRatingText}>5K</Text>
               <Icon type="AntDesign" name="star" size={15} color="yellow" />
@@ -92,18 +96,16 @@ const StuffDetailsPage = ({navigation}) => {
               <Icon type="AntDesign" name="star" size={15} color="yellow" />
               <Icon type="AntDesign" name="star" size={15} color="grey" />
             </View>
-            <Text style={styles.productDetails}>
-              Daytona USA is an arcade racing game developed by Sega AM2 and
-              published by Sega in March 1994. Inspired by the popularity of the
-              NASCAR motor racing series in the US, the game has players race
-              stock cars on one of three courses. It was the first arcade game
-              to be released on the Sega Model 2, an arcade system board which
-              was co-developed by GE Aerospace.
-            </Text>
+            <Text style={styles.productDetails}>{productData.description}</Text>
           </View>
         </View>
         <View style={styles.quantityBox}>
-          <Text style={styles.quantityText}>Quantity: </Text>
+          <Text style={styles.quantityText}>
+            Quantity {''}
+            <Text style={{fontSize: 14, fontFamily: fonts.tertiary}}>
+              max {productData.max_quantity}
+            </Text>
+          </Text>
           <TouchableOpacity onPress={() => changeQuantity(quantity + 1)}>
             <View style={styles.quantityChangeBox}>
               <Text style={styles.quantityChangeText}>+</Text>
@@ -125,12 +127,23 @@ const StuffDetailsPage = ({navigation}) => {
             </View>
           </TouchableOpacity>
         </View>
+
         <View style={styles.continueBox}>
-          <TouchableOpacity style={styles.callButton}>
+          <TouchableOpacity
+            style={styles.callButton}
+            onPress={() => Linking.openURL(`tel:${productData.mobile}`)}>
             <Icon name={'call'} type={'Ionicons'} size={18} color={'white'} />
             <Text style={styles.callButtonText}>Call</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.callButton, {marginHorizontal: 10}]}>
+          <TouchableOpacity
+            style={[styles.callButton, {marginHorizontal: 10}]}
+            onPress={() =>
+              Linking.openURL(
+                `https://wa.me/+91${productData.chat}?text=${encodeURIComponent(
+                  "Hi there! I saw your product on GalaGrid and I'm interested. Can we talk?",
+                )}`,
+              )
+            }>
             <Icon
               name={'chatbox'}
               type={'Ionicons'}
@@ -294,7 +307,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   quantityBox: {
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 0,
     flexDirection: 'row',
 
     alignItems: 'center',

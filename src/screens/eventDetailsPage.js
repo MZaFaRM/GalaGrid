@@ -1,28 +1,19 @@
-import React, {useEffect, useRef, useState} from 'react';
+import {React, useState} from 'react';
 import {
-  View,
-  StyleSheet,
-  ScrollView,
-  Text,
-  TouchableOpacity,
+  Button,
   Image,
+  ScrollView,
+  StyleSheet,
+  Text,
   TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import Layout from '../components/layout';
+import * as ImagePicker from 'react-native-image-picker';
+import {Rows, Table} from 'react-native-reanimated-table';
 import Icon from '../assets/icons';
+import Layout from '../components/layout';
 import {colors, fonts, pages} from '../constants/constants';
-import {UserReviewRatings} from '../components/stuffDetailsComponents';
-import {Banner} from '../components/component';
-import {
-  Table,
-  TableWrapper,
-  Row,
-  Rows,
-  Col,
-  Cols,
-  Cell,
-} from 'react-native-reanimated-table';
-import {StretchOutY} from 'react-native-reanimated';
 
 const ListItem = () => {
   const status = {
@@ -164,28 +155,18 @@ const ListItem = () => {
   );
 };
 
-const EventDetailsPage = ({navigation}) => {
+const EventDetailsPage = ({navigation, newEvent = true}) => {
   const [toDo, setToDo] = useState([
     {
-      text: 'Lorem Ipsum is simply dummy text',
-      status: false,
-    },
-    {
-      text: 'Contrary to popular belief, Lorem',
-      status: true,
-    },
-    {
-      text: 'Ipsum is not simply random text.',
+      text: '',
       status: null,
     },
   ]);
   const [eventDetails, setEventDetails] = useState({
-    description:
-      "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.",
+    title: null,
+    description: null,
   });
-  const [notes, setNotes] = useState(
-    "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
-  );
+  const [notes, setNotes] = useState('');
 
   const todoStates = {
     cancelled: 'times-circle',
@@ -199,33 +180,89 @@ const EventDetailsPage = ({navigation}) => {
   };
 
   const emptyTodo = {text: '', status: null};
+  const [image, setImage] = useState(null);
+
+  const convertToBase64 = async imageUri => {
+    try {
+      const response = await fetch(imageUri);
+      const blob = await response.blob();
+      const base64String = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+      return base64String.replace('data:image/jpeg;base64,', ''); // Remove data URL prefix
+    } catch (error) {
+      console.error('Error converting image to base64:', error);
+      throw error;
+    }
+  };
+
+  const handleChooseImage = () => {
+    const options = {
+      title: 'Select Product Image',
+      mediaType: 'photo',
+      maxWidth: 5000,
+      maxHeight: 5000,
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    ImagePicker.launchImageLibrary(options, async response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        const base64Image = await convertToBase64(response.assets[0].uri);
+        setImage({
+          uri: response.assets[0].uri,
+          base64: base64Image,
+        });
+      }
+    });
+  };
 
   return (
     <Layout title="Event Details" navigation={navigation}>
       <ScrollView style={styles.container}>
         <View style={styles.eventImagesBox}>
-          <View style={styles.eventImageBox}>
+          <TouchableOpacity
+            style={styles.eventImageBox}
+            onPress={handleChooseImage}>
             <Image
               source={{
-                uri: 'https://i.pinimg.com/736x/b8/45/91/b84591f7dd03449b406304331ca991d3.jpg',
+                uri:
+                  image?.uri ||
+                  'https://www.spict.org.uk/wp-content/uploads/2019/04/placeholder.png',
               }}
               style={styles.eventImage}
             />
-          </View>
+          </TouchableOpacity>
         </View>
         <View style={styles.dataContainer}>
-          <Text style={styles.headText}>Karma KMCT 2024</Text>
+          <TextInput
+            style={styles.headText}
+            placeholder="Your event name here"
+            value={eventDetails.title}
+            onChangeText={text =>
+              setEventDetails({...eventDetails, title: text})
+            }
+          />
           <TextInput
             style={styles.headParagraph}
             multiline={true}
             value={eventDetails.description}
+            placeholder="Your event description here"
             onChangeText={text =>
               setEventDetails({...eventDetails, description: text})
             }
           />
           <View style={styles.subHeadBox}>
             <Text style={styles.subHead}>Goods</Text>
-            <ListItem />
+            {!newEvent && <ListItem />}
             <TouchableOpacity
               style={styles.buyMoreButton}
               onPress={() => navigation.push(pages.homePage)}>
@@ -294,7 +331,9 @@ const EventDetailsPage = ({navigation}) => {
                       marginVertical: 0,
                       paddingVertical: 0,
                       flex: 10,
+                      color: 'white',
                     }}
+                    placeholder="Add your todo text here"
                     onKeyPress={({nativeEvent}) => {
                       if (nativeEvent.key === 'Backspace' && item.text === '') {
                         setToDo(prev => {
@@ -337,11 +376,16 @@ const EventDetailsPage = ({navigation}) => {
               numberOfLines={4}
               onChangeText={setNotes}
               value={notes}
+              placeholder="Add your notes here"
               style={styles.notes}
             />
           </View>
         </View>
       </ScrollView>
+      <Button
+        title="Save"
+        disabled={!(image || eventDetails.title || eventDetails.description)}
+      />
     </Layout>
   );
 };
@@ -373,12 +417,16 @@ const styles = StyleSheet.create({
     color: colors.yellow,
     fontSize: 25,
     marginBottom: 5,
+
+    padding: 10,
   },
   headParagraph: {
     color: '#bfbfbf',
     fontFamily: fonts.tertiary,
     fontSize: 14,
     lineHeight: 24,
+
+    padding: 10,
   },
   subHeadBox: {
     marginBottom: 10,
@@ -443,6 +491,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.tertiary,
     fontSize: 14,
     lineHeight: 24,
+    paddingTop: 0,
   },
   buyMoreButton: {
     backgroundColor: colors.yellow,

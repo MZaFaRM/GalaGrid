@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import {Buffer} from 'buffer';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
-  ImageBackground,
+  RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
@@ -8,118 +9,49 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import RNFetchBlob from 'rn-fetch-blob';
+import {fetchProduct} from '../api/products';
 import Icon from '../assets/icons';
+import {Banner} from '../components/component';
 import {RecommendedStuffBoxCard} from '../components/homeComponents';
 import Layout from '../components/layout';
 import {colors, fonts, pages} from '../constants/constants';
-import {Banner} from '../components/component';
 
 const HomePage = ({navigation}) => {
-  const [products, setProducts] = useState([
-    {
-      key: 0,
-      company: 'PC event rentals',
-      name: 'cusion chair',
-      image:
-        'https://5.imimg.com/data5/SELLER/Default/2023/8/336556815/LU/VP/KG/12245154/home-cushion-plastic-chair-500x500.jpeg',
-      item_count: 5,
-    },
-    {
-      key: 1,
-      company: 'PC event rentals',
-      name: 'royal chair',
-      image:
-        'https://5.imimg.com/data5/SELLER/Default/2023/6/319033547/ZJ/NT/AN/125999640/king-queen-throne-chair.jpeg',
-      item_count: 5,
-    },
-    {
-      key: 2,
-      company: 'Taj light & sounds',
-      name: 'fancy chair',
-      image:
-        'https://5.imimg.com/data5/ANDROID/Default/2022/1/QZ/DY/VN/45791135/product-jpeg-500x500.jpg',
-      item_count: 5,
-    },
-    {
-      key: 3,
-      company: 'PCF',
-      name: 'normal chair',
-      image:
-        'https://5.imimg.com/data5/MY/RD/IQ/ANDROID-32996277/product-jpeg.jpg',
-      item_count: 5,
-    },
-    {
-      key: 4,
-      company: 'PC event rentals',
-      name: 'normal handrest chair',
-      image:
-        'https://m.media-amazon.com/images/I/51V1dc-rJZS._AC_UF894,1000_QL80_.jpg',
-      item_count: 5,
-    },
-    {
-      key: 5,
-      company: 'Taj light & sounds',
-      name: 'cusion chair',
-      image:
-        'https://www.nilkamalfurniture.com/cdn/shop/products/1_07_c0558986-554b-4164-b481-ac25dff2d637.jpg?v=1674215514&width=360',
-      item_count: 5,
-    },
-    {
-      key: 6,
-      name: 'fancy chair',
-      image:
-        'https://cdn.shopify.com/s/files/1/0044/1208/0217/files/FERNYLW_900x.jpg?v=1708504570',
-      company: 'SNS',
-      item_count: 5,
-    },
-    {
-      key: 7,
-      company: 'SNS',
-      name: 'royal chair',
-      image:
-        'https://m.media-amazon.com/images/I/81FXphelMWL._AC_UF894,1000_QL80_.jpg',
-      item_count: 5,
-    },
-    {
-      key: 8,
-      company: 'SNS',
-      name: 'table',
-      image:
-        'https://images-cdn.ubuy.co.in/64b6d70ac8bd5b69132d62d8-mainstays-6-foot-bi-fold-plastic-folding.jpg',
-      item_count: 5,
-    },
-    {
-      key: 9,
-      company: 'PC event rentals',
-      name: 'table cum chair foldable',
-      image:
-        'https://5.imimg.com/data5/ANDROID/Default/2022/3/KY/HE/GT/108228820/product-jpeg.jpg',
-      item_count: 5,
-    },
-    {
-      key: 10,
-      company: 'Taj light & sounds',
-      name: 'table',
-      image: 'https://cdn.moglix.com/p/cPMyaxrbLbtb9-xxlarge.jpg',
-      item_count: 5,
-    },
-    {
-      key: 11,
-      company: 'SNS',
-      name: 'round table',
-      image:
-        'https://m.media-amazon.com/images/I/61VDv8UQvtL._AC_UF894,1000_QL80_.jpg',
-      item_count: 5,
-    },
-    // {
-    //   key: 12,
-    //   company: 'PCF',
-    //   name: 'fancy table',
-    //   image:
-    //     'https://images.woodenstreet.de/image/data/dining-tables/paul-dining-table/updated/honey-finish/1.jpg',
-    //   item_count: 5,
-    // },
-  ]);
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const cleanData = async products => {
+    for (let i = 0; i < products.length; i++) {
+      const product = products[i];
+      const encodedImage = product.encoded_image;
+      const decodedImage = Buffer.from(encodedImage, 'base64');
+      const path = RNFetchBlob.fs.dirs.CacheDir + '/temp_image_' + i + '.jpeg';
+
+      const decodedImageString = decodedImage.toString('base64');
+      await RNFetchBlob.fs.writeFile(path, decodedImageString, 'base64');
+
+      products[i].image = 'file://' + path;
+    }
+    return products;
+  };
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    const response = await fetchProduct();
+    const cleanedData = await cleanData(response.data);
+    setProducts(cleanedData);
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    fetchData();
+    console.log('fetching data');
+  }, []);
+
+  const onRefresh = useCallback(() => {
+    fetchData();
+  }, []);
 
   return (
     <Layout
@@ -128,7 +60,11 @@ const HomePage = ({navigation}) => {
       footer={true}
       header={false}
       currentPage={pages.homePage}>
-      <ScrollView style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        refreshControl={
+          <RefreshControl refreshing={isLoading} onRefresh={onRefresh} />
+        }>
         <Banner
           image={require('../assets/images/bannerBG.jpg')}
           text={'Explore our collection of \nevent rentals & services'}
@@ -161,18 +97,13 @@ const HomePage = ({navigation}) => {
         <View style={[styles.StuffHeader]}>
           <Text style={styles.StuffHeaderText}>Featured Products</Text>
         </View>
-        <View style={styles.recommendedStuffBoxCards}>
-          {products.map(product => (
-            <RecommendedStuffBoxCard
-              key={product.key}
-              productID={product.key}
-              company={product.company}
-              image={product.image}
-              name={product.name}
-              itemCount={product.item_count}
-            />
-          ))}
-        </View>
+        {products && products.length > 0 && (
+          <View style={styles.recommendedStuffBoxCards}>
+            {products.map(product => (
+              <RecommendedStuffBoxCard key={product.id} product={product} />
+            ))}
+          </View>
+        )}
       </ScrollView>
     </Layout>
   );

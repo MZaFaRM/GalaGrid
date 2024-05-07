@@ -24,5 +24,6 @@ export const pages = {
   settingsPage: 'SettingsPage',
   eventDetails: 'EventDetails',
   stuffUploadPage: 'StuffUploadPage',
-  userProfilePage: 'userProfilePage',
+  userProfilePage: 'UserProfilePage',
+  productForm: 'ProductForm',
 };

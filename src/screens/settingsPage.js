@@ -28,7 +28,13 @@ const SettingsPage = ({navigation}) => {
           image={require('../assets/images/bannerBGSettings.jpg')}
           text={'Settings'}
         />
-        <View style={{marginBottom: 150}}></View>
+        <View style={{marginBottom: 150}}>
+          <TouchableOpacity
+            onPress={() => navigation.push(pages.productForm)}
+            style={styles.settingsItem}>
+            <Text style={styles.settingsText}>Submit a Product</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </Layout>
   );
@@ -37,6 +43,20 @@ const SettingsPage = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'black',
+  },
+  settingsItem: {
+    marginVertical: 10,
+    paddingVertical: 20,
+
+    borderBottomWidth: 1,
+    borderColor: 'white',
+    margin: 20
+  },
+  settingsText: {
+    color: 'white',
+    fontSize: 18,
+    paddingHorizontal: 10,
+    fontFamily: fonts.tertiary,
   },
 });
 

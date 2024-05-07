@@ -1,9 +1,9 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from '../assets/icons';
 import {colors, fonts, pages} from '../constants/constants';
 
-export const EventCard = ({navigation}) => {
+export const EventCard = ({navigation, eventData}) => {
   return (
     <TouchableOpacity
       style={styles.container}
@@ -11,15 +11,15 @@ export const EventCard = ({navigation}) => {
       <View style={styles.otherStuffBoxCardImageBox}>
         <Image
           source={{
-            uri: 'https://img.freepik.com/free-vector/business-man-working-hard-stock-financial-trade-market-diagram-vector-illustration-flat-design_1150-39773.jpg?w=740&t=st=1710891345~exp=1710891945~hmac=08b821b62f4da424990243e4b89ca7bdcfaf7b25913e626c276c3b19e71154fc',
+            uri: eventData.image,
           }}
           style={styles.otherStuffBoxCardImage}
         />
       </View>
       <View style={styles.otherStuffBoxCardDetails}>
-        <Text style={styles.otherStuffName}>Scale Up Hackathon 2'24</Text>
+        <Text style={styles.otherStuffName}>{eventData.name}</Text>
         <View style={styles.eventDue}>
-          <Text style={styles.eventDueText}>On 21 January 2024</Text>
+          <Text style={styles.eventDueText}>On {eventData.date}</Text>
         </View>
         <View style={styles.otherStuffLocation}>
           <Icon
@@ -27,9 +27,11 @@ export const EventCard = ({navigation}) => {
             name="location-pin"
             size={15}
             color={colors.yellow}
-            style={{marginRight: 10}}
+            style={{marginRight: 5}}
           />
-          <Text style={styles.otherStuffLocationText}>Kerala, India</Text>
+          <Text style={styles.otherStuffLocationText}>
+            {eventData.location}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>

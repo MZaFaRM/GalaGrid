@@ -1,36 +1,35 @@
-import React from 'react';
-import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
-import Icon from '../assets/icons';
 import {useNavigation} from '@react-navigation/native';
+import React from 'react';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import Icon from '../assets/icons';
 import {colors, fonts, pages} from '../constants/constants';
 
-export const RecommendedStuffBoxCard = ({
-  productID,
-  company,
-  name,
-  image,
-  itemCount,
-}) => {
+export const RecommendedStuffBoxCard = ({product}) => {
   const navigation = useNavigation();
+
   return (
     <TouchableOpacity
       style={stuffBoxCardStyles.stuffBox}
-      onPress={() => navigation.navigate(pages.stuffDetailsPage)}>
+      onPress={() =>
+        navigation.navigate(pages.stuffDetailsPage, {productData: product})
+      }>
       <Image
         source={{
-          uri: image,
+          uri: product.image,
         }}
         style={stuffBoxCardStyles.stuffImage}
       />
       <View style={stuffBoxCardStyles.stuffDetails}>
-        <Text style={stuffBoxCardStyles.companyName}>{company}</Text>
+        <Text style={stuffBoxCardStyles.companyName}>
+          {product.company_name}
+        </Text>
         <Text style={stuffBoxCardStyles.stuffName} numberOfLines={1}>
-          {itemCount} × {name}
+          {product.max_quantity} × {product.name}
         </Text>
         <View style={stuffBoxCardStyles.stuffOther}>
           <View style={stuffBoxCardStyles.stuffLocation}>
             <Text style={stuffBoxCardStyles.stuffLocationText}>
-              Kerala, India
+              {product.district}, {product.state}
             </Text>
           </View>
           <View style={stuffBoxCardStyles.stuffRatingBox}>
