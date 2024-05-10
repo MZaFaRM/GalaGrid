@@ -3,6 +3,7 @@ import {
   ActivityIndicator,
   Button,
   Image,
+  Linking,
   RefreshControl,
   ScrollView,
   StyleSheet,
@@ -26,11 +27,39 @@ const EventDetailsPage = ({navigation, route}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
+  const [productData, setProductData] = useState([]);
+
+  const [productTable, setProductTable] = useState([]);
+
   const [toDo, setToDo] = useState([...emptyTodo.map(item => ({...item}))]);
   const [eventDetails, setEventDetails] = useState({});
   const [notes, setNotes] = useState('');
 
   const [image, setImage] = useState(null);
+
+  const status = {
+    pending: 'pending',
+    confirmed: 'confirmed',
+    cancelled: 'cancelled',
+  };
+
+  const statusColors = {
+    pending: {
+      background: '#222831',
+      text: '#EEEEEE',
+      border: '#31363F',
+    },
+    confirmed: {
+      background: '#0A6847',
+      text: '#EEEEEE',
+      border: '#7ABA78',
+    },
+    cancelled: {
+      background: '#DD5746',
+      text: '#EEEEEE',
+      border: '#8B322C',
+    },
+  };
 
   const convertToBase64 = async imageUri => {
     try {
@@ -53,8 +82,8 @@ const EventDetailsPage = ({navigation, route}) => {
     const options = {
       title: 'Select Product Image',
       mediaType: 'photo',
-      maxWidth: 5000,
-      maxHeight: 5000,
+      maxWidth: 500,
+      maxHeight: 500,
       includeBase64: true,
       storageOptions: {
         skipBackup: true,
@@ -85,12 +114,15 @@ const EventDetailsPage = ({navigation, route}) => {
         notes: notes,
       },
       todos: toDo.filter(item => item.data),
+      products: productData.map(item => ({
+        id: item.id,
+        status: item.status,
+      })),
     };
     if (eventID) {
       await updateEvent(eventID, eventDetailsData);
     } else {
       const response = await createEvent(eventDetailsData);
-      console.log(response.data);
       setEventID(response.data);
     }
     setIsSaving(false);
@@ -111,7 +143,11 @@ const EventDetailsPage = ({navigation, route}) => {
       setNotes(response.data.notes);
     }
 
+    setProductData(response.data.products);
+
     setEventDetails(response.data);
+
+    setProductTable(getState(response.data.products));
     setIsLoading(false);
   };
 
@@ -123,6 +159,99 @@ const EventDetailsPage = ({navigation, route}) => {
     fetchData();
   }, []);
 
+  const getState = data => {
+    return data
+      ? data.map(item => [
+          <View style={styles.productInfo}>
+            <Image
+              key={item.name}
+              source={{
+                uri: item.image,
+              }}
+              style={styles.listProfileImage}
+            />
+            <View style={{flex: 1}}>
+              <Text key={item.product} style={styles.listText}>
+                {item.quantity} x {item.name}
+              </Text>
+            </View>
+          </View>,
+          <TouchableOpacity
+            style={styles.statusContainer}
+            onPress={() =>
+              setProductData(prev => {
+                const updatedArray = [...prev];
+                const updatedItem = {
+                  ...item,
+                  status:
+                    item.status === status.pending
+                      ? status.confirmed
+                      : item.status === status.confirmed
+                      ? status.cancelled
+                      : status.pending,
+                };
+                updatedArray[data.indexOf(item)] = updatedItem;
+
+                setProductTable(getState(updatedArray));
+                return updatedArray;
+              })
+            }>
+            <View
+              style={[
+                styles.statusBox,
+                {
+                  backgroundColor: statusColors[item.status].background,
+                  borderRadius: 5,
+                  borderColor: statusColors[item.status].border,
+                  borderWidth: 2,
+                },
+              ]}>
+              <Text
+                style={[
+                  styles.listText,
+                  {
+                    fontFamily: fonts.secondary,
+                    fontSize: 12,
+                    marginLeft: 0,
+                    color: statusColors[item.status].text,
+                  },
+                ]}>
+                {item.status}
+              </Text>
+            </View>
+          </TouchableOpacity>,
+          <View style={{flexDirection: 'row', marginBottom: 20}}>
+            <TouchableOpacity
+              style={styles.listConnect}
+              onPress={() => Linking.openURL(`tel:${item.mobile}`)}>
+              <Icon name={'call'} type={'Ionicons'} size={18} color={'black'} />
+              {/* item.chat, */}
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.listConnect,
+                {backgroundColor: '#EE4266', marginLeft: 10},
+              ]}
+              onPress={() =>
+                Linking.openURL(
+                  `https://wa.me/+91${item.chat}?text=${encodeURIComponent(
+                    `Hi there! this message is regarding the ${item.quantity} x ${item.name} that was featured on GalaGrid. Can we talk?`,
+                  )}`,
+                )
+              }>
+              <Icon
+                name={'chatbox'}
+                type={'Ionicons'}
+                size={18}
+                color={'white'}
+              />
+              {/* item.chat, */}
+            </TouchableOpacity>
+          </View>,
+        ])
+      : [];
+  };
+
   return (
     <Layout title="Event Details" navigation={navigation}>
       <ScrollView
@@ -130,7 +259,7 @@ const EventDetailsPage = ({navigation, route}) => {
         refreshControl={
           <RefreshControl refreshing={isLoading} onRefresh={onRefresh} />
         }>
-        {!isLoading && (
+        {isLoading ? null : (
           <>
             <View style={styles.eventImagesBox}>
               <TouchableOpacity
@@ -167,7 +296,9 @@ const EventDetailsPage = ({navigation, route}) => {
               />
               <View style={styles.subHeadBox}>
                 <Text style={styles.subHead}>Goods</Text>
-                {!!eventID && <ListItem />}
+                <Table>
+                  <Rows data={productTable} flexArr={[2, 1, 1]} />
+                </Table>
                 <TouchableOpacity
                   style={styles.buyMoreButton}
                   onPress={() => navigation.push(pages.homePage)}>
@@ -317,146 +448,6 @@ const EventDetailsPage = ({navigation, route}) => {
         )}
       </TouchableOpacity>
     </Layout>
-  );
-};
-
-const ListItem = () => {
-  const status = {
-    pending: 'pending',
-    confirmed: 'confirmed',
-    cancelled: 'cancelled',
-  };
-
-  const statusColors = {
-    pending: {
-      background: '#222831',
-      text: '#EEEEEE',
-      border: '#31363F',
-    },
-    confirmed: {
-      background: '#0A6847',
-      text: '#EEEEEE',
-      border: '#7ABA78',
-    },
-    cancelled: {
-      background: '#DD5746',
-      text: '#EEEEEE',
-      border: '#8B322C',
-    },
-  };
-
-  const [data, setData] = useState([
-    {
-      image:
-        'https://www.pngitem.com/pimgs/m/206-2067128_cat-png-image-free-download-searchpng-cute-stuff.png',
-      product: 'Royal Chair',
-      quantity: 1,
-      chat: '9778177858',
-      status: status.pending,
-    },
-    {
-      image:
-        'https://wallpapers.com/images/hd/cool-dog-profile-picture-ajv9wf3wkzyi3igf.jpg',
-      product: 'Peasant Chair',
-      quantity: 100,
-      chat: '9778177858',
-      status: status.confirmed,
-    },
-    {
-      image:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGy_LyTwbh0s621yRvhcJfyFPExWrQraO9gAtzEgI3wA&s',
-      product: 'Volunteer Chair',
-      quantity: 30,
-      chat: '9778177858',
-      status: status.cancelled,
-    },
-    {
-      image:
-        'https://static.vecteezy.com/system/resources/previews/004/944/798/non_2x/the-cool-shooter-ant-esport-mascot-design-vector.jpg',
-      product: 'Manager Chair',
-      quantity: 5,
-      chat: '9778177858',
-      status: status.pending,
-    },
-  ]);
-
-  const state = data.map(item => [
-    <View style={styles.productInfo}>
-      <Image
-        key={item.name}
-        source={{
-          uri: item.image,
-        }}
-        style={styles.listProfileImage}
-      />
-      <View style={{flex: 1}}>
-        <Text key={item.name} style={styles.listText}>
-          {item.quantity} x {item.product}
-        </Text>
-      </View>
-    </View>,
-    <TouchableOpacity
-      style={styles.statusContainer}
-      onPress={() =>
-        setData(prev => {
-          const updatedArray = [...prev];
-          const updatedItem = {
-            ...item,
-            status:
-              item.status === status.pending
-                ? status.confirmed
-                : item.status === status.confirmed
-                ? status.cancelled
-                : status.pending,
-          };
-          updatedArray[data.indexOf(item)] = updatedItem;
-          return updatedArray;
-        })
-      }>
-      <View
-        style={[
-          styles.statusBox,
-          {
-            backgroundColor: statusColors[item.status].background,
-            borderRadius: 5,
-            borderColor: statusColors[item.status].border,
-            borderWidth: 2,
-          },
-        ]}>
-        <Text
-          style={[
-            styles.listText,
-            {
-              fontFamily: fonts.secondary,
-              fontSize: 12,
-              marginLeft: 0,
-              color: statusColors[item.status].text,
-            },
-          ]}>
-          {item.status}
-        </Text>
-      </View>
-    </TouchableOpacity>,
-    <View style={{flexDirection: 'row', marginBottom: 20}}>
-      <View style={styles.listConnect}>
-        <Icon name={'call'} type={'Ionicons'} size={18} color={'black'} />
-        {/* item.chat, */}
-      </View>
-      <View
-        style={[
-          styles.listConnect,
-          {backgroundColor: '#EE4266', marginLeft: 10},
-        ]}>
-        <Icon name={'chatbox'} type={'Ionicons'} size={18} color={'white'} />
-        {/* item.chat, */}
-      </View>
-    </View>,
-  ]);
-
-  return (
-    <Table>
-      <Rows data={state} flexArr={[2, 1, 1]} />
-    </Table>
   );
 };
 

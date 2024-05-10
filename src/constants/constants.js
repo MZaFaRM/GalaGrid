@@ -16,6 +16,8 @@ export const colors = {
   grey: '#61677A', // grey
 };
 export const pages = {
+  signUpPage: 'SignUpPage',
+  signInPage: 'SignInPage',
   introPage: 'IntroPage',
   homePage: 'HomePage',
   filterPage: 'FilterPage',

@@ -7,7 +7,7 @@ export const fetchEvent = async (eventId = null) => {
     return await fetchData(eventBase + (eventId || ''));
   } catch (error) {
     console.error('Error fetching event:', error);
-    throw error;
+    throw error;  
   }
 };
 

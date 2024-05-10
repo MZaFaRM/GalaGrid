@@ -20,61 +20,71 @@ import EventPage from './src/screens/eventPage';
 import SettingsPage from './src/screens/settingsPage';
 import EventDetailsPage from './src/screens/eventDetailsPage';
 import ProductForm from './src/screens/productForm';
+import SignUpPage from './src/screens/SignUpPage';
+import ErrorBoundary from 'react-native-error-boundary';
+import ErrorModal from './src/components/errorModal';
 
 const Stack = createStackNavigator();
 
 const App = () => {
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: 'black',
-      }}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          {/* <Stack.Screen
+    <ErrorBoundary>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: 'black',
+        }}>
+        <NavigationContainer>
+          <Stack.Navigator>
+            {/* <Stack.Screen
             name={pages.introPage}
             component={IntroPage}
             options={{headerShown: false}}
           /> */}
-          <Stack.Screen
-            name={pages.homePage}
-            component={HomePage}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name={pages.filterPage}
-            component={FilterPage}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name={pages.stuffDetailsPage}
-            component={StuffDetailsPage}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name={pages.eventPage}
-            component={EventPage}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name={pages.eventDetails}
-            component={EventDetailsPage}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name={pages.settingsPage}
-            component={SettingsPage}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name={pages.productForm}
-            component={ProductForm}
-            options={{headerShown: false}}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </View>
+            <Stack.Screen
+              name={pages.signUpPage}
+              component={SignUpPage}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name={pages.homePage}
+              component={HomePage}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name={pages.filterPage}
+              component={FilterPage}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name={pages.stuffDetailsPage}
+              component={StuffDetailsPage}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name={pages.eventPage}
+              component={EventPage}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name={pages.eventDetails}
+              component={EventDetailsPage}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name={pages.settingsPage}
+              component={SettingsPage}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name={pages.productForm}
+              component={ProductForm}
+              options={{headerShown: false}}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </View>
+    </ErrorBoundary>
   );
 };
 

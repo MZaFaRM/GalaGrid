@@ -22,15 +22,13 @@ const EventPage = ({navigation}) => {
   const [newEvent, setNewEvent] = useState({
     image:
       'https://www.spict.org.uk/wp-content/uploads/2019/04/placeholder.png',
-    name: 'Your event name',
-    description: 'Your event description',
-    location: 'Your Location',
+    name: 'Your Event Name',
+    description: 'Your Event Description',
   });
   const [emptyCards, setEmptyCards] = useState(0);
 
   const fetchData = async () => {
     setIsLoading(true);
-    setEmptyCards(1);
     const response = await fetchEvent();
     setEventData(response.data);
     setIsLoading(false);

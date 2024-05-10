@@ -171,7 +171,7 @@ const StuffDetailsPage = ({navigation, route}) => {
                     `https://wa.me/+91${
                       productData.chat
                     }?text=${encodeURIComponent(
-                      "Hi there! I saw your product on GalaGrid and I'm interested. Can we talk?",
+                      `Hi there! this message is regarding the ${productData.max_quantity} x ${productData.name} that was featured under the company ${productData.company_name} on GalaGrid. Can we talk?`,
                     )}`,
                   )
                 }>

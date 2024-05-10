@@ -1,6 +1,7 @@
 import {Buffer} from 'buffer';
 import React, {useCallback, useEffect, useState} from 'react';
 import {
+  ActivityIndicator,
   RefreshControl,
   ScrollView,
   StyleSheet,
@@ -38,6 +39,44 @@ const HomePage = ({navigation}) => {
     fetchData();
   }, []);
 
+  const calculateJaccardSimilarity = (query, attribute) => {
+    const querySet = new Set(query.toLowerCase().split(' '));
+    const attributeSet = new Set(attribute.toLowerCase().split(' '));
+    const intersectionSize = [...querySet].filter(x =>
+      attributeSet.has(x),
+    ).length;
+    const unionSize = querySet.size + attributeSet.size - intersectionSize;
+    return intersectionSize / unionSize;
+  };
+
+  const searchProducts = query => {
+    const scoredProducts = products.map(product => {
+      let score = 0;
+      score += calculateJaccardSimilarity(query, product.name) * 2; // Double points for exact match
+      score += calculateJaccardSimilarity(query, product.company_name);
+      score += calculateJaccardSimilarity(query, product.description);
+      score += calculateJaccardSimilarity(query, product.district);
+      score += calculateJaccardSimilarity(query, product.state);
+      score += calculateJaccardSimilarity(query, product.price.toString());
+      score += calculateJaccardSimilarity(
+        query,
+        product.max_quantity.toString(),
+      );
+      return {product, score};
+    });
+
+    scoredProducts.sort((a, b) => b.score - a.score);
+
+    return scoredProducts.map(scoredProduct => scoredProduct.product);
+  };
+
+  const handleSearch = query => {
+    setIsLoading(true);
+    const searchResults = searchProducts(query);
+    setProducts(searchResults);
+    setIsLoading(false);
+  };
+
   return (
     <Layout
       navigation={navigation}
@@ -66,17 +105,18 @@ const HomePage = ({navigation}) => {
             placeholder="Search"
             placeholderTextColor="white"
             style={[styles.SearchText, {flex: 10}]}
+            onChangeText={handleSearch}
           />
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={[styles.filterBox, {flex: 1}]}
             onPress={() => navigation.navigate(pages.filterPage)}>
             <Icon
               type="Entypo"
-              name="menu"
+              name="menu" 
               size={20}
               color={colors.quaternary}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         <View style={styles.typeProduct}></View>
         <View style={[styles.StuffHeader]}>
@@ -85,10 +125,7 @@ const HomePage = ({navigation}) => {
         {products && products.length > 0 && (
           <View style={styles.recommendedStuffBoxCards}>
             {products.map(product => (
-              <RecommendedStuffBoxCard
-                key={product.id}
-                product={product}
-              />
+              <RecommendedStuffBoxCard key={product.id} product={product} />
             ))}
           </View>
         )}

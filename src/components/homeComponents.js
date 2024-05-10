@@ -26,7 +26,10 @@ export const RecommendedStuffBoxCard = ({product}) => {
           {product.company_name}
         </Text>
         <Text style={stuffBoxCardStyles.stuffName} numberOfLines={1}>
-          ₹ {product.price} / {product.name} (x{product.max_quantity})
+          ₹ {product.price}
+        </Text>
+        <Text style={stuffBoxCardStyles.stuffName} numberOfLines={1}>
+          {product.name} (x{product.max_quantity})
         </Text>
         <View style={stuffBoxCardStyles.stuffOther}>
           <View style={stuffBoxCardStyles.stuffLocation}>
