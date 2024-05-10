@@ -4,10 +4,15 @@ import Icon from '../assets/icons';
 import {colors, fonts, pages} from '../constants/constants';
 
 export const EventCard = ({navigation, eventData}) => {
+
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => navigation.navigate(pages.eventDetails)}>
+      onPress={() =>
+        navigation.navigate(pages.eventDetails, {
+          eventID: eventData.id,
+        })
+      }>
       <View style={styles.otherStuffBoxCardImageBox}>
         <Image
           source={{
@@ -19,9 +24,11 @@ export const EventCard = ({navigation, eventData}) => {
       <View style={styles.otherStuffBoxCardDetails}>
         <Text style={styles.otherStuffName}>{eventData.name}</Text>
         <View style={styles.eventDue}>
-          <Text style={styles.eventDueText}>On {eventData.date}</Text>
+          <Text style={styles.eventDueText} numberOfLines={3}>
+            {eventData.description}
+          </Text>
         </View>
-        <View style={styles.otherStuffLocation}>
+        {/* <View style={styles.otherStuffLocation}>
           <Icon
             type="Entypo"
             name="location-pin"
@@ -32,7 +39,7 @@ export const EventCard = ({navigation, eventData}) => {
           <Text style={styles.otherStuffLocationText}>
             {eventData.location}
           </Text>
-        </View>
+        </View> */}
       </View>
     </TouchableOpacity>
   );

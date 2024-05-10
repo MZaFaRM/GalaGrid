@@ -1,4 +1,4 @@
-import {createData, fetchData} from './utils';
+import {createData, fetchData, updateData} from './utils';
 
 const eventBase = `api/event/`;
 
@@ -16,6 +16,15 @@ export const createEvent = async eventData => {
     return await createData(eventBase, eventData);
   } catch (error) {
     console.error('Error creating event:', error);
+    throw error;
+  }
+};
+
+export const updateEvent = async (eventId, eventData) => {
+  try {
+    return await updateData(eventBase + eventId + '/', eventData);
+  } catch (error) {
+    console.error('Error updating event:', error);
     throw error;
   }
 };

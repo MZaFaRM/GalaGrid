@@ -11,7 +11,9 @@ export const RecommendedStuffBoxCard = ({product}) => {
     <TouchableOpacity
       style={stuffBoxCardStyles.stuffBox}
       onPress={() =>
-        navigation.navigate(pages.stuffDetailsPage, {productData: product})
+        navigation.navigate(pages.stuffDetailsPage, {
+          productID: product.id,
+        })
       }>
       <Image
         source={{
@@ -24,7 +26,7 @@ export const RecommendedStuffBoxCard = ({product}) => {
           {product.company_name}
         </Text>
         <Text style={stuffBoxCardStyles.stuffName} numberOfLines={1}>
-          {product.max_quantity} × {product.name}
+          ₹ {product.price} / {product.name} (x{product.max_quantity})
         </Text>
         <View style={stuffBoxCardStyles.stuffOther}>
           <View style={stuffBoxCardStyles.stuffLocation}>

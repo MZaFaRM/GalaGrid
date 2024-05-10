@@ -45,6 +45,8 @@ const ProductForm = () => {
       mediaType: 'photo',
       maxWidth: 5000,
       maxHeight: 5000,
+      maxQuantity: 1,
+      includeBase64: true,
       storageOptions: {
         skipBackup: true,
         path: 'images',
@@ -56,10 +58,9 @@ const ProductForm = () => {
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else {
-        const base64Image = await convertToBase64(response.assets[0].uri);
         setImage({
           uri: response.assets[0].uri,
-          base64: base64Image,
+          base64: response.assets[0].base64,
         });
       }
     });

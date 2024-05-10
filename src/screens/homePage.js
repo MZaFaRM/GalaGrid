@@ -16,31 +16,16 @@ import {Banner} from '../components/component';
 import {RecommendedStuffBoxCard} from '../components/homeComponents';
 import Layout from '../components/layout';
 import {colors, fonts, pages} from '../constants/constants';
+import {fetchEvent} from '../api/events';
 
 const HomePage = ({navigation}) => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const cleanData = async products => {
-    for (let i = 0; i < products.length; i++) {
-      const product = products[i];
-      const encodedImage = product.encoded_image;
-      const decodedImage = Buffer.from(encodedImage, 'base64');
-      const path = RNFetchBlob.fs.dirs.CacheDir + '/temp_image_' + i + '.jpeg';
-
-      const decodedImageString = decodedImage.toString('base64');
-      await RNFetchBlob.fs.writeFile(path, decodedImageString, 'base64');
-
-      products[i].image = 'file://' + path;
-    }
-    return products;
-  };
-
   const fetchData = async () => {
     setIsLoading(true);
     const response = await fetchProduct();
-    const cleanedData = await cleanData(response.data);
-    setProducts(cleanedData);
+    setProducts(response.data);
     setIsLoading(false);
   };
 
@@ -100,7 +85,10 @@ const HomePage = ({navigation}) => {
         {products && products.length > 0 && (
           <View style={styles.recommendedStuffBoxCards}>
             {products.map(product => (
-              <RecommendedStuffBoxCard key={product.id} product={product} />
+              <RecommendedStuffBoxCard
+                key={product.id}
+                product={product}
+              />
             ))}
           </View>
         )}

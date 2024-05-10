@@ -108,9 +108,11 @@ export const EventSelectCard = ({navigation, event}) => {
       <View style={styles.otherStuffBoxCardDetails}>
         <Text style={styles.otherStuffName}>{event.name}</Text>
         <View style={styles.eventDue}>
-          <Text style={styles.eventDueText}>On {event.date}</Text>
+          <Text style={styles.eventDueText} numberOfLines={3}>
+            {event.description}
+          </Text>
         </View>
-        <View style={styles.otherStuffLocation}>
+        {/* <View style={styles.otherStuffLocation}>
           <Icon
             type="Entypo"
             name="location-pin"
@@ -119,7 +121,7 @@ export const EventSelectCard = ({navigation, event}) => {
             style={{marginRight: 10}}
           />
           <Text style={styles.otherStuffLocationText}>{event.location}</Text>
-        </View>
+        </View> */}
       </View>
     </>
   );
