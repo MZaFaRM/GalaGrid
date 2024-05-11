@@ -85,7 +85,10 @@ const StuffDetailsPage = ({navigation, route}) => {
   }, []);
 
   return (
-    <Layout title="Details" navigation={navigation}>
+    <Layout
+      title="Details"
+      navigation={navigation}
+      currentPage={pages.stuffDetailsPage}>
       <ScrollView
         style={styles.container}
         refreshControl={
@@ -194,7 +197,11 @@ const StuffDetailsPage = ({navigation, route}) => {
                 onRequestClose={() => {
                   setModalVisible(!modalVisible);
                 }}>
-                <ScrollView style={{backgroundColor: 'black', padding: 50}}>
+                <ScrollView
+                  style={{
+                    backgroundColor: 'black',
+                    padding: 50,
+                  }}>
                   <View style={styles.modalContainer}>
                     <View contentContainerStyle={styles.modalBody}>
                       <Text style={styles.modalHead}>Select an Event</Text>
@@ -218,7 +225,7 @@ const StuffDetailsPage = ({navigation, route}) => {
                         </TouchableOpacity>
                       </View>
                       <View style={styles.eventSelector}>
-                        {eventData ? (
+                        {eventData.length === 0 ? (
                           <TouchableOpacity
                             style={[
                               styles.continueButton,
@@ -263,17 +270,6 @@ const StuffDetailsPage = ({navigation, route}) => {
                             </TouchableOpacity>
                           ))
                         )}
-                      </View>
-                      <View>
-                        <TouchableOpacity style={styles.modalCancelButton}>
-                          <Icon
-                            name={'back'}
-                            type={'Entypo'}
-                            size={14}
-                            color={'white'}
-                          />
-                          <Text style={styles.modalCancelText}>Cancel</Text>
-                        </TouchableOpacity>
                       </View>
                     </View>
                   </View>

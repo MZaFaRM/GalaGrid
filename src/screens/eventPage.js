@@ -7,16 +7,20 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {fetchEvent} from '../api/events';
+import {deleteEvent, fetchEvent} from '../api/events';
 import Icon from '../assets/icons';
 import {Banner} from '../components/component';
 import {EventCard} from '../components/eventComponents';
 import Layout from '../components/layout';
 import {colors, fonts, pages} from '../constants/constants';
 
-import {cleanData} from '../utils/events';
+import {handleAuthError} from '../api/auth';
+import {useFocusEffect} from '@react-navigation/native';
 
-const EventPage = ({navigation}) => {
+import 'react-native-get-random-values';
+import {v4 as uuidv4} from 'uuid';
+
+const EventPage = ({route, navigation}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [eventData, setEventData] = useState([]);
   const [newEvent, setNewEvent] = useState({
@@ -25,7 +29,17 @@ const EventPage = ({navigation}) => {
     name: 'Your Event Name',
     description: 'Your Event Description',
   });
-  const [emptyCards, setEmptyCards] = useState(0);
+  const [emptyCards, setEmptyCards] = useState([]);
+
+  const handleDelete = async (id = null) => {
+    try {
+      const response = await deleteEvent(id);
+      await fetchData();
+    } catch (error) {
+      handleAuthError(error, navigation);
+      console.error('Error deleting event:', error);
+    }
+  };
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -37,6 +51,12 @@ const EventPage = ({navigation}) => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, []),
+  );
 
   const onRefresh = useCallback(() => {
     fetchData();
@@ -61,52 +81,54 @@ const EventPage = ({navigation}) => {
           />
         </View>
         <View style={{marginBottom: 150, padding: 20}}>
-          {!isLoading && (
-            <>
-              <TouchableOpacity
-                style={styles.createEventButton}
-                onPress={() => setEmptyCards(emptyCards + 1)}>
-                <Icon
-                  type={'MaterialIcons'}
-                  name={'create'}
-                  size={14}
-                  color={'black'}
-                />
-                <Text
-                  style={{
-                    color: 'black',
-                    fontFamily: fonts.primary,
-                    marginLeft: 10,
-                  }}>
-                  Create an event
-                </Text>
-              </TouchableOpacity>
-              <View>
-                {emptyCards > 0 && (
-                  <View style={styles.recommendedStuffBoxCards}>
-                    {[...Array(emptyCards)].map((_, index) => (
-                      <EventCard
-                        key={index}
-                        navigation={navigation}
-                        eventData={newEvent}
-                      />
-                    ))}
-                  </View>
-                )}
-                {eventData.length > 0 && (
-                  <View style={styles.recommendedStuffBoxCards}>
-                    {eventData.map((event, index) => (
-                      <EventCard
-                        key={index}
-                        navigation={navigation}
-                        eventData={event}
-                      />
-                    ))}
-                  </View>
-                )}
+          <TouchableOpacity
+            style={styles.createEventButton}
+            onPress={() =>
+              setEmptyCards(prev => [...prev, uuidv4({length: 8})])
+            }>
+            <Icon
+              type={'MaterialIcons'}
+              name={'create'}
+              size={14}
+              color={'black'}
+            />
+            <Text
+              style={{
+                color: 'black',
+                fontFamily: fonts.primary,
+                marginLeft: 10,
+              }}>
+              Create an event
+            </Text>
+          </TouchableOpacity>
+          <View>
+            {emptyCards.length > 0 && (
+              <View style={styles.recommendedStuffBoxCards}>
+                {emptyCards.map(id => (
+                  <EventCard
+                    key={id}
+                    navigation={navigation}
+                    eventData={newEvent}
+                    onDelete={() =>
+                      setEmptyCards(prev => prev.filter(item => item !== id))
+                    }
+                  />
+                ))}
               </View>
-            </>
-          )}
+            )}
+            {eventData.length > 0 && (
+              <View style={styles.recommendedStuffBoxCards}>
+                {eventData.map((event, index) => (
+                  <EventCard
+                    key={event.id}
+                    navigation={navigation}
+                    eventData={event}
+                    onDelete={handleDelete}
+                  />
+                ))}
+              </View>
+            )}
+          </View>
         </View>
       </ScrollView>
     </Layout>

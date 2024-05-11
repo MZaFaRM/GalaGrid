@@ -15,7 +15,10 @@ const LoginPage = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [mobile, setMobile] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [message, setMessage] = useState({
+    text: '',
+    success: false,
+  });
 
   const handleLogin = async () => {
     try {
@@ -26,10 +29,12 @@ const LoginPage = ({navigation}) => {
         return error?.response?.data[attr];
       };
 
-      const errorMessage =
-        getError('error') || error.message || 'Something went wrong';
+      const newError = {
+        success: false,
+        text: getError('error') || error.message || 'Something went wrong',
+      };
 
-      setError(errorMessage);
+      setMessage(newError);
     }
   };
 
@@ -67,7 +72,11 @@ const LoginPage = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
-      <MessageModal error={error} resetError={setError} />
+      <MessageModal
+        message={message.text}
+        resetMessage={setMessage}
+        success={message.success}
+      />
     </View>
   );
 };

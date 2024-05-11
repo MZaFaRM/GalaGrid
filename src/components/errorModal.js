@@ -14,12 +14,10 @@ const MessageModal = ({message, resetMessage, success = false}) => {
   const [visible, setVisible] = useState(!!message);
 
   useEffect(() => {
-    if (!visible) {
+    setVisible(!!message);
+    if (!message) {
       return;
     }
-    
-    console.log('Error logged:', message);
-    setVisible(!!message);
 
     setTimeout(() => {
       handleClose();
@@ -32,25 +30,38 @@ const MessageModal = ({message, resetMessage, success = false}) => {
   };
 
   return (
-    <Modal visible={visible} animationType="slide" transparent={true}>
-      <View style={styles.container}>
-        <View
-          style={[
-            styles.modal,
-            success ? {borderColor: 'green'} : {borderColor: 'red'},
-          ]}>
-          <Text style={styles.errorText}>{message}</Text>
-          <TouchableOpacity onPress={handleClose} style={styles.closeButton}>
-            <Icon
-              name="close"
-              size={14}
-              style={styles.closeButton}
-              type={'Ionicons'}
-            />
-          </TouchableOpacity>
+    <View style={{width: '100%', height: '100%'}} onTouchStart={handleClose}>
+      <Modal visible={visible} animationType="slide" transparent={true}>
+        <View style={styles.container}>
+          <View
+            style={[
+              styles.modal,
+              success ? {borderColor: 'green'} : {borderColor: 'red'},
+            ]}>
+            <Text
+              style={[
+                styles.errorText,
+                // success ? {color: 'green'} : {color: 'red'},
+              ]}>
+              {message}
+            </Text>
+            <TouchableOpacity
+              onPress={handleClose}
+              style={[
+                styles.closeButton,
+                success ? {backgroundColor: 'green'} : {backgroundColor: 'red'},
+              ]}>
+              <Icon
+                name="close"
+                size={14}
+                style={styles.closeButton}
+                type={'Ionicons'}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    </Modal>
+      </Modal>
+    </View>
   );
 };
 
@@ -66,7 +77,6 @@ const styles = StyleSheet.create({
   modal: {
     backgroundColor: 'black',
     borderWidth: 1,
-    borderColor: 'red',
     padding: 10,
     borderRadius: 4,
     flexDirection: 'row',
@@ -76,11 +86,10 @@ const styles = StyleSheet.create({
   },
   errorText: {
     fontSize: 14,
-    color: 'white',
-    marginRight: 10,
+    marginHorizontal: 30,
+    fontFamily: fonts.primary,
   },
   closeButton: {
-    backgroundColor: 'red',
     padding: 2,
     borderRadius: 2,
     textAlign: 'center',

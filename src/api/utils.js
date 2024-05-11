@@ -1,4 +1,4 @@
-import {api, updateAuthToken} from './src';
+import { api, updateAuthToken } from './src';
 
 export const fetchData = async endpoint => {
   try {
@@ -37,5 +37,16 @@ export const updateData = async (endpoint, requestData) => {
       'Error updating data:',
       JSON.stringify(error.response.data.errors),
     );
+  }
+};
+
+export const deleteData = async endpoint => {
+  try {
+    await updateAuthToken();
+    const response = await api.delete(endpoint);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting data:', error);
+    throw error;
   }
 };

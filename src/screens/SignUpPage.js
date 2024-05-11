@@ -16,7 +16,10 @@ const SignUp = ({navigation}) => {
   const [fullName, setFullName] = useState('');
   const [mobile, setMobile] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [message, setMessage] = useState({
+    text: '',
+    success: false,
+  });
 
   const handleSignUp = async () => {
     try {
@@ -35,18 +38,22 @@ const SignUp = ({navigation}) => {
       await signUp(userData);
       navigation.navigate(pages.loginPage);
     } catch (error) {
+      console.log(error);
       const getError = attr => {
         return error?.response?.data[attr]?.[0];
       };
 
-      const errorMessage =
-        getError('mobile') ||
-        getError('username') ||
-        getError('first_name') ||
-        error.message ||
-        'Something went wrong';
+      const newError = {
+        success: false,
+        text:
+          getError('mobile') ||
+          getError('username') ||
+          getError('first_name') ||
+          error.message ||
+          'Something went wrong',
+      };
 
-      setError(errorMessage);
+      setMessage(newError);
     }
   };
 
@@ -89,7 +96,11 @@ const SignUp = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
-      <MessageModal error={error} resetError={setError} />
+      <MessageModal
+        message={message.text}
+        resetMessage={setMessage}
+        success={message.success}
+      />
     </View>
   );
 };

@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import {
-  View,
-  StyleSheet,
   ScrollView,
+  StyleSheet,
   Text,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import Layout from '../components/layout';
-import {colors, fonts} from '../constants/constants';
+import {colors, fonts, pages} from '../constants/constants';
 
 const FilterPage = ({navigation}) => {
   const [filterData, setFilterData] = useState([
@@ -120,7 +120,11 @@ const FilterPage = ({navigation}) => {
   };
 
   return (
-    <Layout navigation={navigation} title="Filter" header={true}>
+    <Layout
+      navigation={navigation}
+      title="Filter"
+      header={true}
+      currentPage={pages.filterPage}>
       <ScrollView style={styles.container}>
         {filterData.map(filter => (
           <View style={styles.filterHeader} key={filter.key}>

@@ -19,6 +19,7 @@ import Layout from '../components/layout';
 import {colors, fonts, pages} from '../constants/constants';
 import {fetchEvent} from '../api/events';
 import {handleAuthError} from '../api/auth';
+import {useFocusEffect} from '@react-navigation/native';
 
 const HomePage = ({navigation}) => {
   const [products, setProducts] = useState([]);
@@ -82,6 +83,12 @@ const HomePage = ({navigation}) => {
     setProducts(searchResults);
     setIsLoading(false);
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, []),
+  );
 
   return (
     <Layout

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const api = axios.create({
   //   baseURL: 'https://webscrapper-r78p.onrender.com',
-  baseURL: 'https://1c50-2405-201-f021-1039-18df-8ade-941d-2bc5.ngrok-free.app',
+  baseURL: 'https://1117-2405-201-f021-1039-d58-c1c8-9250-58fa.ngrok-free.app',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -19,7 +19,7 @@ export const saveAuthToken = async token => {
 
 export const updateAuthToken = async (token = null) => {
   if (!token) {
-    token = await getAuthToken(); // Await the result of getAuthToken()
+    token = await getAuthToken();
   }
   await saveAuthToken(token);
   api.defaults.headers.common.Authorization = `Token ${token}`;

@@ -1,20 +1,25 @@
 import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import Swipeable from 'react-native-swipeable';
+import {handleAuthError} from '../api/auth';
+import {deleteEvent} from '../api/events';
 import Icon from '../assets/icons';
 import {colors, fonts, pages} from '../constants/constants';
-import Swipeable from 'react-native-swipeable';
 
-export const EventCard = ({navigation, eventData}) => {
+export const EventCard = ({navigation, eventData, onDelete}) => {
   const rightButtons = [
     <TouchableOpacity
       style={styles.deleteButton}
       onPress={() => onDelete(eventData.id)}>
-      <Text style={styles.deleteButtonText}>Delete</Text>
+      <View style={styles.deleteButtonBox}>
+        <Icon name="trash" size={20} color="white" type={'Entypo'} />
+        <Text style={styles.deleteButtonText}>Delete</Text>
+      </View>
     </TouchableOpacity>,
   ];
 
   return (
-    <Swipeable rightButtons={rightButtons}>
+    <Swipeable rightButtons={rightButtons} rightButtonWidth={200}>
       <TouchableOpacity
         style={styles.container}
         onPress={() =>
@@ -58,7 +63,7 @@ export const EventCard = ({navigation, eventData}) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.secondary,
-    borderRadius: 20,
+    borderRadius: 10,
 
     overflow: 'hidden',
     marginTop: 20,
@@ -73,7 +78,7 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     height: 100,
 
-    borderRadius: 20,
+    borderRadius: 10,
   },
   otherStuffBoxCardDetails: {
     marginVertical: 10,
@@ -112,5 +117,28 @@ const styles = StyleSheet.create({
   otherStuffLocationText: {
     color: colors.yellow,
     fontFamily: fonts.tertiary,
+  },
+  deleteButton: {
+    width: 800,
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    padding: 20,
+    paddingBottom: 0,
+  },
+  deleteButtonText: {
+    color: 'white',
+    fontFamily: fonts.primary,
+    marginLeft: 10,
+  },
+  deleteButtonBox: {
+    borderRadius: 10,
+    backgroundColor: 'red',
+    width: '100%',
+    height: '100%',
+    paddingLeft: 20,
+
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });

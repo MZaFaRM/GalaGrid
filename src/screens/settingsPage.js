@@ -1,21 +1,21 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
-  ImageBackground,
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import Icon from '../assets/icons';
-import {RecommendedStuffBoxCard} from '../components/homeComponents';
-import Layout from '../components/layout';
-import {colors, fonts, pages} from '../constants/constants';
-import {EventCard} from '../components/eventComponents';
+import {removeAuthToken} from '../api/src';
 import {Banner} from '../components/component';
+import Layout from '../components/layout';
+import {fonts, pages} from '../constants/constants';
 
 const SettingsPage = ({navigation}) => {
+  const logout = () => {
+    removeAuthToken();
+    navigation.replace(pages.loginPage);
+  };
   return (
     <Layout
       navigation={navigation}
@@ -34,9 +34,7 @@ const SettingsPage = ({navigation}) => {
             style={styles.settingsItem}>
             <Text style={styles.settingsText}>Submit a Product</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.push(pages.productForm)}
-            style={styles.settingsItem}>
+          <TouchableOpacity onPress={logout} style={styles.settingsItem}>
             <Text style={styles.settingsText}>Log out</Text>
           </TouchableOpacity>
         </View>

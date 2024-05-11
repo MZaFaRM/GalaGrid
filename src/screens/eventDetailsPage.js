@@ -1,7 +1,6 @@
 import {React, useCallback, useEffect, useState} from 'react';
 import {
   ActivityIndicator,
-  Button,
   Image,
   Linking,
   RefreshControl,
@@ -14,13 +13,13 @@ import {
 } from 'react-native';
 import * as ImagePicker from 'react-native-image-picker';
 import {Rows, Table} from 'react-native-reanimated-table';
+import {handleAuthError} from '../api/auth';
 import {createEvent, fetchEvent, updateEvent} from '../api/events';
 import Icon from '../assets/icons';
+import MessageModal from '../components/errorModal';
 import Layout from '../components/layout';
 import {colors, fonts, pages} from '../constants/constants';
-import {cleanData, emptyTodo, todoColors, todoStates} from '../utils/events';
-import {handleAuthError} from '../api/auth';
-import MessageModal from '../components/errorModal';
+import {emptyTodo, todoColors, todoStates} from '../utils/events';
 
 const EventDetailsPage = ({navigation, route}) => {
   const tempEventID = route.params.eventID;
@@ -109,13 +108,24 @@ const EventDetailsPage = ({navigation, route}) => {
   };
 
   const handleSubmit = async () => {
+    if (
+      !eventDetails.name ||
+      !eventDetails.description ||
+      !(eventDetails.image || image?.base64)
+    ) {
+      setMessage({
+        text: 'Event name, description, and image are required.',
+        success: false,
+      });
+      return;
+    }
     try {
       setIsSaving(true);
       const eventDetailsData = {
         event: {
           name: eventDetails.name,
           description: eventDetails.description,
-          encoded_image: eventDetails.image || image.base64,
+          encoded_image: image?.base64 || eventDetails.image,
           notes: notes,
         },
         todos: toDo.filter(item => item.data),
@@ -130,6 +140,11 @@ const EventDetailsPage = ({navigation, route}) => {
         const response = await createEvent(eventDetailsData);
         setEventID(response.data);
       }
+      setMessage({
+        text: 'Data Successfully saved!',
+        success: true,
+      });
+      await fetchData();
     } catch (error) {
       setMessage({text: error.message || 'Error saving event', success: false});
       console.error('Error saving event:', error);
@@ -264,7 +279,10 @@ const EventDetailsPage = ({navigation, route}) => {
   };
 
   return (
-    <Layout title="Event Details" navigation={navigation}>
+    <Layout
+      title="Event Details"
+      navigation={navigation}
+      currentPage={pages.eventPage}>
       <ScrollView
         style={styles.container}
         refreshControl={
@@ -279,8 +297,8 @@ const EventDetailsPage = ({navigation, route}) => {
                 <Image
                   source={{
                     uri:
-                      eventDetails.image ||
                       image?.uri ||
+                      eventDetails.image ||
                       'https://www.spict.org.uk/wp-content/uploads/2019/04/placeholder.png',
                   }}
                   style={styles.eventImage}
@@ -444,15 +462,6 @@ const EventDetailsPage = ({navigation, route}) => {
           justifyContent: 'center',
           alignItems: 'center',
         }}
-        disabled={
-          !(
-            (image || eventDetails.image) &&
-            eventDetails.name &&
-            eventDetails.description &&
-            !isSaving &&
-            !isLoading
-          )
-        }
         onPress={() => handleSubmit()}>
         {isSaving ? (
           <ActivityIndicator size="small" color={'black'} />

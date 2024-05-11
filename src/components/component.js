@@ -1,17 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   ImageBackground,
-  ScrollView,
   StyleSheet,
   Text,
-  TextInput,
-  TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import Icon from '../assets/icons';
-import {RecommendedStuffBoxCard} from './homeComponents';
-import Layout from '../components/layout';
-import {colors, fonts, pages} from '../constants/constants';
+import { fonts } from '../constants/constants';
 
 export const Banner = ({image, text}) => (
   <ImageBackground source={image} resizeMode="stretch">
