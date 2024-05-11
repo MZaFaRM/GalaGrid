@@ -1,10 +1,8 @@
 import React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Swipeable from 'react-native-swipeable';
-import {handleAuthError} from '../api/auth';
-import {deleteEvent} from '../api/events';
 import Icon from '../assets/icons';
-import {colors, fonts, pages} from '../constants/constants';
+import { colors, fonts, pages } from '../constants/constants';
 
 export const EventCard = ({navigation, eventData, onDelete}) => {
   const rightButtons = [

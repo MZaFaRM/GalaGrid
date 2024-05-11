@@ -131,7 +131,7 @@ const EventDetailsPage = ({navigation, route}) => {
     } catch (error) {
       setMessage({text: error.message || 'Error saving event', success: false});
       console.error('Error saving event:', error);
-      handleAuthError(error, navigation);
+      await handleAuthError(error, navigation);
     } finally {
       setIsSaving(false);
     }

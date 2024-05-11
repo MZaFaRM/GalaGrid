@@ -20,6 +20,7 @@ import {colors, fonts, pages} from '../constants/constants';
 import {fetchEvent} from '../api/events';
 import {handleAuthError} from '../api/auth';
 import {useFocusEffect} from '@react-navigation/native';
+import {getAuthToken} from '../api/src';
 
 const HomePage = ({navigation}) => {
   const [products, setProducts] = useState([]);
@@ -31,7 +32,7 @@ const HomePage = ({navigation}) => {
       const response = await fetchProduct();
       setProducts(response.data);
     } catch (error) {
-      handleAuthError(error, navigation);
+      await handleAuthError(error, navigation);
     } finally {
       setIsLoading(false);
     }

@@ -25,6 +25,7 @@ import ErrorBoundary from 'react-native-error-boundary';
 import MessageModal from './src/components/errorModal';
 import LoginPage from './src/screens/loginPage';
 import EditProfile from './src/screens/editProfilePage.js';
+import BlankPage from './src/screens/blankPage.js';
 
 const Stack = createStackNavigator();
 
@@ -38,19 +39,24 @@ const App = () => {
         }}>
         <NavigationContainer>
           <Stack.Navigator>
-            {/* <Stack.Screen
-            name={pages.introPage}
-            component={IntroPage}
-            options={{headerShown: false}}
-          /> */}
             <Stack.Screen
-              name={pages.homePage}
-              component={HomePage}
+              name={pages.blankPage}
+              component={BlankPage}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name={pages.introPage}
+              component={IntroPage}
               options={{headerShown: false}}
             />
             <Stack.Screen
               name={pages.loginPage}
               component={LoginPage}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name={pages.homePage}
+              component={HomePage}
               options={{headerShown: false}}
             />
             <Stack.Screen

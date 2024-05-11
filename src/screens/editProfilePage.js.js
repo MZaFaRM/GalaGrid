@@ -63,7 +63,7 @@ const EditProfile = () => {
         success: false,
       });
 
-      handleAuthError(error, navigation);
+      await handleAuthError(error, navigation);
     }
   };
 
@@ -74,7 +74,7 @@ const EditProfile = () => {
       setName(response.data.first_name);
       setMobile(response.data.mobile);
     } catch (error) {
-      handleAuthError(error, navigation);
+      await handleAuthError(error, navigation);
     } finally {
       setIsLoading(false);
     }
@@ -91,7 +91,7 @@ const EditProfile = () => {
       setIsLoading(false);
       navigation.navigate(pages.settingsPage);
     } catch (error) {
-      handleAuthError(error, navigation);
+      await handleAuthError(error, navigation);
     }
   };
 

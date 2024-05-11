@@ -67,7 +67,7 @@ const ProductForm = () => {
       await createProduct(productData);
       navigation.navigate(pages.settingsPage);
     } catch (error) {
-      handleAuthError(error, navigation);
+      await handleAuthError(error, navigation);
     }
   };
 

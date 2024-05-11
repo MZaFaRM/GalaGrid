@@ -22,7 +22,8 @@ const LoginPage = ({navigation}) => {
 
   const handleLogin = async () => {
     try {
-      await login(mobile, password);
+      const strMobile = mobile.toString();
+      await login(strMobile, password);
       navigation.navigate(pages.homePage);
     } catch (error) {
       const newError = {
@@ -50,6 +51,7 @@ const LoginPage = ({navigation}) => {
             placeholder="Mobile"
             style={styles.inputBox}
             onChangeText={setMobile}
+            inputMode="numeric"
           />
           <Text style={styles.inputHead}>Password</Text>
           <TextInput

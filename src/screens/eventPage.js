@@ -36,7 +36,7 @@ const EventPage = ({route, navigation}) => {
       const response = await deleteEvent(id);
       await fetchData();
     } catch (error) {
-      handleAuthError(error, navigation);
+      await handleAuthError(error, navigation);
       console.error('Error deleting event:', error);
     }
   };

@@ -7,7 +7,7 @@ export const fetchData = async endpoint => {
     console.log('fetched data from', endpoint);
     return response.data;
   } catch (error) {
-    console.error('Error fetching data:', error.response.data);
+    console.error('Error fetching data:', error.response?.data);
     throw error;
   }
 };
@@ -35,7 +35,7 @@ export const updateData = async (endpoint, requestData) => {
   } catch (error) {
     console.log(
       'Error updating data:',
-      JSON.stringify(error.response.data.errors),
+      JSON.stringify(error.response.data?.errors),
     );
     throw error;
   }

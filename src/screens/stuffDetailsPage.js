@@ -70,7 +70,7 @@ const StuffDetailsPage = ({navigation, route}) => {
       setUserData(userResponse);
     } catch (error) {
       console.error('Error fetching data:', error.response.data);
-      handleAuthError(error, navigation);
+      await handleAuthError(error, navigation);
     } finally {
       setIsLoading(false);
     }
@@ -116,7 +116,7 @@ const StuffDetailsPage = ({navigation, route}) => {
       }
       await fetchData();
     } catch (error) {
-      handleAuthError(error, navigation);
+      await handleAuthError(error, navigation);
       setMessage({
         text: error.message || 'Something went wrong',
         success: false,
@@ -133,7 +133,7 @@ const StuffDetailsPage = ({navigation, route}) => {
       });
       await fetchData();
     } catch (error) {
-      handleAuthError(error, navigation);
+      await handleAuthError(error, navigation);
       setMessage({
         text: error.message || 'Something went wrong',
         success: false,

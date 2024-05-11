@@ -22,17 +22,18 @@ const SignUp = ({navigation}) => {
   });
 
   const handleSignUp = async () => {
+    const strMobile = mobile.toString();
     try {
-      if (!(fullName || mobile || password)) {
+      if (!(fullName || strMobile || password)) {
         throw new Error('Please fill all fields');
-      } else if (!/^\d{10}$/.test(mobile.trim())) {
+      } else if (!/^\d{10}$/.test(strMobile)) {
         throw new Error('Mobile number should be a 10 digit number');
       }
 
       const userData = {
-        username: `${mobile.trim()}@galagrid.org`,
+        username: `${strMobile}@galagrid.org`,
         first_name: fullName.trim(),
-        mobile: mobile.trim(),
+        mobile: strMobile,
         password: password,
       };
       await signUp(userData);
@@ -74,6 +75,7 @@ const SignUp = ({navigation}) => {
             placeholder="Mobile"
             style={styles.inputBox}
             onChangeText={setMobile}
+            inputMode="numeric"
           />
           <Text style={styles.inputHead}>Password</Text>
           <TextInput

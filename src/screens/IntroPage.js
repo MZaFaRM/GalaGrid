@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from '../assets/icons';
 import GetStarted from '../assets/images/GetStarted.svg';
-import { pages } from '../constants/constants';
+import {pages} from '../constants/constants';
 const IntroPage = ({navigation}) => {
   return (
     <View style={styles.container}>
@@ -17,13 +17,13 @@ const IntroPage = ({navigation}) => {
           Find Event {'\n'}Rentals & Services
         </Text>
         <Text style={styles.bodyText}>
-          Find event rentals and services easily with EventEase. From
-          decorations to catering, everything you need is here. Simplify your
-          event planning with us.
+          Find event rentals and services easily with GalaGrid. From decorations
+          to catering, everything you need is here. Simplify your event planning
+          with us.
         </Text>
         <TouchableOpacity
           style={styles.GetStartedButton}
-          onPress={() => navigation.replace(pages.homePage)}>
+          onPress={() => navigation.replace(pages.signUpPage)}>
           <Text style={styles.footerText}>Get Started</Text>
           <Icon type="AntDesign" name="arrowright" size={20} color={'white'} />
         </TouchableOpacity>
