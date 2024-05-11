@@ -19,7 +19,7 @@ export const createData = async (endpoint, requestData) => {
     const response = await api.post(endpoint, requestData);
     return response.data;
   } catch (error) {
-    console.error(
+    console.log(
       'Error creating data:',
       JSON.stringify(error.response.data.errors),
     );
@@ -33,10 +33,11 @@ export const updateData = async (endpoint, requestData) => {
     const response = await api.patch(endpoint, requestData);
     return response.data;
   } catch (error) {
-    console.error(
+    console.log(
       'Error updating data:',
       JSON.stringify(error.response.data.errors),
     );
+    throw error;
   }
 };
 

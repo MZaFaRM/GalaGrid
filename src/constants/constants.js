@@ -20,6 +20,7 @@ export const pages = {
   loginPage: 'LoginPage',
   introPage: 'IntroPage',
   homePage: 'HomePage',
+  editProfile: 'EditProfile',
   filterPage: 'FilterPage',
   eventPage: 'EventPage',
   stuffDetailsPage: 'StuffDetailsPage',

@@ -24,6 +24,7 @@ import SignUpPage from './src/screens/signUpPage';
 import ErrorBoundary from 'react-native-error-boundary';
 import MessageModal from './src/components/errorModal';
 import LoginPage from './src/screens/loginPage';
+import EditProfile from './src/screens/editProfilePage.js';
 
 const Stack = createStackNavigator();
 
@@ -85,6 +86,11 @@ const App = () => {
             <Stack.Screen
               name={pages.productForm}
               component={ProductForm}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name={pages.editProfile}
+              component={EditProfile}
               options={{headerShown: false}}
             />
           </Stack.Navigator>

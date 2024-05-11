@@ -10,6 +10,39 @@ import {
 import Icon from '../assets/icons';
 import {colors, fonts} from '../constants/constants';
 
+const RandomUserReviewImage = ({main = false}) => {
+  let randomProfile;
+
+  if (main === true) {
+    randomProfile = 'user-astronaut';
+  } else {
+    const profileImages = [
+      'hospital-user',
+      'user-graduate',
+      'user-injured',
+      'user-ninja',
+      'user-md',
+      'user-tie',
+      'user-secret',
+      'user-shield',
+      'user-nurse',
+      'chalkboard-user',
+    ];
+    randomProfile =
+      profileImages[Math.floor(Math.random() * profileImages.length)];
+  }
+
+  return (
+    <Icon
+      name={randomProfile}
+      type={'FontAwesome6'}
+      size={25}
+      color={'white'}
+      style={{padding: 15, paddingRight: 0}}
+    />
+  );
+};
+
 export const UserReviewRatings = ({
   userData,
   onSubmit,
@@ -44,14 +77,7 @@ export const UserReviewRatings = ({
   return (
     <View style={styles.singleRating}>
       <View style={styles.profileName}>
-        <Image
-          source={{
-            uri: 'https://www.ageuk.org.uk/globalassets/age-uk/media/hero/sleeping-cat-crop.jpg',
-          }}
-          width={25}
-          height={25}
-          borderRadius={50}
-        />
+        <RandomUserReviewImage main />
       </View>
       <View
         style={styles.commentDescription}
@@ -136,36 +162,43 @@ export const UserReviewRatings = ({
   );
 };
 
-export const ReviewRatings = ({commentData}) => (
-  <View style={styles.singleRating}>
-    <View style={styles.profileName}>
-      <Image
-        source={{
-          uri: 'https://img.lovepik.com/photo/20211119/large/lovepik-cat-picture_500156655.jpg',
-        }}
-        width={25}
-        height={25}
-        borderRadius={50}
-      />
-    </View>
-    <View style={styles.commentDescription}>
-      <Text style={styles.commenterName}>Sheikh Minhaj</Text>
-      <View style={styles.productRating}>
-        <Icon type="AntDesign" name="star" size={15} color="yellow" />
-        <Icon type="AntDesign" name="star" size={15} color="yellow" />
-        <Icon type="AntDesign" name="star" size={15} color="yellow" />
-        <Icon type="AntDesign" name="star" size={15} color="yellow" />
-        <Icon type="AntDesign" name="star" size={15} color="grey" />
-        <Text style={[styles.profileName, {marginLeft: 5}]}>25/1/2023</Text>
+export const ReviewRatings = ({commentData}) => {
+  const [date, setDate] = useState(``);
+
+  useEffect(() => {
+    if (commentData.created_at) {
+      const userDate = new Date(commentData.created_at);
+      setDate(
+        `${userDate.getDate()}/${
+          userDate.getMonth() + 1
+        }/${userDate.getFullYear()}`,
+      );
+    }
+  }, []);
+
+  return (
+    <View style={styles.singleRating}>
+      <View style={styles.profileName}>
+        <RandomUserReviewImage />
       </View>
-      <Text style={styles.comment}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pulvinar
-        consequat tortor, sit amet viverra libero. Vivamus dapibus varius nulla
-        a lobortis. Morbi feugiat quis velit sit amet lobortis.
-      </Text>
+      <View style={styles.commentDescription}>
+        <Text style={styles.commenterName}>{commentData.user}</Text>
+        <View style={styles.productRating}>
+          {[...Array(5)].map((_, i) => (
+            <Icon
+              type="AntDesign"
+              name="star"
+              size={15}
+              color={i < commentData.rating ? 'yellow' : 'grey'}
+            />
+          ))}
+          <Text style={[styles.profileName, {marginLeft: 5}]}>{date}</Text>
+        </View>
+        <Text style={styles.comment}>{commentData.comment}</Text>
+      </View>
     </View>
-  </View>
-);
+  );
+};
 
 export const EventSelectCard = ({navigation, event}) => {
   return (
@@ -233,6 +266,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.quaternary,
     fontSize: 14,
     color: 'white',
+    marginTop: 10,
   },
   otherStuffBoxCardImageBox: {
     margin: 10,

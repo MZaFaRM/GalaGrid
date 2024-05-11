@@ -379,7 +379,7 @@ const StuffDetailsPage = ({navigation, route}) => {
                 onDelete={onReviewDelete}
               />
               {productData.ratings_data.all.map((review, index) => (
-                <ReviewRatings key={index} review={review} />
+                <ReviewRatings key={index} commentData={review} />
               ))}
             </View>
           </>

@@ -23,23 +23,6 @@ const ProductForm = () => {
   const [maxQuantity, setMaxQuantity] = useState('');
   const [image, setImage] = useState(null);
 
-  const convertToBase64 = async imageUri => {
-    try {
-      const response = await fetch(imageUri);
-      const blob = await response.blob();
-      const base64String = await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(blob);
-      });
-      return base64String.replace('data:image/jpeg;base64,', ''); // Remove data URL prefix
-    } catch (error) {
-      console.error('Error converting image to base64:', error);
-      throw error;
-    }
-  };
-
   const handleChooseImage = () => {
     const options = {
       title: 'Select Product Image',
@@ -98,7 +81,7 @@ const ProductForm = () => {
         <View style={styles.header}>
           <Text style={styles.heading}>Submit a Product</Text>
           <Text style={styles.description}>
-            Enter your product details and submit to click on submit send your
+            Enter your product details and submit to click on submit to send your
             product to review.
           </Text>
         </View>
