@@ -17,6 +17,11 @@ export const saveAuthToken = async token => {
   await AsyncStorage.setItem('authToken', token);
 };
 
+export const removeAuthToken = async () => {
+  await AsyncStorage.removeItem('authToken');
+  delete api.defaults.headers.common.Authorization;
+};
+
 export const updateAuthToken = async (token = null) => {
   if (!token) {
     token = await getAuthToken();
@@ -25,7 +30,14 @@ export const updateAuthToken = async (token = null) => {
   api.defaults.headers.common.Authorization = `Token ${token}`;
 };
 
-export const removeAuthToken = async () => {
-  await AsyncStorage.removeItem('authToken');
-  delete api.defaults.headers.common.Authorization;
+export const saveUserData = async userData => {
+  await AsyncStorage.setItem('userData', JSON.stringify(userData));
+};
+
+export const getUserData = async () => {
+  return JSON.parse(await AsyncStorage.getItem('userData'));
+};
+
+export const removeUserData = async () => {
+  await AsyncStorage.removeItem('userData');
 };

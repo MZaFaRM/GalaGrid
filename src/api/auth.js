@@ -1,24 +1,25 @@
 import {pages} from '../constants/constants';
-import {api, removeAuthToken, updateAuthToken} from './src';
+import {api, removeAuthToken, saveUserData, updateAuthToken} from './src';
 
 export const signUp = async userData => {
   try {
     return await api.post('api/signup/', userData);
   } catch (error) {
-    console.error('Error signing up:', error.response.data);
+    console.log('Error signing up:', error.response.data);
     throw error;
   }
 };
 export const login = async (mobile, password) => {
   try {
-    const authToken = await api.post('api/login/', {
+    const response = await api.post('api/login/', {
       mobile: mobile,
       password: password,
     });
-    updateAuthToken(authToken.data.token);
-    return authToken;
+    updateAuthToken(response.data.data.token);
+    saveUserData(response.data.data);
+    return response;
   } catch (error) {
-    console.error('Error signing up:', error.response.data);
+    console.log('Error logging in:', error.response.data);
     throw error;
   }
 };

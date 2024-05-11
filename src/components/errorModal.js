@@ -30,7 +30,7 @@ const MessageModal = ({message, resetMessage, success = false}) => {
   };
 
   return (
-    <View style={{width: '100%', height: '100%'}} onTouchStart={handleClose}>
+    <View onTouchStart={handleClose}>
       <Modal visible={visible} animationType="slide" transparent={true}>
         <View style={styles.container}>
           <View
@@ -67,7 +67,6 @@ const MessageModal = ({message, resetMessage, success = false}) => {
 
 const styles = StyleSheet.create({
   container: {
-    zIndex: 1,
     position: 'absolute',
     bottom: 0,
     width: '100%',

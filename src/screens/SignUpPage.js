@@ -30,7 +30,7 @@ const SignUp = ({navigation}) => {
       }
 
       const userData = {
-        username: `${mobile.trim()}@${mobile.trim()}.galagrid.org`,
+        username: `${mobile.trim()}@galagrid.org`,
         first_name: fullName.trim(),
         mobile: mobile.trim(),
         password: password,
@@ -38,9 +38,8 @@ const SignUp = ({navigation}) => {
       await signUp(userData);
       navigation.navigate(pages.loginPage);
     } catch (error) {
-      console.log(error);
       const getError = attr => {
-        return error?.response?.data[attr]?.[0];
+        return error.response?.data.data[attr]?.[0];
       };
 
       const newError = {

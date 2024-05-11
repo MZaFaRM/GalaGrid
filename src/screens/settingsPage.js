@@ -6,14 +6,15 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {removeAuthToken} from '../api/src';
+import {removeAuthToken, removeUserData} from '../api/src';
 import {Banner} from '../components/component';
 import Layout from '../components/layout';
 import {fonts, pages} from '../constants/constants';
 
 const SettingsPage = ({navigation}) => {
-  const logout = () => {
-    removeAuthToken();
+  const logout = async () => {
+    await removeAuthToken();
+    await removeUserData();
     navigation.replace(pages.loginPage);
   };
   return (

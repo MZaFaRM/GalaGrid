@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Image,
   StyleSheet,
@@ -8,12 +8,38 @@ import {
   View,
 } from 'react-native';
 import Icon from '../assets/icons';
-import {colors, fonts, pages} from '../constants/constants';
+import {colors, fonts} from '../constants/constants';
 
-export const UserReviewRatings = () => {
-  const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState('');
+export const UserReviewRatings = ({
+  userData,
+  onSubmit,
+  userReview,
+  onDelete,
+}) => {
+  const [rating, setRating] = useState(userReview.rating || 0);
+  const [comment, setComment] = useState(userReview.comment || '');
+  const [date, setDate] = useState(``);
+
+  useEffect(() => {
+    if (userReview.created_at) {
+      const userDate = new Date(userReview.created_at);
+      setDate(
+        `${userDate.getDate()}/${
+          userDate.getMonth() + 1
+        }/${userDate.getFullYear()}`,
+      );
+    }
+  }, []);
+
+  const [showEdit, setShowEdit] = useState(false);
+
   const [height, setHeight] = useState(0);
+  const textInputRef = useRef(null);
+
+  useEffect(() => {
+    setComment(userReview.comment);
+    setRating(userReview.rating);
+  }, [showEdit]);
 
   return (
     <View style={styles.singleRating}>
@@ -27,22 +53,32 @@ export const UserReviewRatings = () => {
           borderRadius={50}
         />
       </View>
-      <View style={styles.commentDescription}>
+      <View
+        style={styles.commentDescription}
+        onTouchStart={() => {
+          if (!showEdit) {
+            setShowEdit(true);
+          }
+        }}>
         <Text style={[styles.commenterName, {color: 'white'}]}>
-          Muhammed Zafar (You)
+          {userData.first_name} (You)
         </Text>
         <View style={styles.productRating}>
           {[...Array(5)].map((e, i) => (
-            <TouchableOpacity key={i} onPress={() => setRating(i + 1)}>
+            <TouchableOpacity
+              key={i}
+              onPress={() => setRating(i + 1)}
+              disabled={!showEdit}>
               <Icon
                 type="AntDesign"
                 name="star"
-                size={20}
+                size={showEdit ? 20 : 15}
                 color={i < rating ? 'yellow' : 'grey'}
                 key={i}
               />
             </TouchableOpacity>
           ))}
+          <Text style={[styles.profileName, {marginLeft: 5}]}>{date}</Text>
         </View>
         <View>
           <TextInput
@@ -53,17 +89,54 @@ export const UserReviewRatings = () => {
             onChangeText={setComment}
             numberOfLines={1}
             maxLength={200}
+            editable={showEdit}
+            ref={textInputRef}
           />
         </View>
-        <TouchableOpacity style={styles.postCommentButton}>
-          <Text style={{color: 'black', fontFamily: fonts.primary}}>Post</Text>
-        </TouchableOpacity>
+        {showEdit && (
+          <View
+            style={{
+              flexDirection: 'row',
+              width: '100%',
+            }}>
+            {userReview && (
+              <TouchableOpacity
+                style={[styles.postCommentButton, {backgroundColor: '#0E46A3'}]}
+                onPress={() => setShowEdit(false)}>
+                <Icon
+                  type="AntDesign"
+                  name="closesquare"
+                  size={18}
+                  color="#9AC8CD"
+                />
+              </TouchableOpacity>
+            )}
+            <TouchableOpacity
+              style={[
+                styles.postCommentButton,
+                {flex: 1, marginHorizontal: 10},
+              ]}
+              onPress={() => onSubmit(rating, comment)}>
+              <Text style={{color: 'black', fontFamily: fonts.primary}}>
+                {userReview.rating > 0 ? 'Edit Review' : 'Post'}
+              </Text>
+            </TouchableOpacity>
+            {userReview && (
+              <TouchableOpacity
+                style={[styles.postCommentButton, {backgroundColor: 'red'}]}
+                disabled={!userReview.rating}
+                onPress={onDelete}>
+                <Icon type="Entypo" name="trash" size={18} color="white" />
+              </TouchableOpacity>
+            )}
+          </View>
+        )}
       </View>
     </View>
   );
 };
 
-export const ReviewRatings = () => (
+export const ReviewRatings = ({commentData}) => (
   <View style={styles.singleRating}>
     <View style={styles.profileName}>
       <Image
@@ -140,6 +213,7 @@ const styles = StyleSheet.create({
   commentDescription: {
     marginLeft: 25,
     paddingRight: 30,
+    flex: 1,
   },
   commenterName: {
     fontFamily: fonts.secondary,
@@ -150,13 +224,15 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   userComment: {
-    fontFamily: fonts.tertiary,
+    fontFamily: fonts.quaternary,
     fontSize: 14,
     width: '100%',
+    color: 'white',
   },
   comment: {
-    fontFamily: fonts.tertiary,
+    fontFamily: fonts.quaternary,
     fontSize: 14,
+    color: 'white',
   },
   otherStuffBoxCardImageBox: {
     margin: 10,
@@ -206,8 +282,8 @@ const styles = StyleSheet.create({
   },
   postCommentButton: {
     backgroundColor: colors.yellow,
-    padding: 10,
-    borderRadius: 10,
+    padding: 8,
+    borderRadius: 5,
     marginTop: 10,
     alignItems: 'center',
   },

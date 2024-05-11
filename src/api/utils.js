@@ -1,4 +1,4 @@
-import { api, updateAuthToken } from './src';
+import {api, updateAuthToken} from './src';
 
 export const fetchData = async endpoint => {
   try {

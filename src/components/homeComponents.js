@@ -39,32 +39,30 @@ export const RecommendedStuffBoxCard = ({product}) => {
           </View>
           <View style={stuffBoxCardStyles.stuffRatingBox}>
             <Text style={stuffBoxCardStyles.stuffRatingText}>
-              5K{'\t'}
-              <Icon
-                type="AntDesign"
-                name="star"
-                size={14}
-                color={colors.yellow}
-              />
-              <Icon
-                type="AntDesign"
-                name="star"
-                size={14}
-                color={colors.yellow}
-              />
-              <Icon
-                type="AntDesign"
-                name="star"
-                size={14}
-                color={colors.yellow}
-              />
-              <Icon
-                type="AntDesign"
-                name="star"
-                size={14}
-                color={colors.yellow}
-              />
-              <Icon type="AntDesign" name="star" size={14} color="grey" />
+              {product.ratings.peeps}
+              {'\t'}
+              {Array(product.ratings.stars)
+                .fill(0)
+                .map((_, index) => (
+                  <Icon
+                    key={index}
+                    type="AntDesign"
+                    name="star"
+                    size={14}
+                    color={colors.yellow}
+                  />
+                ))}
+              {Array(5 - product.ratings.stars)
+                .fill(0)
+                .map((_, index) => (
+                  <Icon
+                    key={index}
+                    type="AntDesign"
+                    name="star"
+                    size={14}
+                    color="grey"
+                  />
+                ))}
             </Text>
           </View>
         </View>

@@ -25,13 +25,12 @@ const LoginPage = ({navigation}) => {
       await login(mobile, password);
       navigation.navigate(pages.homePage);
     } catch (error) {
-      const getError = attr => {
-        return error?.response?.data[attr];
-      };
-
       const newError = {
         success: false,
-        text: getError('error') || error.message || 'Something went wrong',
+        text:
+          error.response?.data.message ||
+          error.message ||
+          'Something went wrong',
       };
 
       setMessage(newError);

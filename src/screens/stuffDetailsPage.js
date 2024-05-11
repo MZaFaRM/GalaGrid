@@ -19,9 +19,16 @@ import {
   UserReviewRatings,
 } from '../components/stuffDetailsComponents';
 import {colors, fonts, pages} from '../constants/constants';
-import {fetchProduct, saveToEvents} from '../api/products';
+import {
+  createReview,
+  deleteReview,
+  fetchProduct,
+  saveToEvents,
+} from '../api/products';
 import {fetchEvent} from '../api/events';
 import {handleAuthError} from '../api/auth';
+import {getUserData} from '../api/src';
+import MessageModal from '../components/errorModal';
 
 const StuffDetailsPage = ({navigation, route}) => {
   const {productID} = route.params;
@@ -31,8 +38,14 @@ const StuffDetailsPage = ({navigation, route}) => {
   const [productData, setProductData] = useState({});
   const [eventData, setEventData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [userData, setUserData] = useState({});
+  const [userReview, setUserReview] = useState({});
 
   const [selectedEvents, setSelectedEvents] = useState([]);
+  const [message, setMessage] = useState({
+    text: '',
+    success: false,
+  });
 
   const changeQuantity = text => {
     const number = parseInt(text);
@@ -52,6 +65,9 @@ const StuffDetailsPage = ({navigation, route}) => {
       setProductData(response.data);
       const eventResponse = await fetchEvent();
       setEventData(eventResponse.data);
+
+      const userResponse = await getUserData();
+      setUserData(userResponse);
     } catch (error) {
       console.error('Error fetching data:', error.response.data);
       handleAuthError(error, navigation);
@@ -83,6 +99,47 @@ const StuffDetailsPage = ({navigation, route}) => {
   const onRefresh = useCallback(() => {
     fetchData();
   }, []);
+
+  const onReviewSubmit = async (rating, comment) => {
+    try {
+      if (!rating) {
+        throw new Error('Rating is required to add your review!');
+      }
+      await createReview(productData.id, rating, comment);
+      if (productData.ratings_data.user?.rating) {
+        setMessage({
+          text: 'Review Updated!',
+          success: true,
+        });
+      } else {
+        setMessage({text: 'Review Added!', success: true});
+      }
+      await fetchData();
+    } catch (error) {
+      handleAuthError(error, navigation);
+      setMessage({
+        text: error.message || 'Something went wrong',
+        success: false,
+      });
+    }
+  };
+
+  const onReviewDelete = async () => {
+    try {
+      await deleteReview();
+      setMessage({
+        text: 'Review Deleted!',
+        success: true,
+      });
+      await fetchData();
+    } catch (error) {
+      handleAuthError(error, navigation);
+      setMessage({
+        text: error.message || 'Something went wrong',
+        success: false,
+      });
+    }
+  };
 
   return (
     <Layout
@@ -116,12 +173,31 @@ const StuffDetailsPage = ({navigation, route}) => {
                   {productData.district}, {productData.state}
                 </Text>
                 <View style={styles.productRating}>
-                  <Text style={styles.productRatingText}>5K</Text>
-                  <Icon type="AntDesign" name="star" size={15} color="yellow" />
-                  <Icon type="AntDesign" name="star" size={15} color="yellow" />
-                  <Icon type="AntDesign" name="star" size={15} color="yellow" />
-                  <Icon type="AntDesign" name="star" size={15} color="yellow" />
-                  <Icon type="AntDesign" name="star" size={15} color="grey" />
+                  <Text style={styles.productRatingText}>
+                    {productData.ratings?.peeps}
+                  </Text>
+                  {Array(productData.ratings.stars)
+                    .fill(0)
+                    .map((_, index) => (
+                      <Icon
+                        key={index}
+                        type="AntDesign"
+                        name="star"
+                        size={14}
+                        color={colors.yellow}
+                      />
+                    ))}
+                  {Array(5 - productData.ratings.stars)
+                    .fill(0)
+                    .map((_, index) => (
+                      <Icon
+                        key={index}
+                        type="AntDesign"
+                        name="star"
+                        size={14}
+                        color="grey"
+                      />
+                    ))}
                 </View>
                 <Text style={styles.productDetails}>
                   {productData.description}
@@ -296,14 +372,24 @@ const StuffDetailsPage = ({navigation, route}) => {
               <Text style={styles.reviewsAndRatingsText}>
                 Reviews & Ratings
               </Text>
-              <UserReviewRatings />
-              <ReviewRatings />
-              <ReviewRatings />
-              <ReviewRatings />
+              <UserReviewRatings
+                userData={userData}
+                onSubmit={onReviewSubmit}
+                userReview={productData.ratings_data.user}
+                onDelete={onReviewDelete}
+              />
+              {productData.ratings_data.all.map((review, index) => (
+                <ReviewRatings key={index} review={review} />
+              ))}
             </View>
           </>
         )}
       </ScrollView>
+      <MessageModal
+        message={message.text}
+        resetMessage={setMessage}
+        success={message.success}
+      />
     </Layout>
   );
 };
