@@ -20,9 +20,10 @@ import EventPage from './src/screens/eventPage';
 import SettingsPage from './src/screens/settingsPage';
 import EventDetailsPage from './src/screens/eventDetailsPage';
 import ProductForm from './src/screens/productForm';
-import SignUpPage from './src/screens/SignUpPage';
+import SignUpPage from './src/screens/signUpPage';
 import ErrorBoundary from 'react-native-error-boundary';
-import ErrorModal from './src/components/errorModal';
+import MessageModal from './src/components/errorModal';
+import LoginPage from './src/screens/loginPage';
 
 const Stack = createStackNavigator();
 
@@ -42,13 +43,18 @@ const App = () => {
             options={{headerShown: false}}
           /> */}
             <Stack.Screen
-              name={pages.signUpPage}
-              component={SignUpPage}
+              name={pages.homePage}
+              component={HomePage}
               options={{headerShown: false}}
             />
             <Stack.Screen
-              name={pages.homePage}
-              component={HomePage}
+              name={pages.loginPage}
+              component={LoginPage}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name={pages.signUpPage}
+              component={SignUpPage}
               options={{headerShown: false}}
             />
             <Stack.Screen

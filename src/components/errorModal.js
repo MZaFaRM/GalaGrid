@@ -10,28 +10,36 @@ import {
 import {colors, fonts} from '../constants/constants';
 import Icon from '../assets/icons';
 
-const ErrorModal = ({error, resetError}) => {
-  const [visible, setVisible] = useState(!!error);
+const MessageModal = ({message, resetMessage, success = false}) => {
+  const [visible, setVisible] = useState(!!message);
 
   useEffect(() => {
-    console.log('Error logged:', error);
-    setVisible(!!error);
+    if (!visible) {
+      return;
+    }
+    
+    console.log('Error logged:', message);
+    setVisible(!!message);
 
     setTimeout(() => {
       handleClose();
     }, 5000);
-  }, [error]);
+  }, [message]);
 
   const handleClose = () => {
-    resetError('');
+    resetMessage('');
     setVisible(false);
   };
 
   return (
     <Modal visible={visible} animationType="slide" transparent={true}>
       <View style={styles.container}>
-        <View style={styles.modal}>
-          <Text style={styles.errorText}>{error}</Text>
+        <View
+          style={[
+            styles.modal,
+            success ? {borderColor: 'green'} : {borderColor: 'red'},
+          ]}>
+          <Text style={styles.errorText}>{message}</Text>
           <TouchableOpacity onPress={handleClose} style={styles.closeButton}>
             <Icon
               name="close"
@@ -48,7 +56,10 @@ const ErrorModal = ({error, resetError}) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    zIndex: 1,
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
@@ -78,4 +89,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ErrorModal;
+export default MessageModal;

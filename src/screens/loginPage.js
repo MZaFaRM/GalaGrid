@@ -6,45 +6,28 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {signUp} from '../api/auth';
+import {login, signUp} from '../api/auth';
 import MessageModal from '../components/errorModal';
 import {colors, fonts, pages} from '../constants/constants';
 import {err} from 'react-native-svg';
 
-const SignUp = ({navigation}) => {
+const LoginPage = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [fullName, setFullName] = useState('');
   const [mobile, setMobile] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleSignUp = async () => {
+  const handleLogin = async () => {
     try {
-      if (!(fullName || mobile || password)) {
-        throw new Error('Please fill all fields');
-      } else if (!/^\d{10}$/.test(mobile.trim())) {
-        throw new Error('Mobile number should be a 10 digit number');
-      }
-
-      const userData = {
-        username: `${mobile.trim()}@${mobile.trim()}.galagrid.org`,
-        first_name: fullName.trim(),
-        mobile: mobile.trim(),
-        password: password,
-      };
-      await signUp(userData);
-      navigation.navigate(pages.loginPage);
+      await login(mobile, password);
+      navigation.navigate(pages.homePage);
     } catch (error) {
       const getError = attr => {
-        return error?.response?.data[attr]?.[0];
+        return error?.response?.data[attr];
       };
 
       const errorMessage =
-        getError('mobile') ||
-        getError('username') ||
-        getError('first_name') ||
-        error.message ||
-        'Something went wrong';
+        getError('error') || error.message || 'Something went wrong';
 
       setError(errorMessage);
     }
@@ -54,15 +37,10 @@ const SignUp = ({navigation}) => {
     <View style={styles.container}>
       <View style={styles.formContainer}>
         <Text style={styles.header}>
-          Welcome {'\n'}to <Text style={{color: colors.yellow}}>GalaGrid</Text>
+          Welcome {'\n'}Back to{' '}
+          <Text style={{color: colors.yellow}}>GalaGrid</Text>
         </Text>
         <View style={styles.form}>
-          <Text style={styles.inputHead}>Full Name</Text>
-          <TextInput
-            placeholder="Full Name"
-            style={styles.inputBox}
-            onChangeText={setFullName}
-          />
           <Text style={styles.inputHead}>Mobile</Text>
           <TextInput
             placeholder="Mobile"
@@ -76,16 +54,16 @@ const SignUp = ({navigation}) => {
             style={styles.inputBox}
             onChangeText={setPassword}
           />
-          <TouchableOpacity onPress={handleSignUp}>
+          <TouchableOpacity onPress={handleLogin}>
             {isLoading ? (
               <ActivityIndicator size="small" color={'black'} />
             ) : (
-              <Text style={styles.signUpButton}>Sign Up</Text>
+              <Text style={styles.signUpButton}>Login</Text>
             )}
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate(pages.loginPage)}>
-            <Text style={styles.alreadyAccount}>Have an account already?</Text>
+            onPress={() => navigation.navigate(pages.signUpPage)}>
+            <Text style={styles.alreadyAccount}>Don't have an account?</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -153,4 +131,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUp;
+export default LoginPage;

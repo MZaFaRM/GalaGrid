@@ -17,7 +17,7 @@ export const colors = {
 };
 export const pages = {
   signUpPage: 'SignUpPage',
-  signInPage: 'SignInPage',
+  loginPage: 'LoginPage',
   introPage: 'IntroPage',
   homePage: 'HomePage',
   filterPage: 'FilterPage',

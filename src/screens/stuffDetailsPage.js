@@ -18,9 +18,10 @@ import {
   ReviewRatings,
   UserReviewRatings,
 } from '../components/stuffDetailsComponents';
-import {colors, fonts} from '../constants/constants';
+import {colors, fonts, pages} from '../constants/constants';
 import {fetchProduct, saveToEvents} from '../api/products';
 import {fetchEvent} from '../api/events';
+import {handleAuthError} from '../api/auth';
 
 const StuffDetailsPage = ({navigation, route}) => {
   const {productID} = route.params;
@@ -51,9 +52,11 @@ const StuffDetailsPage = ({navigation, route}) => {
       setProductData(response.data);
       const eventResponse = await fetchEvent();
       setEventData(eventResponse.data);
-      setIsLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error.response.data);
+      handleAuthError(error, navigation);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -215,28 +218,51 @@ const StuffDetailsPage = ({navigation, route}) => {
                         </TouchableOpacity>
                       </View>
                       <View style={styles.eventSelector}>
-                        {eventData.map((event, index) => (
+                        {eventData ? (
                           <TouchableOpacity
-                            key={index}
-                            onPress={() => {
-                              setEventData(prevState => {
-                                const updatedEvents = [...prevState];
-                                updatedEvents[index].selected =
-                                  !updatedEvents[index].selected;
-                                return updatedEvents;
-                              });
-                            }}
                             style={[
-                              styles.eventContainer,
-                              event.selected && styles.selectedContainer,
-                            ]}>
-                            <EventSelectCard
-                              navigation={navigation}
-                              key={index}
-                              event={event}
+                              styles.continueButton,
+                              {alignItems: 'center', padding: 20},
+                            ]}
+                            onPress={() => navigation.replace(pages.eventPage)}>
+                            <Icon
+                              name={'event'}
+                              type={'MaterialIcons'}
+                              size={24}
+                              color={'black'}
                             />
+                            <Text
+                              style={[
+                                styles.continueButtonText,
+                                {fontSize: 18},
+                              ]}>
+                              Create an Event
+                            </Text>
                           </TouchableOpacity>
-                        ))}
+                        ) : (
+                          eventData.map((event, index) => (
+                            <TouchableOpacity
+                              key={index}
+                              onPress={() => {
+                                setEventData(prevState => {
+                                  const updatedEvents = [...prevState];
+                                  updatedEvents[index].selected =
+                                    !updatedEvents[index].selected;
+                                  return updatedEvents;
+                                });
+                              }}
+                              style={[
+                                styles.eventContainer,
+                                event.selected && styles.selectedContainer,
+                              ]}>
+                              <EventSelectCard
+                                navigation={navigation}
+                                key={index}
+                                event={event}
+                              />
+                            </TouchableOpacity>
+                          ))
+                        )}
                       </View>
                       <View>
                         <TouchableOpacity style={styles.modalCancelButton}>

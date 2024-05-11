@@ -2,33 +2,42 @@ import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from '../assets/icons';
 import {colors, fonts, pages} from '../constants/constants';
+import Swipeable from 'react-native-swipeable';
 
 export const EventCard = ({navigation, eventData}) => {
+  const rightButtons = [
+    <TouchableOpacity
+      style={styles.deleteButton}
+      onPress={() => onDelete(eventData.id)}>
+      <Text style={styles.deleteButtonText}>Delete</Text>
+    </TouchableOpacity>,
+  ];
 
   return (
-    <TouchableOpacity
-      style={styles.container}
-      onPress={() =>
-        navigation.navigate(pages.eventDetails, {
-          eventID: eventData.id,
-        })
-      }>
-      <View style={styles.otherStuffBoxCardImageBox}>
-        <Image
-          source={{
-            uri: eventData.image,
-          }}
-          style={styles.otherStuffBoxCardImage}
-        />
-      </View>
-      <View style={styles.otherStuffBoxCardDetails}>
-        <Text style={styles.otherStuffName}>{eventData.name}</Text>
-        <View style={styles.eventDue}>
-          <Text style={styles.eventDueText} numberOfLines={3}>
-            {eventData.description}
-          </Text>
+    <Swipeable rightButtons={rightButtons}>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={() =>
+          navigation.navigate(pages.eventDetails, {
+            eventID: eventData.id,
+          })
+        }>
+        <View style={styles.otherStuffBoxCardImageBox}>
+          <Image
+            source={{
+              uri: eventData.image,
+            }}
+            style={styles.otherStuffBoxCardImage}
+          />
         </View>
-        {/* <View style={styles.otherStuffLocation}>
+        <View style={styles.otherStuffBoxCardDetails}>
+          <Text style={styles.otherStuffName}>{eventData.name}</Text>
+          <View style={styles.eventDue}>
+            <Text style={styles.eventDueText} numberOfLines={3}>
+              {eventData.description}
+            </Text>
+          </View>
+          {/* <View style={styles.otherStuffLocation}>
           <Icon
             type="Entypo"
             name="location-pin"
@@ -40,8 +49,9 @@ export const EventCard = ({navigation, eventData}) => {
             {eventData.location}
           </Text>
         </View> */}
-      </View>
-    </TouchableOpacity>
+        </View>
+      </TouchableOpacity>
+    </Swipeable>
   );
 };
 

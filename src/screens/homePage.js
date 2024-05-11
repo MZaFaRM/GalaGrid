@@ -18,16 +18,22 @@ import {RecommendedStuffBoxCard} from '../components/homeComponents';
 import Layout from '../components/layout';
 import {colors, fonts, pages} from '../constants/constants';
 import {fetchEvent} from '../api/events';
+import {handleAuthError} from '../api/auth';
 
 const HomePage = ({navigation}) => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchData = async () => {
-    setIsLoading(true);
-    const response = await fetchProduct();
-    setProducts(response.data);
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      const response = await fetchProduct();
+      setProducts(response.data);
+    } catch (error) {
+      handleAuthError(error, navigation);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {

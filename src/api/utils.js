@@ -1,7 +1,8 @@
-import {api} from './src';
+import {api, updateAuthToken} from './src';
 
 export const fetchData = async endpoint => {
   try {
+    await updateAuthToken();
     const response = await api.get(endpoint);
     console.log('fetched data from', endpoint);
     return response.data;
@@ -14,6 +15,7 @@ export const fetchData = async endpoint => {
 export const createData = async (endpoint, requestData) => {
   try {
     console.log(endpoint);
+    await updateAuthToken();
     const response = await api.post(endpoint, requestData);
     return response.data;
   } catch (error) {
@@ -27,6 +29,7 @@ export const createData = async (endpoint, requestData) => {
 
 export const updateData = async (endpoint, requestData) => {
   try {
+    await updateAuthToken();
     const response = await api.patch(endpoint, requestData);
     return response.data;
   } catch (error) {

@@ -7,6 +7,7 @@ import {createProduct} from '../api/products';
 import Icon from '../assets/icons';
 import Layout from '../components/layout';
 import {colors, fonts, pages} from '../constants/constants';
+import {handleAuthError} from '../api/auth';
 
 const ProductForm = () => {
   const navigation = useNavigation();
@@ -67,20 +68,24 @@ const ProductForm = () => {
   };
 
   const handleSubmit = async () => {
-    const productData = {
-      company_name: company,
-      name: name,
-      description: description,
-      district: district[0].toUpperCase() + district.slice(1),
-      state: state[0].toUpperCase() + state.slice(1),
-      price: price,
-      chat: chat,
-      mobile: mobile,
-      max_quantity: maxQuantity,
-      encoded_image: image.base64,
-    };
-    await createProduct(productData);
-    navigation.navigate(pages.settingsPage);
+    try {
+      const productData = {
+        company_name: company,
+        name: name,
+        description: description,
+        district: district[0].toUpperCase() + district.slice(1),
+        state: state[0].toUpperCase() + state.slice(1),
+        price: price,
+        chat: chat,
+        mobile: mobile,
+        max_quantity: maxQuantity,
+        encoded_image: image.base64,
+      };
+      await createProduct(productData);
+      navigation.navigate(pages.settingsPage);
+    } catch (error) {
+      handleAuthError(error, navigation);
+    }
   };
 
   return (

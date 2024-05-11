@@ -34,6 +34,11 @@ const SettingsPage = ({navigation}) => {
             style={styles.settingsItem}>
             <Text style={styles.settingsText}>Submit a Product</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.push(pages.productForm)}
+            style={styles.settingsItem}>
+            <Text style={styles.settingsText}>Log out</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </Layout>
@@ -45,16 +50,16 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   settingsItem: {
-    marginVertical: 10,
+    marginVertical: 0,
     paddingVertical: 20,
 
     borderBottomWidth: 1,
     borderColor: 'white',
-    margin: 20
+    margin: 20,
   },
   settingsText: {
     color: 'white',
-    fontSize: 18,
+    fontSize: 14,
     paddingHorizontal: 10,
     fontFamily: fonts.tertiary,
   },

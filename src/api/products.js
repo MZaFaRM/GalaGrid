@@ -1,3 +1,4 @@
+import {updateAuthToken} from './src';
 import {createData, fetchData} from './utils';
 
 const productBase = `api/product/`;

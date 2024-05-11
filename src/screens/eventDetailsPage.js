@@ -19,6 +19,8 @@ import Icon from '../assets/icons';
 import Layout from '../components/layout';
 import {colors, fonts, pages} from '../constants/constants';
 import {cleanData, emptyTodo, todoColors, todoStates} from '../utils/events';
+import {handleAuthError} from '../api/auth';
+import MessageModal from '../components/errorModal';
 
 const EventDetailsPage = ({navigation, route}) => {
   const tempEventID = route.params.eventID;
@@ -36,6 +38,8 @@ const EventDetailsPage = ({navigation, route}) => {
   const [notes, setNotes] = useState('');
 
   const [image, setImage] = useState(null);
+
+  const [message, setMessage] = useState({text: '', success: null});
 
   const status = {
     pending: 'pending',
@@ -105,27 +109,34 @@ const EventDetailsPage = ({navigation, route}) => {
   };
 
   const handleSubmit = async () => {
-    setIsSaving(true);
-    const eventDetailsData = {
-      event: {
-        name: eventDetails.name,
-        description: eventDetails.description,
-        encoded_image: eventDetails.image || image.base64,
-        notes: notes,
-      },
-      todos: toDo.filter(item => item.data),
-      products: productData.map(item => ({
-        id: item.id,
-        status: item.status,
-      })),
-    };
-    if (eventID) {
-      await updateEvent(eventID, eventDetailsData);
-    } else {
-      const response = await createEvent(eventDetailsData);
-      setEventID(response.data);
+    try {
+      setIsSaving(true);
+      const eventDetailsData = {
+        event: {
+          name: eventDetails.name,
+          description: eventDetails.description,
+          encoded_image: eventDetails.image || image.base64,
+          notes: notes,
+        },
+        todos: toDo.filter(item => item.data),
+        products: productData.map(item => ({
+          id: item.id,
+          status: item.status,
+        })),
+      };
+      if (eventID) {
+        await updateEvent(eventID, eventDetailsData);
+      } else {
+        const response = await createEvent(eventDetailsData);
+        setEventID(response.data);
+      }
+    } catch (error) {
+      setMessage({text: error.message || 'Error saving event', success: false});
+      console.error('Error saving event:', error);
+      handleAuthError(error, navigation);
+    } finally {
+      setIsSaving(false);
     }
-    setIsSaving(false);
   };
 
   const fetchData = async () => {
@@ -420,6 +431,11 @@ const EventDetailsPage = ({navigation, route}) => {
             </View>
           </>
         )}
+        <MessageModal
+          message={message.text}
+          success={message.success}
+          resetMessage={setMessage}
+        />
       </ScrollView>
       <TouchableOpacity
         style={{
