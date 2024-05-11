@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginHorizontal: 30,
     fontFamily: fonts.primary,
+    color: 'white',
   },
   closeButton: {
     padding: 2,

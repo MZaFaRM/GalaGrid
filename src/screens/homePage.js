@@ -116,6 +116,7 @@ const HomePage = ({navigation}) => {
             style={{flex: 1}}
           />
           <TextInput
+          placeholderTextColor="#D3D3D3"
             placeholder="Search"
             placeholderTextColor="white"
             style={[styles.SearchText, {flex: 10}]}

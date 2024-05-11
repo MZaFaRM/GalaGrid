@@ -1,21 +1,8 @@
-import {useNavigation} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
-import {Image, StyleSheet, Text, TextInput, View} from 'react-native';
-import {
-  RefreshControl,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
-import * as ImagePicker from 'react-native-image-picker';
-import {createProduct} from '../api/products';
-import Icon from '../assets/icons';
-import Layout from '../components/layout';
-import {colors, fonts, pages} from '../constants/constants';
-import {handleAuthError} from '../api/auth';
-import {editUser, fetchUser} from '../api/user';
-import MessageModal from '../components/errorModal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {getAuthToken} from '../api/src';
+import React, { useEffect } from 'react';
+import { View } from 'react-native';
+import { getAuthToken } from '../api/src';
+import { pages } from '../constants/constants';
 
 const BlankPage = ({navigation}) => {
   const checkAuth = async () => {

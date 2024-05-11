@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {
+  ActivityIndicator,
   StyleSheet,
   Text,
   TextInput,
@@ -11,10 +12,11 @@ import MessageModal from '../components/errorModal';
 import {colors, fonts, pages} from '../constants/constants';
 import {err} from 'react-native-svg';
 
-const LoginPage = ({navigation}) => {
+const LoginPage = ({navigation, route}) => {
+  const {_mobile, _password} = route.params || {};
   const [isLoading, setIsLoading] = useState(false);
-  const [mobile, setMobile] = useState('');
-  const [password, setPassword] = useState('');
+  const [mobile, setMobile] = useState(_mobile || '');
+  const [password, setPassword] = useState(_password || '');
   const [message, setMessage] = useState({
     text: '',
     success: false,
@@ -22,6 +24,7 @@ const LoginPage = ({navigation}) => {
 
   const handleLogin = async () => {
     try {
+      setIsLoading(true);
       const strMobile = mobile.toString();
       await login(strMobile, password);
       navigation.navigate(pages.homePage);
@@ -35,6 +38,8 @@ const LoginPage = ({navigation}) => {
       };
 
       setMessage(newError);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -48,6 +53,7 @@ const LoginPage = ({navigation}) => {
         <View style={styles.form}>
           <Text style={styles.inputHead}>Mobile</Text>
           <TextInput
+            placeholderTextColor="#D3D3D3"
             placeholder="Mobile"
             style={styles.inputBox}
             onChangeText={setMobile}
@@ -55,20 +61,22 @@ const LoginPage = ({navigation}) => {
           />
           <Text style={styles.inputHead}>Password</Text>
           <TextInput
+            placeholderTextColor="#D3D3D3"
             placeholder="Password"
             secureTextEntry={true}
             style={styles.inputBox}
             onChangeText={setPassword}
           />
-          <TouchableOpacity onPress={handleLogin}>
+          <TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
             {isLoading ? (
               <ActivityIndicator size="small" color={'black'} />
             ) : (
-              <Text style={styles.signUpButton}>Login</Text>
+              <Text style={styles.loginText}>Login</Text>
             )}
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate(pages.signUpPage)}>
+            onPress={() => navigation.navigate(pages.signUpPage)}
+            disabled={isLoading}>
             <Text style={styles.alreadyAccount}>Don't have an account?</Text>
           </TouchableOpacity>
         </View>
@@ -115,13 +123,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     fontFamily: fonts.secondary,
+    color: 'white',
   },
-  signUpButton: {
+  loginButton: {
     backgroundColor: colors.yellow,
-    padding: 10,
-    textAlign: 'center',
     borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 20,
+    height: 40,
+  },
+  loginText: {
     color: 'black',
     fontSize: 20,
     fontFamily: fonts.primary,

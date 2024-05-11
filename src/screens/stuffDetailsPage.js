@@ -176,7 +176,7 @@ const StuffDetailsPage = ({navigation, route}) => {
                   <Text style={styles.productRatingText}>
                     {productData.ratings?.peeps}
                   </Text>
-                  {Array(productData.ratings.stars)
+                  {Array(5)
                     .fill(0)
                     .map((_, index) => (
                       <Icon
@@ -184,18 +184,11 @@ const StuffDetailsPage = ({navigation, route}) => {
                         type="AntDesign"
                         name="star"
                         size={14}
-                        color={colors.yellow}
-                      />
-                    ))}
-                  {Array(5 - productData.ratings.stars)
-                    .fill(0)
-                    .map((_, index) => (
-                      <Icon
-                        key={index}
-                        type="AntDesign"
-                        name="star"
-                        size={14}
-                        color="grey"
+                        color={
+                          index < productData.ratings.stars
+                            ? colors.yellow
+                            : colors.grey
+                        }
                       />
                     ))}
                 </View>
@@ -224,7 +217,7 @@ const StuffDetailsPage = ({navigation, route}) => {
                 textAlign="center"
                 onChangeText={setQuantity}
                 onEndEditing={() => changeQuantity(quantity)}
-                style={{margin: 0, padding: 0, width: 50}}
+                style={{margin: 0, padding: 0, width: 50, color: 'white'}}
               />
               <TouchableOpacity
                 onPress={() => changeQuantity(parseInt(quantity) - 1)}>
@@ -234,140 +227,56 @@ const StuffDetailsPage = ({navigation, route}) => {
               </TouchableOpacity>
             </View>
 
-            <View style={styles.continueBox}>
-              <TouchableOpacity
-                style={styles.callButton}
-                onPress={() => Linking.openURL(`tel:${productData.mobile}`)}>
-                <Icon
-                  name={'call'}
-                  type={'Ionicons'}
-                  size={18}
-                  color={'white'}
-                />
-                <Text style={styles.callButtonText}>Call</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.callButton, {marginHorizontal: 10}]}
-                onPress={() =>
-                  Linking.openURL(
-                    `https://wa.me/+91${
-                      productData.chat
-                    }?text=${encodeURIComponent(
-                      `Hi there! this message is regarding the ${productData.max_quantity} x ${productData.name} that was featured under the company ${productData.company_name} on GalaGrid. Can we talk?`,
-                    )}`,
-                  )
-                }>
-                <Icon
-                  name={'chatbox'}
-                  type={'Ionicons'}
-                  size={18}
-                  color={'white'}
-                />
-                <Text style={styles.callButtonText}>Chat</Text>
-              </TouchableOpacity>
-              <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                propagateSwipe={true}
-                onRequestClose={() => {
-                  setModalVisible(!modalVisible);
-                }}>
-                <ScrollView
-                  style={{
-                    backgroundColor: 'black',
-                    padding: 50,
-                  }}>
-                  <View style={styles.modalContainer}>
-                    <View contentContainerStyle={styles.modalBody}>
-                      <Text style={styles.modalHead}>Select an Event</Text>
-                      <Text style={styles.modalDescription}>
-                        Add this product to an event to easily manage your
-                        orders, later, when you need it, this product can be
-                        accessed from the event tab by selecting that event.
-                      </Text>
-                      <View style={{flexDirection: 'row', marginBottom: 10}}>
-                        <TouchableOpacity
-                          style={styles.cancelButton}
-                          onPress={onModelSubmit}>
-                          <Text style={styles.cancelButtonText}>Cancel</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          style={styles.continueButton}
-                          onPress={onModelSubmit}>
-                          <Text style={styles.continueButtonText}>
-                            Continue
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
-                      <View style={styles.eventSelector}>
-                        {eventData.length === 0 ? (
-                          <TouchableOpacity
-                            style={[
-                              styles.continueButton,
-                              {alignItems: 'center', padding: 20},
-                            ]}
-                            onPress={() => navigation.replace(pages.eventPage)}>
-                            <Icon
-                              name={'event'}
-                              type={'MaterialIcons'}
-                              size={24}
-                              color={'black'}
-                            />
-                            <Text
-                              style={[
-                                styles.continueButtonText,
-                                {fontSize: 18},
-                              ]}>
-                              Create an Event
-                            </Text>
-                          </TouchableOpacity>
-                        ) : (
-                          eventData.map((event, index) => (
-                            <TouchableOpacity
-                              key={index}
-                              onPress={() => {
-                                setEventData(prevState => {
-                                  const updatedEvents = [...prevState];
-                                  updatedEvents[index].selected =
-                                    !updatedEvents[index].selected;
-                                  return updatedEvents;
-                                });
-                              }}
-                              style={[
-                                styles.eventContainer,
-                                event.selected && styles.selectedContainer,
-                              ]}>
-                              <EventSelectCard
-                                navigation={navigation}
-                                key={index}
-                                event={event}
-                              />
-                            </TouchableOpacity>
-                          ))
-                        )}
-                      </View>
-                    </View>
-                  </View>
-                </ScrollView>
-              </Modal>
-              <TouchableOpacity
-                onPress={() => setModalVisible(true)}
-                style={[
-                  styles.callButton,
-                  {backgroundColor: colors.yellow, flex: 1},
-                ]}>
-                <Icon
-                  name={'bag-add'}
-                  type={'Ionicons'}
-                  size={18}
-                  color={'black'}
-                />
-                <Text style={[styles.callButtonText, {color: 'black'}]}>
-                  Add to Event
-                </Text>
-              </TouchableOpacity>
-            </View>
+            <ScrollView horizontal>
+              <View style={styles.continueBox}>
+                <TouchableOpacity
+                  onPress={() => setModalVisible(true)}
+                  style={[
+                    styles.callButton,
+                    {backgroundColor: colors.yellow, width: 200},
+                  ]}>
+                  <Icon
+                    name={'bag-add'}
+                    type={'Ionicons'}
+                    size={18}
+                    color={'black'}
+                  />
+                  <Text style={[styles.callButtonText, {color: 'black'}]}>
+                    Add to Event
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.callButton, {marginHorizontal: 10}]}
+                  onPress={() => Linking.openURL(`tel:${productData.mobile}`)}>
+                  <Icon
+                    name={'call'}
+                    type={'Ionicons'}
+                    size={18}
+                    color={'white'}
+                  />
+                  <Text style={styles.callButtonText}>Call</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.callButton]}
+                  onPress={() =>
+                    Linking.openURL(
+                      `https://wa.me/+91${
+                        productData.chat
+                      }?text=${encodeURIComponent(
+                        `Hi there! this message is regarding the ${productData.max_quantity} x ${productData.name} that was featured under the company ${productData.company_name} on GalaGrid. Can we talk?`,
+                      )}`,
+                    )
+                  }>
+                  <Icon
+                    name={'chatbox'}
+                    type={'Ionicons'}
+                    size={18}
+                    color={'white'}
+                  />
+                  <Text style={styles.callButtonText}>Chat</Text>
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
             <View style={styles.reviewsAndRatingsBox}>
               <Text style={styles.reviewsAndRatingsText}>
                 Reviews & Ratings
@@ -379,7 +288,7 @@ const StuffDetailsPage = ({navigation, route}) => {
                 onDelete={onReviewDelete}
               />
               {productData.ratings_data.all.map((review, index) => (
-                <ReviewRatings key={index} commentData={review} />
+                <ReviewRatings key={review.id} commentData={review} />
               ))}
             </View>
           </>
@@ -390,6 +299,86 @@ const StuffDetailsPage = ({navigation, route}) => {
         resetMessage={setMessage}
         success={message.success}
       />
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        propagateSwipe={true}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+        <ScrollView
+          style={{
+            backgroundColor: 'black',
+            padding: 50,
+          }}>
+          <View style={styles.modalContainer}>
+            <View contentContainerStyle={styles.modalBody}>
+              <Text style={styles.modalHead}>Select an Event</Text>
+              <Text style={styles.modalDescription}>
+                Add this product to an event to easily manage your orders,
+                later, when you need it, this product can be accessed from the
+                event tab by selecting that event.
+              </Text>
+              <View style={{flexDirection: 'row', marginBottom: 10}}>
+                <TouchableOpacity
+                  style={styles.cancelButton}
+                  onPress={onModelSubmit}>
+                  <Text style={styles.cancelButtonText}>Cancel</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.continueButton}
+                  onPress={onModelSubmit}>
+                  <Text style={styles.continueButtonText}>Continue</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.eventSelector}>
+                {eventData.length === 0 ? (
+                  <TouchableOpacity
+                    style={[
+                      styles.continueButton,
+                      {alignItems: 'center', padding: 20},
+                    ]}
+                    onPress={() => navigation.replace(pages.eventPage)}>
+                    <Icon
+                      name={'event'}
+                      type={'MaterialIcons'}
+                      size={24}
+                      color={'black'}
+                    />
+                    <Text style={[styles.continueButtonText, {fontSize: 18}]}>
+                      Create an Event
+                    </Text>
+                  </TouchableOpacity>
+                ) : (
+                  eventData.map((event, index) => (
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => {
+                        setEventData(prevState => {
+                          const updatedEvents = [...prevState];
+                          updatedEvents[index].selected =
+                            !updatedEvents[index].selected;
+                          return updatedEvents;
+                        });
+                      }}
+                      style={[
+                        styles.eventContainer,
+                        event.selected && styles.selectedContainer,
+                      ]}>
+                      <EventSelectCard
+                        navigation={navigation}
+                        key={index}
+                        event={event}
+                      />
+                    </TouchableOpacity>
+                  ))
+                )}
+              </View>
+            </View>
+          </View>
+        </ScrollView>
+      </Modal>
     </Layout>
   );
 };
@@ -491,6 +480,8 @@ const styles = StyleSheet.create({
 
     flexDirection: 'row',
     justifyContent: 'center',
+
+    width: 150,
   },
   callButtonText: {
     color: 'white',

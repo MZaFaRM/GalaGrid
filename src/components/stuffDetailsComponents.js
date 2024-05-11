@@ -26,7 +26,6 @@ const RandomUserReviewImage = ({main = false}) => {
       'user-secret',
       'user-shield',
       'user-nurse',
-      'chalkboard-user',
     ];
     randomProfile =
       profileImages[Math.floor(Math.random() * profileImages.length)];
@@ -111,6 +110,7 @@ export const UserReviewRatings = ({
             style={styles.userComment}
             value={comment}
             placeholder="Write your review here..."
+            placeholderTextColor="#D3D3D3"
             multiline
             onChangeText={setComment}
             numberOfLines={1}
@@ -127,14 +127,9 @@ export const UserReviewRatings = ({
             }}>
             {userReview && (
               <TouchableOpacity
-                style={[styles.postCommentButton, {backgroundColor: '#0E46A3'}]}
+                style={[styles.postCommentButton, {backgroundColor: 'green'}]}
                 onPress={() => setShowEdit(false)}>
-                <Icon
-                  type="AntDesign"
-                  name="closesquare"
-                  size={18}
-                  color="#9AC8CD"
-                />
+                <Icon type="FontAwesome" name="close" size={18} color="white" />
               </TouchableOpacity>
             )}
             <TouchableOpacity

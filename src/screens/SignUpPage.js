@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {
+  ActivityIndicator,
   StyleSheet,
   Text,
   TextInput,
@@ -22,6 +23,7 @@ const SignUp = ({navigation}) => {
   });
 
   const handleSignUp = async () => {
+    setIsLoading(true);
     const strMobile = mobile.toString();
     try {
       if (!(fullName || strMobile || password)) {
@@ -37,23 +39,27 @@ const SignUp = ({navigation}) => {
         password: password,
       };
       await signUp(userData);
-      navigation.navigate(pages.loginPage);
+      navigation.navigate(pages.loginPage, {
+        mobile: userData.mobile,
+        password: userData.password,
+      });
     } catch (error) {
-      const getError = attr => {
+      const getError = (error, attr) => {
         return error.response?.data.data[attr]?.[0];
       };
-
       const newError = {
         success: false,
         text:
-          getError('mobile') ||
-          getError('username') ||
-          getError('first_name') ||
+          getError(error, 'mobile') ||
+          getError(error, 'username') ||
+          getError(error, 'first_name') ||
           error.message ||
           'Something went wrong',
       };
 
       setMessage(newError);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -67,11 +73,13 @@ const SignUp = ({navigation}) => {
           <Text style={styles.inputHead}>Full Name</Text>
           <TextInput
             placeholder="Full Name"
+            placeholderTextColor="#D3D3D3"
             style={styles.inputBox}
             onChangeText={setFullName}
           />
           <Text style={styles.inputHead}>Mobile</Text>
           <TextInput
+            placeholderTextColor="#D3D3D3"
             placeholder="Mobile"
             style={styles.inputBox}
             onChangeText={setMobile}
@@ -80,15 +88,19 @@ const SignUp = ({navigation}) => {
           <Text style={styles.inputHead}>Password</Text>
           <TextInput
             placeholder="Password"
+            placeholderTextColor="#D3D3D3"
             secureTextEntry={true}
             style={styles.inputBox}
             onChangeText={setPassword}
           />
-          <TouchableOpacity onPress={handleSignUp}>
+          <TouchableOpacity
+            onPress={handleSignUp}
+            style={styles.signUpButton}
+            disabled={isLoading}>
             {isLoading ? (
               <ActivityIndicator size="small" color={'black'} />
             ) : (
-              <Text style={styles.signUpButton}>Sign Up</Text>
+              <Text style={styles.signUpText}>Sign Up</Text>
             )}
           </TouchableOpacity>
           <TouchableOpacity
@@ -139,13 +151,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     fontFamily: fonts.secondary,
+    color: 'white',
   },
   signUpButton: {
     backgroundColor: colors.yellow,
-    padding: 10,
-    textAlign: 'center',
     borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 20,
+    height: 40,
+  },
+  signUpText: {
     color: 'black',
     fontSize: 20,
     fontFamily: fonts.primary,

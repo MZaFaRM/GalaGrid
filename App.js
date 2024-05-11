@@ -20,7 +20,7 @@ import EventPage from './src/screens/eventPage';
 import SettingsPage from './src/screens/settingsPage';
 import EventDetailsPage from './src/screens/eventDetailsPage';
 import ProductForm from './src/screens/productForm';
-import SignUpPage from './src/screens/signUpPage';
+import SignUpPage from './src/screens/signUpPage.js';
 import ErrorBoundary from 'react-native-error-boundary';
 import MessageModal from './src/components/errorModal';
 import LoginPage from './src/screens/loginPage';

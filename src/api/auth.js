@@ -16,7 +16,6 @@ export const login = async (mobile, password) => {
       mobile: mobile,
       password: password,
     });
-    console.log(response.data.data.token);
     updateAuthToken(response.data.data.token);
     saveUserData(response.data.data);
     return response;

@@ -41,7 +41,7 @@ export const RecommendedStuffBoxCard = ({product}) => {
             <Text style={stuffBoxCardStyles.stuffRatingText}>
               {product.ratings.peeps}
               {'\t'}
-              {Array(product.ratings.stars)
+              {Array(5)
                 .fill(0)
                 .map((_, index) => (
                   <Icon
@@ -49,18 +49,11 @@ export const RecommendedStuffBoxCard = ({product}) => {
                     type="AntDesign"
                     name="star"
                     size={14}
-                    color={colors.yellow}
-                  />
-                ))}
-              {Array(5 - product.ratings.stars)
-                .fill(0)
-                .map((_, index) => (
-                  <Icon
-                    key={index}
-                    type="AntDesign"
-                    name="star"
-                    size={14}
-                    color="grey"
+                    color={
+                      index < product.ratings.stars
+                        ? colors.yellow
+                        : colors.grey
+                    }
                   />
                 ))}
             </Text>

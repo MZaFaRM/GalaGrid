@@ -292,6 +292,7 @@ const EventDetailsPage = ({navigation, route}) => {
               <TextInput
                 style={styles.headText}
                 placeholder="Your event name here"
+                placeholderTextColor="#D3D3D3"
                 value={eventDetails.name}
                 onChangeText={text =>
                   setEventDetails({...eventDetails, name: text})
@@ -300,6 +301,7 @@ const EventDetailsPage = ({navigation, route}) => {
               <TextInput
                 style={styles.headParagraph}
                 multiline={true}
+                placeholderTextColor="#D3D3D3"
                 value={eventDetails.description}
                 placeholder="Your event description here"
                 onChangeText={text =>
@@ -375,6 +377,7 @@ const EventDetailsPage = ({navigation, route}) => {
                         />
                       </TouchableOpacity>
                       <TextInput
+                        placeholderTextColor="#D3D3D3"
                         style={{
                           marginVertical: 0,
                           paddingVertical: 0,
@@ -421,6 +424,7 @@ const EventDetailsPage = ({navigation, route}) => {
               <View style={styles.subHeadBox}>
                 <Text style={styles.subHead}>Notes</Text>
                 <TextInput
+                  placeholderTextColor="#D3D3D3"
                   multiline={true}
                   numberOfLines={4}
                   onChangeText={setNotes}

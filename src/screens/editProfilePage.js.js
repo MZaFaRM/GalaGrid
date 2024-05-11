@@ -1,6 +1,13 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {Image, StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import {
   RefreshControl,
   ScrollView,
@@ -52,13 +59,15 @@ const EditProfile = () => {
         success: true,
       });
     } catch (error) {
-      const getError = attr => error.response?.data.data[attr]?.[0];
+      const getError = (error, attr) => {
+        return error.response?.data.data[attr]?.[0];
+      };
 
       setMessage({
         text:
-          getError('first_name') ||
-          getError('mobile') ||
-          getError('password') ||
+          getError(error, 'first_name') ||
+          getError(error, 'mobile') ||
+          getError(error, 'password') ||
           error.message,
         success: false,
       });
@@ -135,8 +144,21 @@ const EditProfile = () => {
           />
           <TouchableOpacity
             onPress={handleSubmit}
-            style={[styles.buttonBox, {marginTop: 20}]}>
-            <Text style={styles.buttonText}>Submit</Text>
+            disabled={isLoading}
+            style={[styles.submitButtonBox]}>
+            {isLoading ? (
+              <ActivityIndicator size="small" color={'black'} />
+            ) : (
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Icon
+                  type={'FontAwesome5'}
+                  size={16}
+                  color={'black'}
+                  name={'user-edit'}
+                />
+                <Text style={styles.submitButtonText}>Edit Profile</Text>
+              </View>
+            )}
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -197,19 +219,22 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 10,
     borderRadius: 10,
+    color: 'white',
   },
-  buttonBox: {
+  submitButtonBox: {
     backgroundColor: colors.yellow,
     flexDirection: 'row',
     padding: 10,
     justifyContent: 'center',
     borderRadius: 10,
     marginBottom: 20,
+    marginTop: 20,
+    height: 40,
   },
-  buttonText: {
+  submitButtonText: {
     color: 'black',
     fontSize: 16,
-    fontFamily: fonts.secondary,
+    fontFamily: fonts.primary,
     marginLeft: 10,
   },
 });
