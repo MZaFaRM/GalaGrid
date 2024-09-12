@@ -10,10 +10,10 @@ export const fonts = {
 export const colors = {
   primary: '#232227',
   secondary: '#232227',
-  yellow: '#EBF400', // Yellow
+  yellow: '#EBF400',
   quaternary: 'black',
   quinary: 'white',
-  grey: '#61677A', // grey
+  grey: '#61677A',
 };
 export const pages = {
   blankPage: 'BlankPage',

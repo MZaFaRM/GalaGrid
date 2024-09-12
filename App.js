@@ -20,18 +20,18 @@ import EventPage from './src/screens/eventPage';
 import SettingsPage from './src/screens/settingsPage';
 import EventDetailsPage from './src/screens/eventDetailsPage';
 import ProductForm from './src/screens/productForm';
-import SignUpPage from './src/screens/signUpPage.js';
+import SignUpPage from './src/screens/signUpPage';
 import ErrorBoundary from 'react-native-error-boundary';
 import MessageModal from './src/components/errorModal';
 import LoginPage from './src/screens/loginPage';
-import EditProfile from './src/screens/editProfilePage.js';
-import BlankPage from './src/screens/blankPage.js';
+import EditProfile from './src/screens/editProfilePage';
+import BlankPage from './src/screens/blankPage';
 
 const Stack = createStackNavigator();
 
 const App = () => {
   return (
-    <ErrorBoundary>
+  <ErrorBoundary>
       <View
         style={{
           flex: 1,

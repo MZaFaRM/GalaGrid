@@ -48,8 +48,8 @@ const ProductForm = () => {
     const options = {
       title: 'Select Product Image',
       mediaType: 'photo',
-      maxWidth: 500,
-      maxHeight: 500,
+      maxWidth: 1500,
+      maxHeight: 1500,
       maxQuantity: 1,
       includeBase64: true,
       storageOptions: {

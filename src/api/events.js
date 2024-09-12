@@ -4,7 +4,7 @@ const eventBase = `api/event/`;
 
 export const fetchEvent = async (eventId = null) => {
   try {
-    return await fetchData(eventBase + (eventId || ''));
+    return await fetchData(eventBase + (eventId || '') + '/');
   } catch (error) {
     console.error('Error fetching event:', error);
     throw error;

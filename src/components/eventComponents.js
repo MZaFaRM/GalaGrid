@@ -40,18 +40,6 @@ export const EventCard = ({navigation, eventData, onDelete}) => {
               {eventData.description}
             </Text>
           </View>
-          {/* <View style={styles.otherStuffLocation}>
-          <Icon
-            type="Entypo"
-            name="location-pin"
-            size={15}
-            color={colors.yellow}
-            style={{marginRight: 5}}
-          />
-          <Text style={styles.otherStuffLocationText}>
-            {eventData.location}
-          </Text>
-        </View> */}
         </View>
       </TouchableOpacity>
     </Swipeable>

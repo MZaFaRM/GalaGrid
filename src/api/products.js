@@ -6,7 +6,7 @@ const productBase = `api/product/`;
 export const fetchProduct = async (productId = null) => {
   try {
     console.log(productBase + (productId || ''));
-    return await fetchData(productBase + (productId || ''));
+    return await fetchData(productBase + (productId || '') + '/');
   } catch (error) {
     console.error('Error fetching product:', error);
     throw error;

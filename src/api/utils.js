@@ -14,7 +14,6 @@ export const fetchData = async endpoint => {
 
 export const createData = async (endpoint, requestData) => {
   try {
-    console.log(endpoint);
     await updateAuthToken();
     const response = await api.post(endpoint, requestData);
     return response.data;

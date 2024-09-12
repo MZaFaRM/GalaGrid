@@ -1,4 +1,4 @@
-import {React, useCallback, useEffect, useState} from 'react';
+import { React, useCallback, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -12,14 +12,14 @@ import {
   View,
 } from 'react-native';
 import * as ImagePicker from 'react-native-image-picker';
-import {Rows, Table} from 'react-native-reanimated-table';
-import {handleAuthError} from '../api/auth';
-import {createEvent, fetchEvent, updateEvent} from '../api/events';
+import { Rows, Table } from 'react-native-reanimated-table';
+import { handleAuthError } from '../api/auth';
+import { createEvent, fetchEvent, updateEvent } from '../api/events';
 import Icon from '../assets/icons';
 import MessageModal from '../components/errorModal';
 import Layout from '../components/layout';
-import {colors, fonts, pages} from '../constants/constants';
-import {emptyTodo, todoColors, todoStates} from '../utils/events';
+import { colors, fonts, pages } from '../constants/constants';
+import { emptyTodo, todoColors, todoStates } from '../utils/events';
 
 const EventDetailsPage = ({navigation, route}) => {
   const tempEventID = route.params.eventID;
@@ -68,8 +68,8 @@ const EventDetailsPage = ({navigation, route}) => {
     const options = {
       title: 'Select Product Image',
       mediaType: 'photo',
-      maxWidth: 500,
-      maxHeight: 500,
+      maxWidth: 1500,
+      maxHeight: 1500,
       includeBase64: true,
       storageOptions: {
         skipBackup: true,

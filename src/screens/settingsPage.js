@@ -75,7 +75,7 @@ const SettingsPage = ({navigation}) => {
             <Text style={styles.settingsText}>Log out</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => Linking.openURL(`tel:+917592085105`)}
+            onPress={() => Linking.openURL(`tel:+919778177858`)}
             style={styles.settingsItem}>
             <View
               style={{
