@@ -1,4 +1,4 @@
-import { React, useCallback, useEffect, useState } from 'react';
+import {React, useCallback, useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -12,14 +12,14 @@ import {
   View,
 } from 'react-native';
 import * as ImagePicker from 'react-native-image-picker';
-import { Rows, Table } from 'react-native-reanimated-table';
-import { handleAuthError } from '../api/auth';
-import { createEvent, fetchEvent, updateEvent } from '../api/events';
+import {Rows, Table} from 'react-native-reanimated-table';
+import {handleAuthError} from '../api/auth';
+import {createEvent, fetchEvent, updateEvent} from '../api/events';
 import Icon from '../assets/icons';
 import MessageModal from '../components/errorModal';
 import Layout from '../components/layout';
-import { colors, fonts, pages } from '../constants/constants';
-import { emptyTodo, todoColors, todoStates } from '../utils/events';
+import {colors, fonts, pages} from '../constants/constants';
+import {emptyTodo, todoColors, todoStates} from '../utils/events';
 
 const EventDetailsPage = ({navigation, route}) => {
   const tempEventID = route.params.eventID;
@@ -291,7 +291,7 @@ const EventDetailsPage = ({navigation, route}) => {
             <View style={styles.dataContainer}>
               <TextInput
                 style={styles.headText}
-                placeholder="Your event name here"
+                placeholder="*your event name here"
                 placeholderTextColor="#D3D3D3"
                 value={eventDetails.name}
                 onChangeText={text =>
@@ -303,7 +303,7 @@ const EventDetailsPage = ({navigation, route}) => {
                 multiline={true}
                 placeholderTextColor="#D3D3D3"
                 value={eventDetails.description}
-                placeholder="Your event description here"
+                placeholder="*your event description here"
                 onChangeText={text =>
                   setEventDetails({...eventDetails, description: text})
                 }
@@ -499,7 +499,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 24,
 
+    backgroundColor: '#222831',
+    borderRadius: 5,
     padding: 10,
+    paddingLeft: 15,
   },
   subHeadBox: {
     marginBottom: 10,

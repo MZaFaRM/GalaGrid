@@ -1,8 +1,105 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+Here's the updated `README.md` for your event rental and management app, incorporating React Native for the frontend, Django for the backend, and linking to your research document:
+
+---
+
+# Event Rental and Management App
+
+A React Native application with a Django backend for managing event rentals. Users can browse, book, and manage event venues, equipment, and services, with all rentals offered for free.
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Research Document](#research-document)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Overview
+
+This event rental and management app simplifies the process of organizing events by offering users a streamlined platform to rent venues, equipment, and other resources. Built with a React Native frontend and Django backend, it provides both mobile and web functionalities, allowing easy access from any device. The app supports free rentals for users.
+
+## Features
+
+- **User Authentication**: Sign up, login, and manage user sessions.
+- **Free Rentals**: Users can browse and rent venues and equipment for free.
+- **Event Management**: Organize and manage event schedules and resources.
+- **Admin Dashboard**: Admins can manage users, bookings, and rentals.
+- **Responsive Design**: Optimized for mobile use with React Native.
+
+## Technologies Used
+
+- **Frontend**: React Native
+- **Backend**: Django (Python)
+- **Database**: MySQL
+- **Styling**: CSS, Bootstrap (for web admin)
+- **Version Control**: Git, GitHub
+
+## Installation
+
+To set up the project locally:
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/yourusername/event-rental-management-app.git
+   cd event-rental-management-app
+   ```
+
+2. **Backend Setup (Django)**:
+
+   - Set up a virtual environment and install dependencies:
+     ```bash
+     python -m venv env
+     source env/bin/activate
+     pip install -r requirements.txt
+     ```
+   - Set up your MySQL database in the `settings.py` file.
+   - Run migrations:
+     ```bash
+     python manage.py migrate
+     ```
+
+3. **Frontend Setup (React Native)**:
+
+   - Navigate to the React Native project folder and install dependencies:
+     ```bash
+     cd frontend
+     npm install
+     ```
+
+4. **Running the App**:
+
+   - Start the Django server:
+     ```bash
+     python manage.py runserver
+     ```
+   - Run the React Native app using the appropriate emulator or device:
+     ```bash
+     npx react-native run-android  # For Android
+     npx react-native run-ios      # For iOS
+     ```
+
+5. Open the app on your device/emulator or access the admin panel at `http://localhost:8000/admin`.
+
+## Usage
+
+- **User Access**: Users can sign up, browse available resources, and book event venues and equipment for free.
+- **Admin Access**: Admins have full control over the management of resources, bookings, and user accounts.
+
+## Research Document
+
+For detailed information about the project, including research, methodology, and technical design, refer to the research document [here](#). _(Insert link to your research doc)_.
+
+## Contributing
+
+Feel free to open issues or submit pull requests for improvements. Contributions are welcome!
 
 # Getting Started
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+> **Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
 
 ## Step 1: Start the Metro Server
 
@@ -77,3 +174,11 @@ To learn more about React Native, take a look at the following resources:
 - [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
 - [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
 - [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+Let me know if you'd like any further customizations!
