@@ -1,3 +1,5 @@
+![GalaGrid Screenshot](./src/assets/images/readme/readme-banner.jpeg)
+
 # GalaGrid: Front End
 
 GalaGrid is an event rental prototype app that simulates the entire process of renting goods for events. Developed using React Native for the frontend and Django for the backend, the app is designed to streamline the event rental process, providing users with a seamless experience.
