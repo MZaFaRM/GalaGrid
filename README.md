@@ -1,8 +1,4 @@
-Here's the updated `README.md` for your event rental and management app, incorporating React Native for the frontend, Django for the backend, and linking to your research document:
-
----
-
-# Event Rental and Management App
+# GALAGRID - Event Rental and Management App
 
 A React Native application with a Django backend for managing event rentals. Users can browse, book, and manage event venues, equipment, and services, with all rentals offered for free.
 
