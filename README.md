@@ -19,22 +19,6 @@ GalaGrid is an event rental prototype app that simulates the entire process of r
 
 ## Installation
 
-### Backend Setup (Django)
-
-1. Clone the repository.
-2. Install dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
-3. Run migrations:
-   ```
-   python manage.py migrate
-   ```
-4. Start the Django server:
-   ```
-   python manage.py runserver
-   ```
-
 ### Frontend Setup (React Native)
 
 1. Navigate to the frontend folder.
